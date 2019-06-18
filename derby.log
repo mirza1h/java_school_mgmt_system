@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Tue Jun 18 19:52:12 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-6bb7-bd78-000006494db0 
-on database directory /home/mirza/myDb with class loader sun.misc.Launcher$AppClassLoader@75b84c92 
-Loaded from file:/home/mirza/Java/derby.jar
+Tue Jun 18 23:51:55 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-6c93-3480-000006269e50 
+on database directory /home/mirza/Projekat/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@75b84c92 
+Loaded from file:/home/mirza/Projekat/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_212-8u212-b03-0ubuntu1.18.04.1-b03
-user.dir=/home/mirza/Java/RazvojSoftvera
+user.dir=/home/mirza/Projekat
 os.name=Linux
 os.arch=amd64
 os.version=4.15.0-51-generic

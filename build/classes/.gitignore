@@ -1,3 +1,4 @@
+/META-INF/
 /derby.jar
 /derbyclient.jar
 /derbynet.jar
@@ -5,3 +6,5 @@
 /derbytools.jar
 /eclipselink.jar
 /jpa/
+/models/
+/views/
