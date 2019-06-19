@@ -1,6 +1,10 @@
 package models;
 
 import java.util.Collection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 enum Usmjerenje{
 	RI,
@@ -9,7 +13,12 @@ enum Usmjerenje{
 	EEMS,
 	TK
 }
+@Entity
 public class Profesor {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	private String ime;
 	private String prezime;
 	private Collection<Predmet> predmeti;

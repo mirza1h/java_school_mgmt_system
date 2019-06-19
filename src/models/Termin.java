@@ -1,5 +1,10 @@
 package models;
 import java.sql.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 enum tipTermina{
 	Predavanje,
 	Vjezbe,
@@ -7,7 +12,11 @@ enum tipTermina{
 	Nadoknada,
 	Diplomski
 }
+@Entity
 public class Termin {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private Predmet predmet;
 	//Mozemo ovo staviti ko jedan string ?
 	private String zgrada;
