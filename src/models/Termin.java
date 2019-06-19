@@ -6,12 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 enum tipTermina {
 	Predavanje, Vjezbe, Seminar, Nadoknada, Diplomski
 }
 
+@NamedQueries({ @NamedQuery(name = "sviTermini", query = "select t from Termin t"),
+		@NamedQuery(name = "sviTerminiZaVrijeme", query = "select t from Termin t where t.vrijeme1 = ?1 and t.vrijeme2 = ?2"), })
 @Entity
 public class Termin {
 	@Id
@@ -24,6 +29,8 @@ public class Termin {
 	private String sala;
 	private Date vrijeme1;
 	private Date vrijeme2;
+	@ManyToOne
+	private Profesor profesor;
 	private tipTermina tip;
 
 	public Predmet getPredmet() {
@@ -76,8 +83,8 @@ public class Termin {
 
 	@Override
 	public String toString() {
-		return "Termin [id=" + this.id + ", predmet=" + this.predmet + ", zgrada=" + this.zgrada + ", sala=" + this.sala + ", vrijeme1="
-				+ this.vrijeme1 + ", vrijeme2=" + this.vrijeme2 + ", tip=" + this.tip + "]";
+		return "Termin [id=" + this.id + ", predmet=" + this.predmet + ", zgrada=" + this.zgrada + ", sala=" + this.sala
+				+ ", vrijeme1=" + this.vrijeme1 + ", vrijeme2=" + this.vrijeme2 + ", tip=" + this.tip + "]";
 	}
 
 }
