@@ -5,49 +5,59 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
-enum Usmjerenje{
-	RI,
-	AR,
-	ESKE,
-	EEMS,
-	TK
+enum Usmjerenje {
+	RI, AR, ESKE, EEMS, TK
 }
+
 @Entity
 public class Profesor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String ime;
 	private String prezime;
+	@ManyToMany(mappedBy = "profesori")
 	private Collection<Predmet> predmeti;
 	private String titula;
 	private Usmjerenje usmjerenje;
 	private String grupa;
 
 	public String getIme() {
-		return ime;
+		return this.ime;
 	}
+
 	public void setIme(String ime) {
 		this.ime = ime;
 	}
+
 	public String getPrezime() {
-		return prezime;
+		return this.prezime;
 	}
+
 	public void setPrezime(String prezime) {
 		this.prezime = prezime;
 	}
+
 	public String getTitula() {
-		return titula;
+		return this.titula;
 	}
+
 	public void setTitula(String titula) {
 		this.titula = titula;
 	}
+
 	public Usmjerenje getUsmjerenje() {
-		return usmjerenje;
+		return this.usmjerenje;
 	}
+
 	public void setUsmjerenje(Usmjerenje usmjerenje) {
 		this.usmjerenje = usmjerenje;
+	}
+
+	public void setPredmete(Collection<Predmet> p) {
+		this.predmeti = p;
 	}
 }

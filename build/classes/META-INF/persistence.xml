@@ -3,7 +3,9 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
     version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="RazvojSoftvera" transaction-type="RESOURCE_LOCAL">
-        <class>models.Todo</class>
+        <class>models.Predmet</class>
+        <class>models.Profesor</class>
+        <class>models.Termin</class>
  <properties>
   <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
   <property name="javax.persistence.jdbc.url"
