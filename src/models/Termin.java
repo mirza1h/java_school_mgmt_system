@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,6 +29,8 @@ public class Termin {
 	private String sala;
 	private Date vrijeme1;
 	private Date vrijeme2;
+	@ManyToOne
+	private Profesor profesor;
 	private tipTermina tip;
 
 	public Predmet getPredmet() {

@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 enum Usmjerenje {
 	RI, AR, ESKE, EEMS, TK
@@ -22,6 +23,8 @@ public class Profesor {
 
 	private String ime;
 	private String prezime;
+	@OneToMany
+	private Collection<Termin> termini;
 	@ManyToMany(mappedBy = "profesori")
 	private Collection<Predmet> predmeti;
 	private String titula;
