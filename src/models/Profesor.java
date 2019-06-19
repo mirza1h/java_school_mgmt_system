@@ -6,11 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 enum Usmjerenje {
 	RI, AR, ESKE, EEMS, TK
 }
 
+@NamedQueries({ @NamedQuery(name = "sviProfesori", query = "select prof from Profesor prof") })
 @Entity
 public class Profesor {
 	@Id
@@ -60,4 +63,11 @@ public class Profesor {
 	public void setPredmete(Collection<Predmet> p) {
 		this.predmeti = p;
 	}
+
+	@Override
+	public String toString() {
+		return "Profesor [id=" + this.id + ", ime=" + this.ime + ", prezime=" + this.prezime + ", predmeti=" + this.predmeti + ", titula="
+				+ this.titula + ", usmjerenje=" + this.usmjerenje + ", grupa=" + this.grupa + "]";
+	}
+
 }

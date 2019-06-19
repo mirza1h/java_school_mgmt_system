@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
@@ -8,8 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({ @NamedQuery(name = "sviPredmeti", query = "select p from Predmet p where p.id>?1"),
+		@NamedQuery(name = "sviPredmetiProfesora", query = "select pred from Predmet pred, Profesor prof WHERE pred.profesori = prof AND prof.ime = ?1"),
+		@NamedQuery(name = "dohvatiPredmet", query = "select p from Predmet p where p.naziv = ?1") })
 public class Predmet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +53,20 @@ public class Predmet {
 
 	public void setProfesore(Collection<Profesor> p) {
 		this.profesori = p;
+	}
+
+	@Override
+	public String toString() {
+		return "Predmet [id=" + this.id + ", naziv=" + this.naziv + ", brojStudenata=" + this.brojStudenata
+				+ ", usmjerenje=" + this.usmjerenje + ", semestar=" + this.semestar + ", profesori=" + this.profesori
+				+ "]";
+	}
+
+	public Collection<Profesor> getProfesore() {
+		if (this.profesori == null) {
+			this.profesori = new ArrayList<Profesor>();
+		}
+		return this.profesori;
 	}
 
 }
