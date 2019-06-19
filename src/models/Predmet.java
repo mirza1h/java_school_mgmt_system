@@ -13,7 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQueries({ @NamedQuery(name = "sviPredmeti", query = "select p from Predmet p where p.id>?1"),
+@NamedQueries({ @NamedQuery(name = "sviPredmeti", query = "select p from Predmet p"),
 		@NamedQuery(name = "sviPredmetiProfesora", query = "select pred from Predmet pred, Profesor prof WHERE pred.profesori = prof AND prof.ime = ?1"),
 		@NamedQuery(name = "dohvatiPredmet", query = "select p from Predmet p where p.naziv = ?1") })
 public class Predmet {
