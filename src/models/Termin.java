@@ -15,7 +15,7 @@ enum tipTermina {
 }
 
 @NamedQueries({ @NamedQuery(name = "sviTermini", query = "select t from Termin t"),
-		@NamedQuery(name = "sviTerminiZaUsmjerenje", query = "select t from Termin t where t.vrijeme1 = ?1 and t.vrijeme2 = ?2"), })
+		@NamedQuery(name = "sviTerminiZaVrijeme", query = "select t from Termin t where t.vrijeme1 = ?1 and t.vrijeme2 = ?2"), })
 @Entity
 public class Termin {
 	@Id
