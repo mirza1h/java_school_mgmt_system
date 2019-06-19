@@ -1,0 +1,7 @@
+.copyable-label, .copyable-label:focused {
+    -fx-color:  white;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-text-fill: rgb(238,238,236);
+    -fx-background-insets: 0px ;
+}
