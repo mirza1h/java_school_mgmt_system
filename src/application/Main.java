@@ -36,6 +36,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import models.Korisnik;
 import models.Korisnik.tipKorisnika;
 import models.Predmet;
 import models.Profesor;
@@ -45,9 +46,11 @@ public class Main extends Application {
 
 	private static final String PERSISTENCE_UNIT_NAME = "RazvojSoftvera";
 	private static EntityManagerFactory factory;
+
 	public static EntityManagerFactory getFactory() {
 		return factory;
 	}
+
 	private static void setDBSystemDir() {
 		// Decide on the db system directory: <userhome>/.addressbook/
 		String userHomeDir = System.getProperty("user.home", ".");
@@ -90,13 +93,45 @@ public class Main extends Application {
 			info.get(i).getStyleClass().add("copyable-label");
 			info.get(i).setPrefWidth(140);
 			info.get(i).setLayoutX(0);
-			info.get(i).setLayoutY(i*15);
+			info.get(i).setLayoutY(i * 15);
 			novi.getChildren().add(info.get(i));
 		}
 		return novi;
 	}
 
+	private void dodajKorisnike() {
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
+		setDBSystemDir();
+		Korisnik prodekan = new Korisnik();
+		prodekan.setUsername("mesko");
+		prodekan.setPassword("mesko");
+		prodekan.setTip(tipKorisnika.Prodekan);
+
+		Korisnik nastavnik = new Korisnik();
+		nastavnik.setUsername("amer");
+		nastavnik.setPassword("amer");
+		nastavnik.setTip(tipKorisnika.Nastavnik);
+
+		em.getTransaction().begin();
+		em.persist(prodekan);
+		em.persist(nastavnik);
+		em.getTransaction().commit();
+		em.close();
+	}
+
 	public void startLoginPage(Stage primaryStage) throws IOException {
+		// Ubacena 2 korisnika, ne pozivati vise
+		// dodajKorisnike();
+
+		// Test korisnika
+		/*
+		 * factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		 * EntityManager em = factory.createEntityManager(); Query q =
+		 * em.createNamedQuery("sviKorisnici"); List<Korisnik> rezultat =
+		 * q.getResultList(); for (Korisnik k : rezultat) { System.out.println(k); }
+		 */
+
 		VBox login = FXMLLoader.load(getClass().getResource("login.fxml"));
 		Scene loginScene = new Scene(login);
 
@@ -113,14 +148,15 @@ public class Main extends Application {
 		Button bezPrijave = (Button) loginPane.getChildren().get(1);
 
 		bezPrijave.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		        try {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
 					startRasporedPage(primaryStage, false);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		    }
+			}
 		});
 	}
 
@@ -138,13 +174,6 @@ public class Main extends Application {
 		AnchorPane novi = newBlock(defaultBlock);
 
 		defaultBlock.setVisible(true);
-
-		/*
-		 * factory =
-		 * Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		 * EntityManager em = factory.createEntityManager();
-		 * setDBSystemDir();
-		 */
 
 		drawPane.getChildren().add(novi);
 
