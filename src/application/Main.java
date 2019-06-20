@@ -207,6 +207,18 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-		launch(args);
+		factory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		if(Korisnik.nadjiKorisnika("amer", "amer")==tipKorisnika.Nastavnik) {
+			System.out.println("radi");
+		}
+		if(Korisnik.nadjiKorisnika("mesko", "mesko")==tipKorisnika.Prodekan) {
+			System.out.println("radi opet");
+		}
+		//Pogresan PASS primjer
+		if(Korisnik.nadjiKorisnika("amer", "aer")==null) {
+			System.out.println("radi i null");
+		}
+		//launch(args);
+		factory.close();
 	}
 }

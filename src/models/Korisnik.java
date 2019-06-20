@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -64,18 +65,21 @@ public class Korisnik {
 	public void setTip(tipKorisnika tip) {
 		this.tip = tip;
 	}
-
+	
 	public static tipKorisnika nadjiKorisnika(String name, String pass) {
 		EntityManager em = Main.getFactory().createEntityManager();
-		Query upit = em.createNamedQuery("Korisnik.dohvatiKorsnika", Korisnik.class);
+		Query upit = em.createNamedQuery("dohvatiKorisnika", Korisnik.class);
 		upit.setParameter(1, name);
 		upit.setParameter(2, pass);
 		Collection<Object> rezultat = upit.getResultList();
-		// Trebam ovdje vidjeti kako ce izgledati ispis prvo
-		for (Object o : rezultat) {
-			System.out.println();
+		Korisnik temp=null;
+		for(Object o: rezultat) {
+			temp=(Korisnik)o;
 		}
-		return tipKorisnika.Prodekan;
+		if(temp==null)
+			return null;
+		return temp.getTip();
+		
 	}
 
 }
