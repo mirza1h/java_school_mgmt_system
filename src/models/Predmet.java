@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import models.Profesor.Usmjerenje;
+
 @Entity
 @NamedQueries({ @NamedQuery(name = "sviPredmeti", query = "select p from Predmet p"),
 		@NamedQuery(name = "sviPredmetiProfesora", query = "select pred from Predmet pred, Profesor prof WHERE pred.profesori = prof AND prof.ime = ?1"),

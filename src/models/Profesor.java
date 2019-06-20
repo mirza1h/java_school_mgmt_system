@@ -10,13 +10,14 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
-enum Usmjerenje {
-	RI, AR, ESKE, EEMS, TK
-}
 
 @NamedQueries({ @NamedQuery(name = "sviProfesori", query = "select prof from Profesor prof") })
 @Entity
 public class Profesor {
+	public enum Usmjerenje {
+		RI, AR, ESKE, EEMS, TK
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

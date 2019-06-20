@@ -36,6 +36,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import models.Korisnik.tipKorisnika;
 import models.Predmet;
 import models.Profesor;
 import models.Termin;
@@ -44,7 +45,9 @@ public class Main extends Application {
 
 	private static final String PERSISTENCE_UNIT_NAME = "RazvojSoftvera";
 	private static EntityManagerFactory factory;
-
+	public static EntityManagerFactory getFactory() {
+		return factory;
+	}
 	private static void setDBSystemDir() {
 		// Decide on the db system directory: <userhome>/.addressbook/
 		String userHomeDir = System.getProperty("user.home", ".");
