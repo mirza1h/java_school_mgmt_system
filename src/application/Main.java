@@ -308,6 +308,7 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		factory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		//DbFunctions.createPredmet();
 		//DbFunctions.createTermini();
 		Predmet.showPredmeti();
 		Termin.showTermini();
@@ -321,7 +322,6 @@ public class Main extends Application {
 		if(Korisnik.nadjiKorisnika("amer", "aer")==null) {
 			System.out.println("radi i null");
 		}
-		
 		launch(args);
 		
 		factory.close();

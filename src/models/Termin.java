@@ -2,8 +2,10 @@ package models;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
@@ -23,7 +25,7 @@ import javax.persistence.NamedQuery;
 
 
 @NamedQueries({ @NamedQuery(name = "sviTermini", query = "select t from Termin t"),
-		@NamedQuery(name = "sviTerminiZaVrijeme", query = "select t from Termin t where t.vrijeme1 = ?1 and t.vrijeme2 = ?2"),
+		@NamedQuery(name = "sviTerminiZaVrijeme", query = "select t from Termin t where t.startTime = ?1 and t.endTime = ?2"),
 		@NamedQuery(name = "izbrisiTermin", query= "delete from Termin t where t.id = ?1")
 })
 @Entity
@@ -40,8 +42,10 @@ public class Termin {
 	private String zgrada;
 	private String sala;
 	private String grupa;
-	private Timestamp vrijeme1;
-	private Timestamp vrijeme2;
+	@Column(columnDefinition = "TIMESTAMP")
+	private LocalDateTime startTime;
+	@Column(columnDefinition = "TIMESTAMP")
+	private LocalDateTime endTime;
 	@ManyToOne
 	private Profesor profesor;
 	private tipTermina tip;
@@ -70,20 +74,20 @@ public class Termin {
 		this.sala = sala;
 	}
 
-	public Timestamp getVrijeme1() {
-		return this.vrijeme1;
+	public LocalDateTime getStartTime() {
+		return startTime;
 	}
 
-	public void setVrijeme1(Timestamp vrijeme12) {
-		this.vrijeme1 = vrijeme12;
+	public void setStartTime(LocalDateTime startTime) {
+		this.startTime = startTime;
 	}
 
-	public Timestamp getVrijeme2() {
-		return this.vrijeme2;
+	public LocalDateTime getEndTime() {
+		return endTime;
 	}
 
-	public void setVrijeme2(Timestamp vrijeme2) {
-		this.vrijeme2 = vrijeme2;
+	public void setEndTime(LocalDateTime endTime) {
+		this.endTime = endTime;
 	}
 
 	public tipTermina getTip() {
@@ -97,7 +101,7 @@ public class Termin {
 	@Override
 	public String toString() {
 		return "Termin [id=" + this.id + ", predmet=" + this.predmet + ", zgrada=" + this.zgrada + ", sala=" + this.sala
-				+ ", vrijeme1=" + this.vrijeme1 + ", vrijeme2=" + this.vrijeme2 + ", tip=" + this.tip + "]";
+				+ ", vrijeme1=" + this.startTime + ", vrijeme2=" + this.endTime + ", tip=" + this.tip + "]";
 	}
 	public static void showTermini() {
 		EntityManager em = Main.getFactory().createEntityManager();

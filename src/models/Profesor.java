@@ -28,7 +28,6 @@ public class Profesor {
 	private Collection<Termin> termini;
 	@ManyToMany(mappedBy = "profesori")
 	private Collection<Predmet> predmeti;
-	private String titula;
 	private Usmjerenje usmjerenje;
 	private String grupa;
 
@@ -48,13 +47,6 @@ public class Profesor {
 		this.prezime = prezime;
 	}
 
-	public String getTitula() {
-		return this.titula;
-	}
-
-	public void setTitula(String titula) {
-		this.titula = titula;
-	}
 
 	public Usmjerenje getUsmjerenje() {
 		return this.usmjerenje;
@@ -70,8 +62,8 @@ public class Profesor {
 
 	@Override
 	public String toString() {
-		return "Profesor [id=" + this.id + ", ime=" + this.ime + ", prezime=" + this.prezime + ", predmeti=" + this.predmeti + ", titula="
-				+ this.titula + ", usmjerenje=" + this.usmjerenje + ", grupa=" + this.grupa + "]";
+		return "Profesor [id=" + this.id + ", ime=" + this.ime + ", prezime=" + this.prezime + ", predmeti=" + this.predmeti
+				+ ", usmjerenje=" + this.usmjerenje + ", grupa=" + this.grupa + "]";
 	}
 
 }
