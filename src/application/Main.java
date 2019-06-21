@@ -44,6 +44,7 @@ import models.Korisnik.tipKorisnika;
 import models.Predmet;
 import models.Profesor;
 import models.Termin;
+import models.Termin.tipTermina;
 
 public class Main extends Application {
 
@@ -307,6 +308,10 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		factory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		//DbFunctions.createTermini();
+		Termin.deleteTermin(3);
+		Predmet.showPredmeti();
+		Termin.showTermini();
 		if(Korisnik.nadjiKorisnika("amer", "amer")==tipKorisnika.Nastavnik) {
 			System.out.println("radi");
 		}

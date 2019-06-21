@@ -5,13 +5,16 @@ import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 
+import application.Main;
 import models.Profesor.Usmjerenje;
 
 @Entity
@@ -70,5 +73,23 @@ public class Predmet {
 		}
 		return this.profesori;
 	}
+	public static void showPredmeti() {
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createNamedQuery("sviPredmeti", Predmet.class);
+		Collection<Object> rezultat = upit.getResultList();
+		for(Object o: rezultat) {
+			System.out.println(o);
+		}
+		
+	}
+	public static Collection<Object> getPredmeti() {
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createNamedQuery("sviPredmeti", Predmet.class);
+		Collection<Object> rezultat = upit.getResultList();
+		return rezultat;
+		
+	}
+
+
 
 }

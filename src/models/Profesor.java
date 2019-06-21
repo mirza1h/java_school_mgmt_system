@@ -24,7 +24,7 @@ public class Profesor {
 
 	private String ime;
 	private String prezime;
-	@OneToMany
+	@OneToMany(mappedBy ="profesor")
 	private Collection<Termin> termini;
 	@ManyToMany(mappedBy = "profesori")
 	private Collection<Predmet> predmeti;
