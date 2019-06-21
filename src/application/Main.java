@@ -309,7 +309,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		factory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		//DbFunctions.createTermini();
-		Termin.deleteTermin(3);
 		Predmet.showPredmeti();
 		Termin.showTermini();
 		if(Korisnik.nadjiKorisnika("amer", "amer")==tipKorisnika.Nastavnik) {
