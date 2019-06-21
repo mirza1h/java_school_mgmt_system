@@ -56,12 +56,18 @@
                         <Font size="18.0" />
                      </font>
                   </CheckBox>
+                  <CheckBox layoutX="15.0" layoutY="253.0" mnemonicParsing="false" text="Usmjerenje" textFill="#eb3535">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </CheckBox>
                   <TextField layoutX="213.0" layoutY="54.0" />
                   <TextField layoutX="213.0" layoutY="87.0" />
                   <TextField layoutX="213.0" layoutY="121.0" />
                   <TextField layoutX="213.0" layoutY="154.0" />
                   <TextField layoutX="213.0" layoutY="187.0" />
                   <TextField layoutX="213.0" layoutY="220.0" />
+                  <TextField layoutX="213.0" layoutY="252.0" />
                   <Button layoutX="213.0" layoutY="298.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" text="Potvrdi" />
                </children>
             </AnchorPane>

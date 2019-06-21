@@ -219,13 +219,13 @@ public class Main extends Application {
 		List<CheckBox> filteri = new ArrayList<>();
 		List<TextField> unosi = new ArrayList<>();
 		List<String> vrijednosti = new ArrayList<>();
-		Button potvrdi = (Button) secondPane.getChildren().get(13);
+		Button potvrdi = (Button) secondPane.getChildren().get(15);
 		
-		for (int i=1; i<=6; ++i) {
+		for (int i=1; i<=7; ++i) {
 			filteri.add((CheckBox) secondPane.getChildren().get(i));
 		}
 		
-		for (int i=7; i<=12; ++i) {
+		for (int i=8; i<=14; ++i) {
 			unosi.add((TextField) secondPane.getChildren().get(i));
 		}
 		
@@ -233,7 +233,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					for (int i=0; i<=5; ++i) {
+					for (int i=0; i<=6; ++i) {
 						if (filteri.get(i).isSelected()) {
 							if (unosi.get(i).getText() == null || unosi.get(i).getText().equals(""))
 								vrijednosti.add(null);
