@@ -21,8 +21,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -145,19 +148,115 @@ public class Main extends Application {
 		AnchorPane duals = (AnchorPane) mainPane.getChildren().get(1);
 		AnchorPane loginPane = (AnchorPane) duals.getChildren().get(1);
 
+		Button loginButton = (Button) loginPane.getChildren().get(0);
 		Button bezPrijave = (Button) loginPane.getChildren().get(1);
-
-		bezPrijave.setOnAction(new EventHandler<ActionEvent>() {
+		
+		TextField username = (TextField) loginPane.getChildren().get(2);
+		PasswordField password = (PasswordField) loginPane.getChildren().get(3);
+		
+		Label greska = (Label) loginPane.getChildren().get(4);
+		
+		loginButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					startRasporedPage(primaryStage, false);
+					String uneseniUser = username.getText();
+					String uneseniPass = password.getText();
+					
+					if (uneseniUser == null || uneseniPass == null)
+						greska.setVisible(true);
+					
+					else if (uneseniUser.equals("") || uneseniPass.equals(""))
+						greska.setVisible(true);	
+					
+					else if(Korisnik.nadjiKorisnika(uneseniUser, uneseniPass)==null) {
+						greska.setVisible(true);
+					}
+					else {
+						greska.setVisible(false);
+						
+						if(Korisnik.nadjiKorisnika(uneseniUser, uneseniPass)==tipKorisnika.Nastavnik) {
+							startFilterPage(primaryStage, true);
+							System.out.println("radi");
+						}
+						else if(Korisnik.nadjiKorisnika(uneseniUser, uneseniPass)==tipKorisnika.Prodekan) {
+							startFilterPage(primaryStage, true);
+							System.out.println("radi opet");
+						}
+						else {
+							startFilterPage(primaryStage, false);
+						}
+						
+					}
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
+
+		bezPrijave.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					startFilterPage(primaryStage, false);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public void startFilterPage(Stage primaryStage, boolean registrovan) throws IOException {
+		VBox filter = FXMLLoader.load(getClass().getResource("rasporedFilter.fxml"));
+
+		AnchorPane mainPane = (AnchorPane) filter.getChildren().get(0);
+		AnchorPane secondPane = (AnchorPane) mainPane.getChildren().get(1);
+		
+		List<CheckBox> filteri = new ArrayList<>();
+		List<TextField> unosi = new ArrayList<>();
+		List<String> vrijednosti = new ArrayList<>();
+		Button potvrdi = (Button) secondPane.getChildren().get(13);
+		
+		for (int i=1; i<=6; ++i) {
+			filteri.add((CheckBox) secondPane.getChildren().get(i));
+		}
+		
+		for (int i=7; i<=12; ++i) {
+			unosi.add((TextField) secondPane.getChildren().get(i));
+		}
+		
+		potvrdi.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					for (int i=0; i<=5; ++i) {
+						if (filteri.get(i).isSelected()) {
+							if (unosi.get(i).getText() == null || unosi.get(i).getText().equals(""))
+								vrijednosti.add(null);
+							else
+								vrijednosti.add(unosi.get(i).getText());
+						}
+						else
+							vrijednosti.add(null);
+					}
+					System.out.println(vrijednosti);
+					startRasporedPage(primaryStage, registrovan);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		Scene filterScene = new Scene(filter);
+		filterScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setResizable(false);
+		primaryStage.setScene(filterScene);
+		primaryStage.show();
+		
 	}
 
 	public void startRasporedPage(Stage primaryStage, boolean registrovan) throws IOException {
@@ -218,7 +317,9 @@ public class Main extends Application {
 		if(Korisnik.nadjiKorisnika("amer", "aer")==null) {
 			System.out.println("radi i null");
 		}
-		//launch(args);
+		
+		launch(args);
+		
 		factory.close();
 	}
 }

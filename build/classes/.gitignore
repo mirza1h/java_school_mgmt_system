@@ -1,1 +1,11 @@
+/META-INF/
+/application/
+/derby.jar
+/derbyclient.jar
+/derbynet.jar
+/derbyrun.jar
+/derbytools.jar
+/eclipselink.jar
+/jpa/
 /models/
+/org.eclipse.fx.ide.css.jfx8_2.4.0.201605112122.jar
