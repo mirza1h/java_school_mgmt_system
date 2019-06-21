@@ -310,6 +310,16 @@ public class Main extends Application {
 		factory=Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		//DbFunctions.createPredmet();
 		//DbFunctions.createTermini();
+		List<String> vr=new ArrayList<String>();
+		vr.add("FE");
+		vr.add("101");
+		vr.add(null);
+		vr.add("0");
+		vr.add("Osnovi elektronike");
+		vr.add(null);
+		vr.add("TK");
+		
+		Termin.getTermini(vr);
 		Predmet.showPredmeti();
 		Termin.showTermini();
 		if(Korisnik.nadjiKorisnika("amer", "amer")==tipKorisnika.Nastavnik) {

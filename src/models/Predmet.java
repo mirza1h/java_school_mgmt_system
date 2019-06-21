@@ -1,11 +1,14 @@
 package models;
 
 import java.util.ArrayList;
+
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +31,7 @@ public class Predmet {
 	private Long id;
 	private String naziv;
 	private int brojStudenata;
+	@Enumerated(EnumType.STRING)
 	private Usmjerenje usmjerenje;
 	private int semestar;
 	@ManyToMany(cascade = CascadeType.PERSIST)

@@ -4,10 +4,13 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +21,7 @@ import javax.persistence.Query;
 import org.apache.derby.client.am.DateTime;
 
 import application.Main;
+import models.Profesor.Usmjerenje;
 
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -48,6 +52,7 @@ public class Termin {
 	private LocalDateTime endTime;
 	@ManyToOne
 	private Profesor profesor;
+	@Enumerated(EnumType.STRING)
 	private tipTermina tip;
 
 	public Predmet getPredmet() {
@@ -101,7 +106,7 @@ public class Termin {
 	@Override
 	public String toString() {
 		return "Termin [id=" + this.id + ", predmet=" + this.predmet + ", zgrada=" + this.zgrada + ", sala=" + this.sala
-				+ ", vrijeme1=" + this.startTime + ", vrijeme2=" + this.endTime + ", tip=" + this.tip + "]";
+				+ ", vrijeme1=" + this.startTime + ", vrijeme2=" + this.endTime +" grupa="+this.grupa+ ", tip=" + this.tip + "]";
 	}
 	public static void showTermini() {
 		EntityManager em = Main.getFactory().createEntityManager();
@@ -129,6 +134,42 @@ public class Termin {
 
 	public void setGrupa(String grupa) {
 		this.grupa = grupa;
+	}
+	public static Collection<Termin> getTermini(List<String> vrijednosti){
+		String finalQuery="select t from Termin t where 1=1";
+		if(vrijednosti.get(0)!=null) {
+			finalQuery=finalQuery+" and t.zgrada like '"+vrijednosti.get(0)+"'";
+		}
+		if(vrijednosti.get(1)!=null) {
+			finalQuery=finalQuery+" and t.sala like '"+vrijednosti.get(1)+"'";
+		}
+		if(vrijednosti.get(2)!=null) {
+			finalQuery=finalQuery+" and t.profesor.ime_prezime like '"+vrijednosti.get(2)+"'";
+		}
+		if(vrijednosti.get(3)!=null) {
+			finalQuery=finalQuery+" and (t.predmet.semestar="+(2*Integer.parseInt(vrijednosti.get(3)))
+		+ " or t.predmet.semestar="+(2*Integer.parseInt(vrijednosti.get(3))+1)+")";
+		}
+		if(vrijednosti.get(4)!=null) {
+			finalQuery=finalQuery+" and t.predmet.naziv like '"+vrijednosti.get(4)+"'";
+		}
+		if(vrijednosti.get(5)!=null) {
+		finalQuery=finalQuery+" and t.grupa like '"+vrijednosti.get(5)+"'";
+		}
+		if(vrijednosti.get(6)!=null) {
+			finalQuery=finalQuery+" and t.predmet.usmjerenje like '"+vrijednosti.get(6)+"'";
+		}
+		
+		
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createQuery(finalQuery, Termin.class);
+		Collection<Termin> rezultat = upit.getResultList();
+		for(Termin o: rezultat) {
+			System.out.println(o);
+		}
+		em.close();
+		
+		return null;
 	}
 
 }

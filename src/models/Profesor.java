@@ -2,6 +2,8 @@ package models;
 
 import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +30,7 @@ public class Profesor {
 	private Collection<Termin> termini;
 	@ManyToMany(mappedBy = "profesori")
 	private Collection<Predmet> predmeti;
+	@Enumerated(EnumType.STRING)
 	private Usmjerenje usmjerenje;
 	private String grupa;
 
