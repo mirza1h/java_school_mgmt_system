@@ -2,7 +2,10 @@ package models;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.List;
 
@@ -136,6 +139,9 @@ public class Termin {
 	}
 
 	public static Collection<Termin> getTermini(List<String> vrijednosti) {
+		boolean datum=false;
+		LocalDateTime datumPrvi=null;
+		LocalDateTime datumDrugi=null;
 		String finalQuery = "select t from Termin t where 1=1";
 		if (vrijednosti.get(0) != null) {
 			finalQuery = finalQuery + " and t.lokacija.zgrada like '" + vrijednosti.get(0) + "'";
@@ -159,9 +165,25 @@ public class Termin {
 		if (vrijednosti.get(6) != null) {
 			finalQuery = finalQuery + " and t.predmet.usmjerenje like '" + vrijednosti.get(6) + "'";
 		}
+		if(vrijednosti.get(7)!=null && vrijednosti.get(8)!=null) {
+			DateTimeFormatter nesto=DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate datum1=LocalDate.parse(vrijednosti.get(7), nesto);
+			datumPrvi=LocalDateTime.of(datum1,LocalTime.of(8, 0));
+			LocalDate datum2=LocalDate.parse(vrijednosti.get(8), nesto);
+			datumDrugi=LocalDateTime.of(datum2,LocalTime.of(8, 0));
+			finalQuery = finalQuery + " and t.startTime >= :prvo and t.endTime <= :drugo";
+			datum=true;
+			
+			
+		}
+		
 
 		EntityManager em = Main.getFactory().createEntityManager();
 		Query upit = em.createQuery(finalQuery, Termin.class);
+		if(datum) {
+			upit.setParameter("prvo",datumPrvi);
+			upit.setParameter("drugo",datumDrugi );
+		}
 		Collection<Termin> rezultat = upit.getResultList();
 		for (Termin o : rezultat) {
 			System.out.println(o);
