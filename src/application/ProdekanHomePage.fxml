@@ -21,22 +21,17 @@
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="b02" layoutX="140.0" layoutY="100.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Predmeti">
+            <Button fx:id="b02" layoutX="140.0" layoutY="120.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Predmeti">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="b03" layoutX="140.0" layoutY="160.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Zgrade">
+            <Button fx:id="b03" layoutX="140.0" layoutY="200.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Prostorije">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="b04" layoutX="140.0" layoutY="220.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Sale">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Button>
-            <Button fx:id="b05" layoutX="140.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Rasporedi">
+            <Button fx:id="b04" layoutX="140.0" layoutY="350.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="135.0" text="Rasporedi">
                <font>
                   <Font size="15.0" />
                </font>

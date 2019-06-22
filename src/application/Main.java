@@ -240,7 +240,8 @@ public class Main extends Application {
 							System.out.println("radi");
 						}
 						else if(Korisnik.nadjiKorisnika(uneseniUser, uneseniPass)==tipKorisnika.Prodekan) {
-							startFilterPage(primaryStage, true);
+//							startFilterPage(primaryStage, true);
+							startProdekanPage(primaryStage);
 							System.out.println("radi opet");
 						}
 						else {
@@ -411,6 +412,168 @@ public class Main extends Application {
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setResizable(false);
 
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startProdekanPage (Stage primaryStage) throws IOException {
+		AnchorPane home = FXMLLoader.load(getClass().getResource("ProdekanHomePage.fxml"));
+		Scene scene = new Scene(home);
+		
+		Button nastavnici = (Button) scene.lookup("#b01");
+		Button predmeti = (Button) scene.lookup("#b02");
+		Button prostorije = (Button) scene.lookup("#b03");
+		Button rasporedi = (Button) scene.lookup("#b04");
+		
+		nastavnici.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startNastavnici(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+		predmeti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startPredmeti(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+		prostorije.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startProstorije(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+		rasporedi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startFilterPage(primaryStage, true);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+		primaryStage.setTitle("Pocetna");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startNastavnici(Stage primaryStage) throws IOException {		
+		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("NastavniciEditPage.fxml"));
+		Scene scene = new Scene(showNastavnici);
+		
+		Button nazad = (Button) scene.lookup("#nazad");
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button uredi = (Button) scene.lookup("#uredi");
+		Button obrisi = (Button) scene.lookup("#obrisi");
+		
+		nazad.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startProdekanPage(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+
+		
+		primaryStage.setTitle("Nastavnici");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startPredmeti(Stage primaryStage) throws IOException {
+		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("PredmetiEditPage.fxml"));
+		Scene scene = new Scene(showNastavnici);
+		
+		Button nazad = (Button) scene.lookup("#nazad");
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button uredi = (Button) scene.lookup("#uredi");
+		Button obrisi = (Button) scene.lookup("#obrisi");
+		
+		nazad.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startProdekanPage(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+		primaryStage.setTitle("Nastavnici");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startProstorije(Stage primaryStage) throws IOException {
+		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("ProstorijeEditPage.fxml"));
+		Scene scene = new Scene(showNastavnici);
+		
+		Button nazad = (Button) scene.lookup("#nazad");
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button uredi = (Button) scene.lookup("#uredi");
+		Button obrisi = (Button) scene.lookup("#obrisi");
+
+		nazad.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startProdekanPage(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+		primaryStage.setTitle("Nastavnici");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
