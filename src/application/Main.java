@@ -49,6 +49,7 @@ import models.Korisnik;
 import models.Korisnik.tipKorisnika;
 import models.Predmet;
 import models.Profesor;
+import models.Profesor.Usmjerenje;
 import models.Termin;
 import models.Termin.tipTermina;
 
@@ -56,7 +57,7 @@ public class Main extends Application {
 
 	private static final String PERSISTENCE_UNIT_NAME = "RazvojSoftvera";
 	private static EntityManagerFactory factory;
-	
+
 	private int offsetDatum = 0;
 
 	public static EntityManagerFactory getFactory() {
@@ -79,8 +80,8 @@ public class Main extends Application {
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-		c.add(Calendar.DATE, offsetDatum);
-		
+		c.add(Calendar.DATE, this.offsetDatum);
+
 		weekDates.add(df.format(c.getTime()));
 		for (int i = 0; i < 6; i++) {
 			c.add(Calendar.DATE, 1);
@@ -93,57 +94,54 @@ public class Main extends Application {
 	public AnchorPane newBlock(AnchorPane block, Termin termin, int velicina, int poRedu) {
 		AnchorPane novi = new AnchorPane();
 
-		if(termin.getTip() == Termin.tipTermina.Predavanje)
+		if (termin.getTip() == Termin.tipTermina.Predavanje) {
 			novi.setStyle("-fx-background-color: #b7f78a");
-
-		else if(termin.getTip() == Termin.tipTermina.Vjezbe)
+		} else if (termin.getTip() == Termin.tipTermina.Vjezbe) {
 			novi.setStyle("-fx-background-color: #f79c8a");
-
-		else if(termin.getTip() == Termin.tipTermina.Seminar)
+		} else if (termin.getTip() == Termin.tipTermina.Seminar) {
 			novi.setStyle("-fx-background-color: #6a95fc");
-
-		else if(termin.getTip() == Termin.tipTermina.Nadoknada)
+		} else if (termin.getTip() == Termin.tipTermina.Nadoknada) {
 			novi.setStyle("-fx-background-color: #424240");
-
-		else
+		} else {
 			novi.setStyle("-fx-background-color: #f2fc69");
-	
-		double width = block.getPrefWidth()/velicina;
-		width = width-(velicina-1)*2;
-		
-		LocalDateTime tempDateTime = LocalDateTime.from( termin.getStartTime() );
-		long minuteTrajanje = tempDateTime.until( termin.getEndTime(), ChronoUnit.MINUTES);
-		
+		}
+
+		double width = block.getPrefWidth() / velicina;
+		width = width - ((velicina - 1) * 2);
+
+		LocalDateTime tempDateTime = LocalDateTime.from(termin.getStartTime());
+		long minuteTrajanje = tempDateTime.until(termin.getEndTime(), ChronoUnit.MINUTES);
+
 		novi.setPrefHeight(minuteTrajanje);
 		novi.setMaxHeight(minuteTrajanje);
-		
+
 		if (velicina > 1) {
 			novi.setPrefWidth(width);
 			novi.setMaxWidth(width);
 		}
-			
+
 		else {
 			novi.setPrefWidth(width);
 			novi.setMaxWidth(width);
 		}
 
 		List<Label> info = new ArrayList<>();
-		
+
 		info.add(new Label(termin.getPredmet().getNaziv()));
 		info.add(new Label(termin.getGrupa()));
-		info.add(new Label(termin.getLokacija().getZgrada()+"-"+termin.getLokacija().getSala()));
-		
-		int razmakZaDan = 140+15;
-		
+		info.add(new Label(termin.getLokacija().getZgrada() + "-" + termin.getLokacija().getSala()));
+
+		int razmakZaDan = 140 + 15;
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDateTime danDatum = termin.getStartTime();
-		
-        String dan = danDatum.format(formatter);
+
+		String dan = danDatum.format(formatter);
 		List<String> sviDani = getDates();
 		int pomjerajX = 0;
-		int pocetak = (termin.getStartTime().getHour()-8) * 60 + termin.getStartTime().getMinute();
+		int pocetak = ((termin.getStartTime().getHour() - 8) * 60) + termin.getStartTime().getMinute();
 		long pomjerajY = pocetak;
-		
+
 		for (int i = 0; i < 6; i++) {
 			if (sviDani.get(i).equals(dan)) {
 				pomjerajX = razmakZaDan * i;
@@ -154,7 +152,7 @@ public class Main extends Application {
 		System.out.println(pomjerajX);
 		novi.setLayoutY(pomjerajY);
 
-		novi.setLayoutX(pomjerajX+poRedu*width+poRedu*2*2);
+		novi.setLayoutX(pomjerajX + (poRedu * width) + (poRedu * 2 * 2));
 
 		for (int i = 0; i < 3; ++i) {
 			info.get(i).getStyleClass().add("copyable-label");
@@ -188,17 +186,12 @@ public class Main extends Application {
 	}
 
 	public void startLoginPage(Stage primaryStage) throws IOException {
-		// Ubacena 2 korisnika, ne pozivati vise
 		// dodajKorisnike();
 
-		// Test korisnika
 		/*
 		 * factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		 * EntityManager em = factory.createEntityManager(); Query q =
-		 * em.createNamedQuery("sviKorisnici"); List<Korisnik> rezultat =
-		 * q.getResultList(); for (Korisnik k : rezultat) { System.out.println(k); }
+		 * EntityManager em = factory.createEntityManager();
 		 */
-
 		VBox login = FXMLLoader.load(getClass().getResource("login.fxml"));
 		Scene loginScene = new Scene(login);
 
@@ -214,46 +207,41 @@ public class Main extends Application {
 
 		Button loginButton = (Button) loginPane.getChildren().get(0);
 		Button bezPrijave = (Button) loginPane.getChildren().get(1);
-		
+
 		TextField username = (TextField) loginPane.getChildren().get(2);
 		PasswordField password = (PasswordField) loginPane.getChildren().get(3);
-		
+
 		Label greska = (Label) loginPane.getChildren().get(4);
-		
+
 		loginButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
 					String uneseniUser = username.getText();
 					String uneseniPass = password.getText();
-					
-					if (uneseniUser == null || uneseniPass == null)
+
+					if ((uneseniUser == null) || (uneseniPass == null)) {
 						greska.setVisible(true);
-					
-					else if (uneseniUser.equals("") || uneseniPass.equals(""))
-						greska.setVisible(true);	
-					
-					else if(Korisnik.nadjiKorisnika(uneseniUser, uneseniPass)==null) {
+					} else if (uneseniUser.equals("") || uneseniPass.equals("")) {
 						greska.setVisible(true);
-					}
-					else {
+					} else if (Korisnik.nadjiKorisnika(uneseniUser, uneseniPass) == null) {
+						greska.setVisible(true);
+					} else {
 						greska.setVisible(false);
-						
-						if(Korisnik.nadjiKorisnika(uneseniUser, uneseniPass)==tipKorisnika.Nastavnik) {
+
+						if (Korisnik.nadjiKorisnika(uneseniUser, uneseniPass) == tipKorisnika.Nastavnik) {
 							startFilterPage(primaryStage, true);
 							System.out.println("radi");
-						}
-						else if(Korisnik.nadjiKorisnika(uneseniUser, uneseniPass)==tipKorisnika.Prodekan) {
+						} else if (Korisnik.nadjiKorisnika(uneseniUser, uneseniPass) == tipKorisnika.Prodekan) {
 //							startFilterPage(primaryStage, true);
 							startProdekanPage(primaryStage);
 							System.out.println("radi opet");
-						}
-						else {
+						} else {
 							startFilterPage(primaryStage, false);
 						}
-						
+
 					}
-					
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -279,55 +267,53 @@ public class Main extends Application {
 
 		AnchorPane mainPane = (AnchorPane) filter.getChildren().get(0);
 		AnchorPane secondPane = (AnchorPane) mainPane.getChildren().get(1);
-		
+
 		List<CheckBox> filteri = new ArrayList<>();
 		List<TextField> unosi = new ArrayList<>();
 		List<String> vrijednosti = new ArrayList<>();
 		Button potvrdi = (Button) secondPane.getChildren().get(15);
 		Label upozorenje1 = (Label) secondPane.getChildren().get(16);
 		Label upozorenje2 = (Label) secondPane.getChildren().get(17);
-		
-		for (int i=1; i<=7; ++i) {
+
+		for (int i = 1; i <= 7; ++i) {
 			filteri.add((CheckBox) secondPane.getChildren().get(i));
 		}
-		
-		for (int i=8; i<=14; ++i) {
+
+		for (int i = 8; i <= 14; ++i) {
 			unosi.add((TextField) secondPane.getChildren().get(i));
 		}
-		
+
 		potvrdi.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					for (int i=0; i<=6; ++i) {
+					for (int i = 0; i <= 6; ++i) {
 						if (filteri.get(i).isSelected()) {
-							if (unosi.get(i).getText() == null || unosi.get(i).getText().equals(""))
+							if ((unosi.get(i).getText() == null) || unosi.get(i).getText().equals("")) {
 								vrijednosti.add(null);
-							else
+							} else {
 								vrijednosti.add(unosi.get(i).getText());
-						}
-						else
+							}
+						} else {
 							vrijednosti.add(null);
+						}
 					}
-					
+
 					System.out.println(vrijednosti);
-					if (vrijednosti.get(1) == null &&
-						vrijednosti.get(2) == null &&
-						vrijednosti.get(4) == null &&
-						vrijednosti.get(5) == null) {
-						
-						if (vrijednosti.get(3) == null || vrijednosti.get(6) == null) {
+					if ((vrijednosti.get(1) == null) && (vrijednosti.get(2) == null) && (vrijednosti.get(4) == null)
+							&& (vrijednosti.get(5) == null)) {
+
+						if ((vrijednosti.get(3) == null) || (vrijednosti.get(6) == null)) {
 							if (vrijednosti.get(0) == null) {
 								upozorenje1.setVisible(true);
 								upozorenje2.setVisible(false);
-							}
-							else {
+							} else {
 								upozorenje1.setVisible(false);
 								upozorenje2.setVisible(true);
 							}
 							vrijednosti.clear();
 						}
-							
+
 						else {
 							upozorenje1.setVisible(false);
 							upozorenje2.setVisible(false);
@@ -335,32 +321,32 @@ public class Main extends Application {
 							System.out.println(termini.size());
 							startRasporedPage(primaryStage, registrovan, termini);
 						}
-						
-					}
-					else {
+
+					} else {
 						upozorenje1.setVisible(false);
 						upozorenje2.setVisible(false);
 						Collection<Termin> termini = Termin.getTermini(vrijednosti);
 						System.out.println(termini.size());
 						startRasporedPage(primaryStage, registrovan, termini);
 					}
-					
+
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		
+
 		Scene filterScene = new Scene(filter);
 		filterScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setResizable(false);
 		primaryStage.setScene(filterScene);
 		primaryStage.show();
-		
+
 	}
 
-	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini) throws IOException {
+	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini)
+			throws IOException {
 
 		VBox root = FXMLLoader.load(getClass().getResource("raspored.fxml"));
 		Scene scene = new Scene(root);
@@ -370,34 +356,36 @@ public class Main extends Application {
 		AnchorPane weekDaysPane = (AnchorPane) mainPane.getChildren().get(1);
 		AnchorPane drawPane = (AnchorPane) mainPane.getChildren().get(3);
 		AnchorPane navigacija = (AnchorPane) mainPane.getChildren().get(4);
-		
+
 		AnchorPane defaultBlock = (AnchorPane) drawPane.getChildren().get(12);
 
 		HashMap<LocalDateTime, List<Termin>> mapaTermina = new HashMap<>();
-		
+
 		for (Termin t : termini) {
-			if (mapaTermina.get(t.getStartTime()) == null)
+			if (mapaTermina.get(t.getStartTime()) == null) {
 				mapaTermina.put(t.getStartTime(), new ArrayList<>());
-			mapaTermina.get(t.getStartTime()).add(t);	
+			}
+			mapaTermina.get(t.getStartTime()).add(t);
 			mapaTermina.get(t.getStartTime()).add(t); // OVAJ OBRISATI!!!!
 		}
-		
+
 		Iterator it = mapaTermina.entrySet().iterator();
 		List<AnchorPane> noviBlokovi = new ArrayList<>();
-		
-	    while (it.hasNext()) {
-	        HashMap.Entry pair = (HashMap.Entry)it.next();
-	        ArrayList<Termin> trenutna = (ArrayList<Termin>) pair.getValue();
-	        
-	        for (int i=0; i<trenutna.size(); ++i) {
+
+		while (it.hasNext()) {
+			HashMap.Entry pair = (HashMap.Entry) it.next();
+			ArrayList<Termin> trenutna = (ArrayList<Termin>) pair.getValue();
+
+			for (int i = 0; i < trenutna.size(); ++i) {
 				AnchorPane noviDodavanje = newBlock(defaultBlock, trenutna.get(i), trenutna.size(), i);
 				noviBlokovi.add(noviDodavanje);
 			}
-	        it.remove(); // avoids a ConcurrentModificationException
-	    }
+			it.remove(); // avoids a ConcurrentModificationException
+		}
 
-		for (int i=0; i<noviBlokovi.size(); ++i)
+		for (int i = 0; i < noviBlokovi.size(); ++i) {
 			drawPane.getChildren().add(noviBlokovi.get(i));
+		}
 
 		List<Node> allDays = weekDaysPane.getChildren();
 
@@ -408,65 +396,65 @@ public class Main extends Application {
 			dateLabel.setText(weekDates.get(i));
 
 		}
-		
+
 		Button nazadFilter = (Button) navigacija.getChildren().get(6);
 		Button sledeca = (Button) navigacija.getChildren().get(7);
 		Button prethodna = (Button) navigacija.getChildren().get(8);
-		
+
 		nazadFilter.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override 
-		    public void handle(ActionEvent e) {
-		        try {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
 					startFilterPage(primaryStage, registrovan);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		    }
+			}
 		});
-		
+
 		sledeca.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override 
-		    public void handle(ActionEvent e) {
-		    	offsetDatum += 7;
-		    	try {
+			@Override
+			public void handle(ActionEvent e) {
+				Main.this.offsetDatum += 7;
+				try {
 					startRasporedPage(primaryStage, registrovan, termini);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		    }
+			}
 		});
-		
+
 		prethodna.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override 
-		    public void handle(ActionEvent e) {
-		        offsetDatum -= 7;
-		        try {
+			@Override
+			public void handle(ActionEvent e) {
+				Main.this.offsetDatum -= 7;
+				try {
 					startRasporedPage(primaryStage, registrovan, termini);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		    }
+			}
 		});
-		
+
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setResizable(false);
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
-	public void startProdekanPage (Stage primaryStage) throws IOException {
+
+	public void startProdekanPage(Stage primaryStage) throws IOException {
 		AnchorPane home = FXMLLoader.load(getClass().getResource("ProdekanHomePage.fxml"));
 		Scene scene = new Scene(home);
-		
+
 		Button nastavnici = (Button) scene.lookup("#b01");
 		Button predmeti = (Button) scene.lookup("#b02");
 		Button prostorije = (Button) scene.lookup("#b03");
 		Button rasporedi = (Button) scene.lookup("#b04");
-		
+
 		nastavnici.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -479,9 +467,9 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
+
 		predmeti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -494,9 +482,9 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
+
 		prostorije.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -509,9 +497,9 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
+
 		rasporedi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -524,23 +512,23 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
+
 		primaryStage.setTitle("Pocetna");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
-	public void startNastavnici(Stage primaryStage) throws IOException {		
+
+	public void startNastavnici(Stage primaryStage) throws IOException {
 		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("NastavniciEditPage.fxml"));
 		Scene scene = new Scene(showNastavnici);
-		
+
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button uredi = (Button) scene.lookup("#uredi");
 		Button obrisi = (Button) scene.lookup("#obrisi");
-		
+
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -553,24 +541,23 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
 
-		
 		primaryStage.setTitle("Nastavnici");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startPredmeti(Stage primaryStage) throws IOException {
 		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("PredmetiEditPage.fxml"));
 		Scene scene = new Scene(showNastavnici);
-		
+
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button uredi = (Button) scene.lookup("#uredi");
 		Button obrisi = (Button) scene.lookup("#obrisi");
-		
+
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -583,18 +570,18 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
+
 		primaryStage.setTitle("Nastavnici");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startProstorije(Stage primaryStage) throws IOException {
 		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("ProstorijeEditPage.fxml"));
 		Scene scene = new Scene(showNastavnici);
-		
+
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button uredi = (Button) scene.lookup("#uredi");
@@ -612,9 +599,9 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
-		
+
 		primaryStage.setTitle("Nastavnici");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -649,7 +636,7 @@ public class Main extends Application {
 		/*
 		 * Termin.getTermini(vr); Predmet.showPredmeti(); Termin.showTermini();
 		 */
-		// Podaci.dodajProfesore();
+		// Podaci.napuniBazu();
 		if (Korisnik.nadjiKorisnika("amer", "amer") == tipKorisnika.Nastavnik) {
 			System.out.println("radi");
 		}

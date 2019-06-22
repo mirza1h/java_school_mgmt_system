@@ -7,42 +7,56 @@ import javax.persistence.Id;
 
 @Entity
 public class Lokacija {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String zgrada;
 	private String sala;
 	private int kapacitet;
+
 	public Lokacija() {
 	}
-	public Lokacija(String a,String b) {
-		zgrada=a;
-		sala=b;
+
+	public Lokacija(String a, String b) {
+		this.zgrada = a;
+		this.sala = b;
 	}
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getZgrada() {
-		return zgrada;
+		return this.zgrada;
 	}
+
 	public void setZgrada(String zgrada) {
 		this.zgrada = zgrada;
 	}
+
 	public String getSala() {
-		return sala;
+		return this.sala;
 	}
+
 	public void setSala(String sala) {
 		this.sala = sala;
 	}
+
 	public int getKapacitet() {
-		return kapacitet;
+		return this.kapacitet;
 	}
+
 	public void setKapacitet(int kapacitet) {
 		this.kapacitet = kapacitet;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "Lokacija [zgrada=" + this.zgrada + ", sala=" + this.sala + "]";
+	}
 }
