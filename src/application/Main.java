@@ -138,6 +138,9 @@ public class Main extends Application {
 
 		String dan = danDatum.format(formatter);
 		List<String> sviDani = getDates();
+		
+		System.out.println("DAAAN " + dan);
+		System.out.println("DANIII NEW BLOCK" + sviDani);
 		int pomjerajX = 0;
 		int pocetak = ((termin.getStartTime().getHour() - 8) * 60) + termin.getStartTime().getMinute();
 		long pomjerajY = pocetak;
@@ -152,7 +155,7 @@ public class Main extends Application {
 		System.out.println(pomjerajX);
 		novi.setLayoutY(pomjerajY);
 
-		novi.setLayoutX(pomjerajX + (poRedu * width) + (poRedu * 2 * 2));
+		novi.setLayoutX(pomjerajX + (poRedu * (width + (velicina - 1) * 2)) + (poRedu * 2));
 
 		for (int i = 0; i < 3; ++i) {
 			info.get(i).getStyleClass().add("copyable-label");
@@ -264,7 +267,7 @@ public class Main extends Application {
 
 	public void startFilterPage(Stage primaryStage, boolean registrovan) throws IOException {
 		VBox filter = FXMLLoader.load(getClass().getResource("rasporedFilter.fxml"));
-
+		
 		AnchorPane mainPane = (AnchorPane) filter.getChildren().get(0);
 		AnchorPane secondPane = (AnchorPane) mainPane.getChildren().get(1);
 
@@ -298,7 +301,9 @@ public class Main extends Application {
 							vrijednosti.add(null);
 						}
 					}
-
+					List<String> trenutnaSedmica = getDates();
+					vrijednosti.add(trenutnaSedmica.get(0));
+					vrijednosti.add(trenutnaSedmica.get(5));
 					System.out.println(vrijednosti);
 					if ((vrijednosti.get(1) == null) && (vrijednosti.get(2) == null) && (vrijednosti.get(4) == null)
 							&& (vrijednosti.get(5) == null)) {
@@ -319,7 +324,7 @@ public class Main extends Application {
 							upozorenje2.setVisible(false);
 							Collection<Termin> termini = Termin.getTermini(vrijednosti);
 							System.out.println(termini.size());
-							startRasporedPage(primaryStage, registrovan, termini);
+							startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 						}
 
 					} else {
@@ -327,7 +332,7 @@ public class Main extends Application {
 						upozorenje2.setVisible(false);
 						Collection<Termin> termini = Termin.getTermini(vrijednosti);
 						System.out.println(termini.size());
-						startRasporedPage(primaryStage, registrovan, termini);
+						startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 					}
 
 				} catch (IOException e1) {
@@ -345,9 +350,33 @@ public class Main extends Application {
 
 	}
 
-	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini)
+	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini, List<String> vrijednosti)
 			throws IOException {
 
+		List<String> sledeceVrijednosti = new ArrayList<>();
+		List<String> prethodneVrijednosti = new ArrayList<>();
+		
+		sledeceVrijednosti.addAll(vrijednosti);
+		prethodneVrijednosti.addAll(vrijednosti);
+		
+		offsetDatum += 7;
+		List<String> sledeciDatumi = getDates();
+		offsetDatum -= 7;
+		sledeceVrijednosti.set(7, sledeciDatumi.get(0));
+		sledeceVrijednosti.set(8, sledeciDatumi.get(5));
+		
+		offsetDatum -= 7;
+		List<String> prethodniDatumi = getDates();
+		offsetDatum += 7;
+		prethodneVrijednosti.set(7, prethodniDatumi.get(0));
+		prethodneVrijednosti.set(8, prethodniDatumi.get(5));
+		
+		Collection<Termin> sledeciTermini = Termin.getTermini(sledeceVrijednosti);
+		Collection<Termin> prethodniTermini = Termin.getTermini(prethodneVrijednosti);
+		
+		System.out.println("OVDJEE: "  + prethodneVrijednosti);
+		System.out.println("OVDJEE: "  + sledeceVrijednosti);
+		
 		VBox root = FXMLLoader.load(getClass().getResource("raspored.fxml"));
 		Scene scene = new Scene(root);
 
@@ -366,7 +395,6 @@ public class Main extends Application {
 				mapaTermina.put(t.getStartTime(), new ArrayList<>());
 			}
 			mapaTermina.get(t.getStartTime()).add(t);
-			mapaTermina.get(t.getStartTime()).add(t); // OVAJ OBRISATI!!!!
 		}
 
 		Iterator it = mapaTermina.entrySet().iterator();
@@ -418,7 +446,7 @@ public class Main extends Application {
 			public void handle(ActionEvent e) {
 				Main.this.offsetDatum += 7;
 				try {
-					startRasporedPage(primaryStage, registrovan, termini);
+					startRasporedPage(primaryStage, registrovan, sledeciTermini, sledeceVrijednosti);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -431,7 +459,7 @@ public class Main extends Application {
 			public void handle(ActionEvent e) {
 				Main.this.offsetDatum -= 7;
 				try {
-					startRasporedPage(primaryStage, registrovan, termini);
+					startRasporedPage(primaryStage, registrovan, prethodniTermini, prethodneVrijednosti);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -632,8 +660,9 @@ public class Main extends Application {
 		vr.add(null);
 		vr.add(null);
 		vr.add(null);
-		vr.add("10/09/2019");
-		vr.add("25/09/2019");
+		vr.add("16/09/2019");
+		vr.add("22/09/2019");
+
 		Termin.getTermini(vr);
 		/*
 		 * Termin.getTermini(vr); Predmet.showPredmeti(); Termin.showTermini();

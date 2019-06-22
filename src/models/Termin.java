@@ -142,7 +142,7 @@ public class Termin {
 		boolean datum=false;
 		LocalDateTime datumPrvi=null;
 		LocalDateTime datumDrugi=null;
-		String finalQuery = "select t from Termin t where 1=1";
+		String finalQuery = "select distinct t from Termin t where 1=1";
 		if (vrijednosti.get(0) != null) {
 			finalQuery = finalQuery + " and t.lokacija.zgrada like '" + vrijednosti.get(0) + "'";
 		}
@@ -190,6 +190,7 @@ public class Termin {
 		}
 		em.close();
 
+		System.out.println("Mirza"+rezultat.size());
 		return rezultat;
 	}
 
