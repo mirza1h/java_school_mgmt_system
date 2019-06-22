@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Sat Jun 22 02:12:54 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-7c87-5bc6-000004dae198 
-on database directory /home/sead/Desktop/2019/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
-Loaded from file:/home/sead/Desktop/2019/raspored/lib/derby.jar
+Sat Jun 22 09:17:38 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-7e0c-3907-000004f13908 
+on database directory /home/mirza/git/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Loaded from file:/home/mirza/git/raspored/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_201-b09
-user.dir=/home/sead/Desktop/2019/raspored
+java.runtime.version=1.8.0_211-b12
+user.dir=/home/mirza/git/raspored
 os.name=Linux
 os.arch=amd64
 os.version=4.15.0-52-generic

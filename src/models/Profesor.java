@@ -1,5 +1,6 @@
 package models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-
 
 @NamedQueries({ @NamedQuery(name = "sviProfesori", query = "select prof from Profesor prof") })
 @Entity
@@ -25,8 +25,7 @@ public class Profesor {
 	private Long id;
 
 	private String ime;
-	private String prezime;
-	@OneToMany(mappedBy ="profesor")
+	@OneToMany(mappedBy = "profesor")
 	private Collection<Termin> termini;
 	@ManyToMany(mappedBy = "profesori")
 	private Collection<Predmet> predmeti;
@@ -42,15 +41,6 @@ public class Profesor {
 		this.ime = ime;
 	}
 
-	public String getPrezime() {
-		return this.prezime;
-	}
-
-	public void setPrezime(String prezime) {
-		this.prezime = prezime;
-	}
-
-
 	public Usmjerenje getUsmjerenje() {
 		return this.usmjerenje;
 	}
@@ -65,8 +55,15 @@ public class Profesor {
 
 	@Override
 	public String toString() {
-		return "Profesor [id=" + this.id + ", ime=" + this.ime + ", prezime=" + this.prezime + ", predmeti=" + this.predmeti
-				+ ", usmjerenje=" + this.usmjerenje + ", grupa=" + this.grupa + "]";
+		return "Profesor [id=" + this.id + ", ime=" + this.ime + ", usmjerenje=" + this.usmjerenje + ", grupa="
+				+ this.grupa + "]";
+	}
+
+	public Collection<Predmet> getPredmete() {
+		if (this.predmeti == null) {
+			this.predmeti = new ArrayList();
+		}
+		return this.predmeti;
 	}
 
 }

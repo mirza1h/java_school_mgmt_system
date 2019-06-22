@@ -37,6 +37,14 @@ public class Predmet {
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	private Collection<Profesor> profesori;
 
+	public int getSemestar() {
+		return this.semestar;
+	}
+
+	public void setSemestar(int semestar) {
+		this.semestar = semestar;
+	}
+
 	public String getNaziv() {
 		return this.naziv;
 	}
@@ -78,23 +86,23 @@ public class Predmet {
 		}
 		return this.profesori;
 	}
+
 	public static void showPredmeti() {
 		EntityManager em = Main.getFactory().createEntityManager();
 		Query upit = em.createNamedQuery("sviPredmeti", Predmet.class);
 		Collection<Object> rezultat = upit.getResultList();
-		for(Object o: rezultat) {
+		for (Object o : rezultat) {
 			System.out.println(o);
 		}
-		
+
 	}
+
 	public static Collection<Object> getPredmeti() {
 		EntityManager em = Main.getFactory().createEntityManager();
 		Query upit = em.createNamedQuery("sviPredmeti", Predmet.class);
 		Collection<Object> rezultat = upit.getResultList();
 		return rezultat;
-		
+
 	}
-
-
 
 }
