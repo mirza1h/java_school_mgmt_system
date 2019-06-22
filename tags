@@ -1,0 +1,137 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AR	src/models/Profesor.java	/^		RI, AR, ESKE, EEMS, TK$/;"	e	enum:Profesor.Usmjerenje	file:
+DbFunctions	src/application/DbFunctions.java	/^public class DbFunctions {$/;"	c
+Diplomski	src/models/Termin.java	/^		Predavanje, Vjezbe, Seminar, Nadoknada, Diplomski$/;"	e	enum:Termin.tipTermina	file:
+EEMS	src/models/Profesor.java	/^		RI, AR, ESKE, EEMS, TK$/;"	e	enum:Profesor.Usmjerenje	file:
+ESKE	src/models/Profesor.java	/^		RI, AR, ESKE, EEMS, TK$/;"	e	enum:Profesor.Usmjerenje	file:
+Korisnik	src/models/Korisnik.java	/^public class Korisnik {$/;"	c
+LocalDateTimeAttributeConverter	src/application/LocalDateTimeAttributeConverter.java	/^public class LocalDateTimeAttributeConverter implements AttributeConverter<LocalDateTime, Timestamp> {$/;"	c
+Main	src/application/Main.java	/^public class Main extends Application {$/;"	c
+Nadoknada	src/models/Termin.java	/^		Predavanje, Vjezbe, Seminar, Nadoknada, Diplomski$/;"	e	enum:Termin.tipTermina	file:
+Nastavnik	src/models/Korisnik.java	/^		Prodekan, Nastavnik, Student$/;"	e	enum:Korisnik.tipKorisnika	file:
+PERSISTENCE_UNIT_NAME	src/application/Main.java	/^	private static final String PERSISTENCE_UNIT_NAME = "RazvojSoftvera";$/;"	f	class:Main	file:
+Podaci	src/application/Podaci.java	/^public class Podaci {$/;"	c
+Predavanje	src/models/Termin.java	/^		Predavanje, Vjezbe, Seminar, Nadoknada, Diplomski$/;"	e	enum:Termin.tipTermina	file:
+Predmet	src/models/Predmet.java	/^public class Predmet {$/;"	c
+Prodekan	src/models/Korisnik.java	/^		Prodekan, Nastavnik, Student$/;"	e	enum:Korisnik.tipKorisnika	file:
+Profesor	src/models/Profesor.java	/^public class Profesor {$/;"	c
+RI	src/models/Profesor.java	/^		RI, AR, ESKE, EEMS, TK$/;"	e	enum:Profesor.Usmjerenje	file:
+Seminar	src/models/Termin.java	/^		Predavanje, Vjezbe, Seminar, Nadoknada, Diplomski$/;"	e	enum:Termin.tipTermina	file:
+Student	src/models/Korisnik.java	/^		Prodekan, Nastavnik, Student$/;"	e	enum:Korisnik.tipKorisnika	file:
+TK	src/models/Profesor.java	/^		RI, AR, ESKE, EEMS, TK$/;"	e	enum:Profesor.Usmjerenje	file:
+Termin	src/models/Termin.java	/^public class Termin {$/;"	c
+Usmjerenje	src/models/Profesor.java	/^	public enum Usmjerenje {$/;"	g	class:Profesor
+Vjezbe	src/models/Termin.java	/^		Predavanje, Vjezbe, Seminar, Nadoknada, Diplomski$/;"	e	enum:Termin.tipTermina	file:
+application	src/application/DbFunctions.java	/^package application;$/;"	p
+application	src/application/LocalDateTimeAttributeConverter.java	/^package application;$/;"	p
+application	src/application/Main.java	/^package application;$/;"	p
+application	src/application/Podaci.java	/^package application;$/;"	p
+brojStudenata	src/models/Predmet.java	/^	private int brojStudenata;$/;"	f	class:Predmet	file:
+convertToDatabaseColumn	src/application/LocalDateTimeAttributeConverter.java	/^    public Timestamp convertToDatabaseColumn(LocalDateTime locDateTime) {$/;"	m	class:LocalDateTimeAttributeConverter
+convertToEntityAttribute	src/application/LocalDateTimeAttributeConverter.java	/^    public LocalDateTime convertToEntityAttribute(Timestamp sqlTimestamp) {$/;"	m	class:LocalDateTimeAttributeConverter
+createPredmet	src/application/DbFunctions.java	/^	public static void createPredmet() {$/;"	m	class:DbFunctions
+createTermini	src/application/DbFunctions.java	/^	public static void createTermini() {$/;"	m	class:DbFunctions
+deleteTermin	src/models/Termin.java	/^	public static void deleteTermin(int id) {$/;"	m	class:Termin
+dodajKorisnike	src/application/Main.java	/^	private void dodajKorisnike() {$/;"	m	class:Main	file:
+dodajProfesore	src/application/Podaci.java	/^	public static void dodajProfesore() {$/;"	m	class:Podaci
+endTime	src/models/Termin.java	/^	private LocalDateTime endTime;$/;"	f	class:Termin	file:
+factory	src/application/Main.java	/^	private static EntityManagerFactory factory;$/;"	f	class:Main	file:
+getBrojStudenata	src/models/Predmet.java	/^	public int getBrojStudenata() {$/;"	m	class:Predmet
+getDates	src/application/Main.java	/^	public List<String> getDates() {$/;"	m	class:Main
+getEndTime	src/models/Termin.java	/^	public LocalDateTime getEndTime() {$/;"	m	class:Termin
+getFactory	src/application/Main.java	/^	public static EntityManagerFactory getFactory() {$/;"	m	class:Main
+getGrupa	src/models/Termin.java	/^	public String getGrupa() {$/;"	m	class:Termin
+getId	src/models/Korisnik.java	/^	public Long getId() {$/;"	m	class:Korisnik
+getIme	src/models/Profesor.java	/^	public String getIme() {$/;"	m	class:Profesor
+getNaziv	src/models/Predmet.java	/^	public String getNaziv() {$/;"	m	class:Predmet
+getPassword	src/models/Korisnik.java	/^	public String getPassword() {$/;"	m	class:Korisnik
+getPredmet	src/models/Termin.java	/^	public Predmet getPredmet() {$/;"	m	class:Termin
+getPredmete	src/models/Profesor.java	/^	public Collection<Predmet> getPredmete() {$/;"	m	class:Profesor
+getPredmeti	src/models/Predmet.java	/^	public static Collection<Object> getPredmeti() {$/;"	m	class:Predmet
+getProfesore	src/models/Predmet.java	/^	public Collection<Profesor> getProfesore() {$/;"	m	class:Predmet
+getSala	src/models/Termin.java	/^	public String getSala() {$/;"	m	class:Termin
+getSemestar	src/models/Predmet.java	/^	public int getSemestar() {$/;"	m	class:Predmet
+getStartTime	src/models/Termin.java	/^	public LocalDateTime getStartTime() {$/;"	m	class:Termin
+getTermini	src/models/Termin.java	/^	public static Collection<Termin> getTermini(List<String> vrijednosti){$/;"	m	class:Termin
+getTip	src/models/Korisnik.java	/^	public tipKorisnika getTip() {$/;"	m	class:Korisnik
+getTip	src/models/Termin.java	/^	public tipTermina getTip() {$/;"	m	class:Termin
+getUsername	src/models/Korisnik.java	/^	public String getUsername() {$/;"	m	class:Korisnik
+getUsmjerenje	src/models/Predmet.java	/^	public Usmjerenje getUsmjerenje() {$/;"	m	class:Predmet
+getUsmjerenje	src/models/Profesor.java	/^	public Usmjerenje getUsmjerenje() {$/;"	m	class:Profesor
+getZgrada	src/models/Termin.java	/^	public String getZgrada() {$/;"	m	class:Termin
+grupa	src/models/Profesor.java	/^	private String grupa;$/;"	f	class:Profesor	file:
+grupa	src/models/Termin.java	/^	private String grupa;$/;"	f	class:Termin	file:
+id	src/models/Korisnik.java	/^	private Long id;$/;"	f	class:Korisnik	file:
+id	src/models/Predmet.java	/^	private Long id;$/;"	f	class:Predmet	file:
+id	src/models/Profesor.java	/^	private Long id;$/;"	f	class:Profesor	file:
+id	src/models/Termin.java	/^	private Long id;$/;"	f	class:Termin	file:
+ime	src/models/Profesor.java	/^	private String ime;$/;"	f	class:Profesor	file:
+main	src/application/Main.java	/^	public static void main(String[] args) {$/;"	m	class:Main
+models	src/models/Korisnik.java	/^package models;$/;"	p
+models	src/models/Predmet.java	/^package models;$/;"	p
+models	src/models/Profesor.java	/^package models;$/;"	p
+models	src/models/Termin.java	/^package models;$/;"	p
+nadjiKorisnika	src/models/Korisnik.java	/^	public static tipKorisnika nadjiKorisnika(String name, String pass) {$/;"	m	class:Korisnik
+naziv	src/models/Predmet.java	/^	private String naziv;$/;"	f	class:Predmet	file:
+newBlock	src/application/Main.java	/^	public AnchorPane newBlock(AnchorPane block, Termin termin, int velicina, int poRedu) {$/;"	m	class:Main
+offsetDatum	src/application/Main.java	/^	private int offsetDatum = 0;$/;"	f	class:Main	file:
+parsirajPredmete	src/application/Podaci.java	/^	public static void parsirajPredmete() {$/;"	m	class:Podaci
+parsirajProfesore	src/application/Podaci.java	/^	public static void parsirajProfesore() {$/;"	m	class:Podaci
+password	src/models/Korisnik.java	/^	private String password;$/;"	f	class:Korisnik	file:
+predmet	src/models/Termin.java	/^	private Predmet predmet;$/;"	f	class:Termin	file:
+predmeti	src/application/Podaci.java	/^	public static List<String> predmeti;$/;"	f	class:Podaci
+predmeti	src/models/Profesor.java	/^	private Collection<Predmet> predmeti;$/;"	f	class:Profesor	file:
+profesor	src/models/Termin.java	/^	private Profesor profesor;$/;"	f	class:Termin	file:
+profesori	src/application/Podaci.java	/^	public static List<String> profesori;$/;"	f	class:Podaci
+profesori	src/models/Predmet.java	/^	private Collection<Profesor> profesori;$/;"	f	class:Predmet	file:
+sala	src/models/Termin.java	/^	private String sala;$/;"	f	class:Termin	file:
+semestar	src/models/Predmet.java	/^	private int semestar;$/;"	f	class:Predmet	file:
+setBrojStudenata	src/models/Predmet.java	/^	public void setBrojStudenata(int brojStudenata) {$/;"	m	class:Predmet
+setDBSystemDir	src/application/Main.java	/^	private static void setDBSystemDir() {$/;"	m	class:Main	file:
+setEndTime	src/models/Termin.java	/^	public void setEndTime(LocalDateTime endTime) {$/;"	m	class:Termin
+setGrupa	src/models/Termin.java	/^	public void setGrupa(String grupa) {$/;"	m	class:Termin
+setId	src/models/Korisnik.java	/^	public void setId(Long id) {$/;"	m	class:Korisnik
+setIme	src/models/Profesor.java	/^	public void setIme(String ime) {$/;"	m	class:Profesor
+setNaziv	src/models/Predmet.java	/^	public void setNaziv(String naziv) {$/;"	m	class:Predmet
+setPassword	src/models/Korisnik.java	/^	public void setPassword(String password) {$/;"	m	class:Korisnik
+setPredmet	src/models/Termin.java	/^	public void setPredmet(Predmet predmet) {$/;"	m	class:Termin
+setPredmete	src/models/Profesor.java	/^	public void setPredmete(Collection<Predmet> p) {$/;"	m	class:Profesor
+setProfesore	src/models/Predmet.java	/^	public void setProfesore(Collection<Profesor> p) {$/;"	m	class:Predmet
+setSala	src/models/Termin.java	/^	public void setSala(String sala) {$/;"	m	class:Termin
+setSemestar	src/models/Predmet.java	/^	public void setSemestar(int semestar) {$/;"	m	class:Predmet
+setStartTime	src/models/Termin.java	/^	public void setStartTime(LocalDateTime startTime) {$/;"	m	class:Termin
+setTip	src/models/Korisnik.java	/^	public void setTip(tipKorisnika tip) {$/;"	m	class:Korisnik
+setTip	src/models/Termin.java	/^	public void setTip(tipTermina tip) {$/;"	m	class:Termin
+setUsername	src/models/Korisnik.java	/^	public void setUsername(String username) {$/;"	m	class:Korisnik
+setUsmjerenje	src/models/Predmet.java	/^	public void setUsmjerenje(Usmjerenje usmjerenje) {$/;"	m	class:Predmet
+setUsmjerenje	src/models/Profesor.java	/^	public void setUsmjerenje(Usmjerenje usmjerenje) {$/;"	m	class:Profesor
+setZgrada	src/models/Termin.java	/^	public void setZgrada(String zgrada) {$/;"	m	class:Termin
+showPredmeti	src/models/Predmet.java	/^	public static void showPredmeti() {$/;"	m	class:Predmet
+showTermini	src/models/Termin.java	/^	public static void showTermini() {$/;"	m	class:Termin
+start	src/application/Main.java	/^	public void start(Stage primaryStage) {$/;"	m	class:Main
+startFilterPage	src/application/Main.java	/^	public void startFilterPage(Stage primaryStage, boolean registrovan) throws IOException {$/;"	m	class:Main
+startLoginPage	src/application/Main.java	/^	public void startLoginPage(Stage primaryStage) throws IOException {$/;"	m	class:Main
+startNastavnici	src/application/Main.java	/^	public void startNastavnici(Stage primaryStage) throws IOException {		$/;"	m	class:Main
+startPredmeti	src/application/Main.java	/^	public void startPredmeti(Stage primaryStage) throws IOException {$/;"	m	class:Main
+startProdekanPage	src/application/Main.java	/^	public void startProdekanPage (Stage primaryStage) throws IOException {$/;"	m	class:Main
+startProstorije	src/application/Main.java	/^	public void startProstorije(Stage primaryStage) throws IOException {$/;"	m	class:Main
+startRasporedPage	src/application/Main.java	/^	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini) throws IOException {$/;"	m	class:Main
+startTime	src/models/Termin.java	/^	private LocalDateTime startTime;$/;"	f	class:Termin	file:
+termini	src/models/Profesor.java	/^	private Collection<Termin> termini;$/;"	f	class:Profesor	file:
+tip	src/models/Korisnik.java	/^	private tipKorisnika tip;$/;"	f	class:Korisnik	file:
+tip	src/models/Termin.java	/^	private tipTermina tip;$/;"	f	class:Termin	file:
+tipKorisnika	src/models/Korisnik.java	/^	public enum tipKorisnika {$/;"	g	class:Korisnik
+tipTermina	src/models/Termin.java	/^	public enum tipTermina {$/;"	g	class:Termin
+toString	src/models/Korisnik.java	/^	public String toString() {$/;"	m	class:Korisnik
+toString	src/models/Predmet.java	/^	public String toString() {$/;"	m	class:Predmet
+toString	src/models/Profesor.java	/^	public String toString() {$/;"	m	class:Profesor
+toString	src/models/Termin.java	/^	public String toString() {$/;"	m	class:Termin
+username	src/models/Korisnik.java	/^	private String username;$/;"	f	class:Korisnik	file:
+usmjerenje	src/models/Predmet.java	/^	private Usmjerenje usmjerenje;$/;"	f	class:Predmet	file:
+usmjerenje	src/models/Profesor.java	/^	private Usmjerenje usmjerenje;$/;"	f	class:Profesor	file:
+zgrada	src/models/Termin.java	/^	private String zgrada;$/;"	f	class:Termin	file:

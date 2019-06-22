@@ -56,6 +56,8 @@ public class Main extends Application {
 
 	private static final String PERSISTENCE_UNIT_NAME = "RazvojSoftvera";
 	private static EntityManagerFactory factory;
+	
+	private int offsetDatum = 0;
 
 	public static EntityManagerFactory getFactory() {
 		return factory;
@@ -77,6 +79,8 @@ public class Main extends Application {
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
+		c.add(Calendar.DATE, offsetDatum);
+		
 		weekDates.add(df.format(c.getTime()));
 		for (int i = 0; i < 6; i++) {
 			c.add(Calendar.DATE, 1);
@@ -408,6 +412,44 @@ public class Main extends Application {
 		Button nazadFilter = (Button) navigacija.getChildren().get(6);
 		Button sledeca = (Button) navigacija.getChildren().get(7);
 		Button prethodna = (Button) navigacija.getChildren().get(8);
+		
+		nazadFilter.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override 
+		    public void handle(ActionEvent e) {
+		        try {
+					startFilterPage(primaryStage, registrovan);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		    }
+		});
+		
+		sledeca.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override 
+		    public void handle(ActionEvent e) {
+		    	offsetDatum += 7;
+		    	try {
+					startRasporedPage(primaryStage, registrovan, termini);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		    }
+		});
+		
+		prethodna.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override 
+		    public void handle(ActionEvent e) {
+		        offsetDatum -= 7;
+		        try {
+					startRasporedPage(primaryStage, registrovan, termini);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		    }
+		});
 		
 		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		primaryStage.setResizable(false);

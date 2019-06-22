@@ -9,17 +9,17 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="859.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="690.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-      <ScrollPane prefHeight="707.0" prefWidth="1045.0">
+      <ScrollPane prefHeight="689.0" prefWidth="1252.0">
          <content>
           <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="828.0" prefWidth="1152.0">
             <children>
-                  <ButtonBar layoutX="380.0" layoutY="790.0" prefHeight="25.0" prefWidth="334.0">
+                  <ButtonBar layoutX="401.0" layoutY="801.0" prefHeight="25.0" prefWidth="334.0">
                     <buttons>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" text="Dodaj" />
-                      <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="15.0" text="Obrisi" />
-                        <Button mnemonicParsing="false" text="Hhehe" />
+                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="117.0" style="-fx-text-fill: red;" text="Dodaj" />
+                      <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="15.0" style="-fx-text-fill: red;" text="Obrisi" />
+                        <Button alignment="CENTER" mnemonicParsing="false" style="-fx-text-fill: red;" text="Uredi" />
                     </buttons>
                   </ButtonBar>
                   <AnchorPane layoutX="110.0" layoutY="15.0" prefHeight="50.0" prefWidth="775.0" style="-fx-background-color: #7cbdff;">
