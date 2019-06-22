@@ -1,18 +1,13 @@
 ----------------------------------------------------------------
-Sat Jun 22 16:04:34 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-7f80-c751-000004db2a40 
-on database directory /home/sead/Desktop/FINAL/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
-Loaded from file:/home/sead/Desktop/FINAL/raspored/lib/derby.jar
+Sat Jun 22 17:21:54 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-7fc7-91be-000005158cb8 
+on database directory /home/vdm/projekat/devet/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Loaded from file:/home/vdm/projekat/devet/raspored/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_201-b09
-user.dir=/home/sead/Desktop/FINAL/raspored
+user.dir=/home/vdm/projekat/devet/raspored
 os.name=Linux
 os.arch=amd64
-os.version=4.15.0-52-generic
+os.version=4.18.0-21-generic
 derby.system.home=null
-------------  Begin Error Message -------------
-
-System may be in a inconsistent state, missing file /home/sead/Desktop/FINAL/raspored/DefaultAddressBook/log/log1.dat
-------------  End Error Message -------------
-
 Database Class Loader started - derby.database.classpath=''

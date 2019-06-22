@@ -131,7 +131,7 @@ public class Main extends Application {
 		
 		info.add(new Label(termin.getPredmet().getNaziv()));
 		info.add(new Label(termin.getGrupa()));
-		info.add(new Label(termin.getZgrada()+"-"+termin.getSala()));
+		info.add(new Label(termin.getLokacija().getZgrada()+"-"+termin.getLokacija().getSala()));
 		
 		int razmakZaDan = 140+15;
 		

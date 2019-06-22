@@ -43,8 +43,8 @@ public class Termin {
 	@OneToOne
 	private Predmet predmet;
 	// Mozemo ovo staviti ko jedan string ?
-	private String zgrada;
-	private String sala;
+	@OneToOne
+	private Lokacija lokacija;
 	private String grupa;
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime startTime;
@@ -55,28 +55,20 @@ public class Termin {
 	@Enumerated(EnumType.STRING)
 	private tipTermina tip;
 
+	public Lokacija getLokacija() {
+		return lokacija;
+	}
+
+	public void setLokacija(Lokacija lokacija) {
+		this.lokacija = lokacija;
+	}
+
 	public Predmet getPredmet() {
 		return this.predmet;
 	}
 
 	public void setPredmet(Predmet predmet) {
 		this.predmet = predmet;
-	}
-
-	public String getZgrada() {
-		return this.zgrada;
-	}
-
-	public void setZgrada(String zgrada) {
-		this.zgrada = zgrada;
-	}
-
-	public String getSala() {
-		return this.sala;
-	}
-
-	public void setSala(String sala) {
-		this.sala = sala;
 	}
 
 	public LocalDateTime getStartTime() {
@@ -105,7 +97,7 @@ public class Termin {
 
 	@Override
 	public String toString() {
-		return "Termin [id=" + this.id + ", predmet=" + this.predmet + ", zgrada=" + this.zgrada + ", sala=" + this.sala
+		return "Termin [id=" + this.id + ", predmet=" + this.predmet + ", zgrada=" + this.lokacija.getZgrada() + ", sala=" + this.lokacija.getSala()
 				+ ", vrijeme1=" + this.startTime + ", vrijeme2=" + this.endTime +" grupa="+this.grupa+ ", tip=" + this.tip + "]";
 	}
 	public static void showTermini() {
@@ -138,10 +130,10 @@ public class Termin {
 	public static Collection<Termin> getTermini(List<String> vrijednosti){
 		String finalQuery="select t from Termin t where 1=1";
 		if(vrijednosti.get(0)!=null) {
-			finalQuery=finalQuery+" and t.zgrada like '"+vrijednosti.get(0)+"'";
+			finalQuery=finalQuery+" and t.lokacija.zgrada like '"+vrijednosti.get(0)+"'";
 		}
 		if(vrijednosti.get(1)!=null) {
-			finalQuery=finalQuery+" and t.sala like '"+vrijednosti.get(1)+"'";
+			finalQuery=finalQuery+" and t.lokacija.sala like '"+vrijednosti.get(1)+"'";
 		}
 		if(vrijednosti.get(2)!=null) {
 			finalQuery=finalQuery+" and t.profesor.ime_prezime like '"+vrijednosti.get(2)+"'";

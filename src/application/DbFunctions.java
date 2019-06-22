@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import models.Lokacija;
 import models.Predmet;
 import models.Profesor.Usmjerenje;
 import models.Termin;
@@ -48,8 +49,7 @@ public class DbFunctions {
 		novi.setStartTime(vrijeme1);
 		novi.setEndTime(vrijeme2);
 		novi.setTip(tipTermina.Predavanje);
-		novi.setZgrada("FE");
-		novi.setSala("008");
+		novi.setLokacija(new Lokacija("FE","101"));
 		em.persist(novi);
 		Termin novi2= new Termin();
 		novi2.setPredmet(pr.get(1));
@@ -58,8 +58,7 @@ public class DbFunctions {
 		novi2.setStartTime(vrijeme12);
 		novi2.setEndTime(vrijeme22);
 		novi2.setTip(tipTermina.Predavanje);
-		novi2.setZgrada("FE");
-		novi2.setSala("101");
+		novi.setLokacija(new Lokacija("FE","101"));
 		em.persist(novi2);
 		em.getTransaction().commit();
 		em.close();

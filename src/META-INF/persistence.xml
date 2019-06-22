@@ -5,6 +5,7 @@
     <persistence-unit name="RazvojSoftvera" transaction-type="RESOURCE_LOCAL">
         <class>application.LocalDateTimeAttributeConverter</class>
         <class>models.Korisnik</class>
+        <class>models.Lokacija</class>
         <class>models.Predmet</class>
         <class>models.Profesor</class>
         <class>models.Termin</class>
