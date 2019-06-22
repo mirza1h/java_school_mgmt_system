@@ -4,8 +4,12 @@ import java.awt.Color;
 import java.awt.Polygon;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -80,18 +84,53 @@ public class Main extends Application {
 		return weekDates;
 	}
 
-	public AnchorPane newBlock(AnchorPane block) {
+	public AnchorPane newBlock(AnchorPane block, Termin termin) {
 		AnchorPane novi = new AnchorPane();
 
-		novi.setStyle(block.getStyle());
-		novi.setLayoutY(105);
+		if(termin.getTip() == Termin.tipTermina.Predavanje)
+			novi.setStyle("-fx-background-color: #b7f78a");
+
+		else if(termin.getTip() == Termin.tipTermina.Vjezbe)
+			novi.setStyle("-fx-background-color: #f79c8a");
+
+		else if(termin.getTip() == Termin.tipTermina.Seminar)
+			novi.setStyle("-fx-background-color: #6a95fc");
+
+		else if(termin.getTip() == Termin.tipTermina.Nadoknada)
+			novi.setStyle("-fx-background-color: #424240");
+
+		else
+			novi.setStyle("-fx-background-color: #f2fc69");
+
 		novi.setPrefHeight(block.getPrefHeight());
 		novi.setPrefWidth(block.getPrefWidth());
 
 		List<Label> info = new ArrayList<>();
-		info.add(new Label("Pisp"));
-		info.add(new Label("RI"));
-		info.add(new Label("Stelekt"));
+		info.add(new Label(termin.getPredmet().getNaziv()));
+		info.add(new Label(termin.getGrupa()));
+		info.add(new Label(termin.getZgrada()+"-"+termin.getSala()));
+		
+		int razmakZaDan = 140+15;
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime danDatum = termin.getStartTime();
+		
+        String dan = danDatum.format(formatter);
+		List<String> sviDani = getDates();
+		int pomjerajX = 0;
+		int pocetak = (termin.getStartTime().getHour()-8) * 60 + termin.getStartTime().getMinute();
+		long pomjerajY = pocetak;
+		
+		for (int i = 0; i < 6; i++) {
+			if (sviDani.get(i).equals(dan)) {
+				pomjerajX = razmakZaDan * i;
+			}
+		}
+
+		System.out.println(pomjerajY);
+		System.out.println(pomjerajX);
+		novi.setLayoutY(pomjerajY);
+		novi.setLayoutX(pomjerajX);
 
 		for (int i = 0; i < 3; ++i) {
 			info.get(i).getStyleClass().add("copyable-label");
@@ -244,7 +283,9 @@ public class Main extends Application {
 							vrijednosti.add(null);
 					}
 					System.out.println(vrijednosti);
-					startRasporedPage(primaryStage, registrovan);
+					Collection<Termin> termini = Termin.getTermini(vrijednosti);
+					System.out.println(termini.size());
+					startRasporedPage(primaryStage, registrovan, termini);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -260,7 +301,7 @@ public class Main extends Application {
 		
 	}
 
-	public void startRasporedPage(Stage primaryStage, boolean registrovan) throws IOException {
+	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini) throws IOException {
 
 		VBox root = FXMLLoader.load(getClass().getResource("raspored.fxml"));
 		Scene scene = new Scene(root);
@@ -271,11 +312,16 @@ public class Main extends Application {
 		AnchorPane drawPane = (AnchorPane) mainPane.getChildren().get(3);
 		AnchorPane defaultBlock = (AnchorPane) drawPane.getChildren().get(12);
 
-		AnchorPane novi = newBlock(defaultBlock);
+		List<AnchorPane> noviBlokovi = new ArrayList<>();
+		for (Termin t : termini) {
+			AnchorPane noviDodavanje = newBlock(defaultBlock, t);
+			noviBlokovi.add(noviDodavanje);
+		}
 
 		defaultBlock.setVisible(true);
 
-		drawPane.getChildren().add(novi);
+		for (int i=0; i<noviBlokovi.size(); ++i)
+			drawPane.getChildren().add(noviBlokovi.get(i));
 
 		List<Node> allDays = weekDaysPane.getChildren();
 

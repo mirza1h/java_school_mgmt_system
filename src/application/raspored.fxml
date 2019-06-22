@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="859.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="859.0" prefWidth="1252.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
       <ScrollPane prefHeight="707.0" prefWidth="1045.0">
          <content>
@@ -212,20 +212,20 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="110.0" layoutY="68.0" prefHeight="720.0" prefWidth="915.0" style="-fx-background-color: #7cbdff;">
+                  <AnchorPane layoutX="110.0" layoutY="68.0" prefHeight="720.0" prefWidth="915.0" style="-fx-background-color: white;">
                      <children>
-                        <Line endX="915.0" layoutY="90.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="105.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="195.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="210.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="300.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="315.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="405.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="420.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="510.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="525.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="615.0" stroke="#fffafa" />
-                        <Line endX="915.0" layoutY="630.0" stroke="#fffafa" />
+                        <Line endX="915.0" layoutY="90.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="105.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="195.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="210.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="300.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="315.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="405.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="420.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="510.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="525.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="615.0" stroke="#2049ee" />
+                        <Line endX="915.0" layoutY="630.0" stroke="#2049ee" />
                         <AnchorPane prefHeight="90.0" prefWidth="140.0" style="-fx-background-color: brown;" visible="false">
                            <children>
                               <Label alignment="CENTER" prefWidth="140.0" text="Naziv" textAlignment="CENTER" textFill="#fcf8f8" />
@@ -233,6 +233,43 @@
                               <Label alignment="CENTER" layoutY="30.0" prefWidth="140.0" text="Sala" textAlignment="CENTER" textFill="#fcf8f8" />
                            </children>
                         </AnchorPane>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="1038.0" layoutY="15.0" prefHeight="361.0" prefWidth="145.0" style="-fx-background-color: #7cbdff;">
+                     <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Legenda:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <AnchorPane layoutX="14.0" layoutY="38.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #b7f78a;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="Predavanje" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="68.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #f79c8a;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="Vjezbe" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="98.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #6a95fc;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="Seminar" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="128.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #424240;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="8.0" prefHeight="16.0" prefWidth="84.0" text="Nadoknada" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="14.0" layoutY="158.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #f2fc69;">
+                           <children>
+                              <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="Diplomski" textFill="WHITE" />
+                           </children>
+                        </AnchorPane>
+                        <Button layoutX="14.0" layoutY="210.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Filter" />
+                        <Button layoutX="14.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Sl. sedmica" />
+                        <Button layoutX="14.0" layoutY="279.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Pr. sedmica" />
                      </children>
                   </AnchorPane>
             </children>

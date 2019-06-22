@@ -169,7 +169,7 @@ public class Termin {
 		}
 		em.close();
 		
-		return null;
+		return rezultat;
 	}
 
 }
