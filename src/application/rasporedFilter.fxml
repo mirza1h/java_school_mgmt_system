@@ -69,6 +69,16 @@
                   <TextField layoutX="213.0" layoutY="220.0" />
                   <TextField layoutX="213.0" layoutY="252.0" />
                   <Button layoutX="213.0" layoutY="298.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" text="Potvrdi" />
+                  <Label layoutX="15.0" layoutY="346.0" prefHeight="46.0" prefWidth="369.0" text="Ukoliko nisu odabrani drugi filteri, minimalno odabrati godinu i usmjerenje!" textFill="#ff0606" visible="false" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="346.0" prefHeight="46.0" prefWidth="369.0" text="Ako je odabran samo filter Zgrada, obavezno je odabrati godinu i usmjerenje!" textFill="#ff0606" visible="false" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
          </children>
