@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -12,6 +13,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 
 import application.Main;
+import models.Korisnik.tipKorisnika;
 
 @NamedQueries({ @NamedQuery(name = "sveLokacije", query = "select t from Lokacija t") })
 @Entity
@@ -74,5 +76,27 @@ public class Lokacija {
 		Collection<Lokacija> rezultat = upit.getResultList();
 		return rezultat;
 
+	}
+	public static boolean unesiLokaciju(List<String> unos) {
+		String zgrada=unos.get(1);
+		String sala=unos.get(0);
+		int kapacitet=Integer.valueOf(unos.get(2));
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createQuery("select t from Lokacija t where t.zgrada='"+zgrada+"' and t.sala='"+sala+"'", Lokacija.class);
+		Collection<Lokacija> rezultat = upit.getResultList();
+		if(rezultat.size()!=0) {
+			em.close();
+			return false;
+		}
+		else {
+		em.getTransaction().begin();
+		Lokacija nova= new Lokacija();
+		nova.setZgrada(zgrada);
+		nova.setKapacitet(kapacitet);
+		nova.setSala(sala);
+		em.persist(nova);
+		em.getTransaction().commit();
+		return true;
+	}
 	}
 }

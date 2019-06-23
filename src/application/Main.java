@@ -102,6 +102,13 @@ public class Main extends Application {
 	public AnchorPane newBlock(AnchorPane block, Termin termin, int velicina, int poRedu) {
 		AnchorPane novi = new AnchorPane();
 
+		novi.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				// Emira pozovi ovdje fju za editovanje i brisanje bloka sa rasporeda
+				System.out.println("Ovdje edit i brisanje");
+			}
+		});
+
 		String myStyle = "-fx-border-color: #c6c6c6; -fx-border-width: 0px 0px 1px 0px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 0.0, 0.0);";
 
 		if (termin.getTip() == Termin.tipTermina.Predavanje) {
@@ -409,9 +416,6 @@ public class Main extends Application {
 		Collection<Termin> sledeciTermini = Termin.getTermini(sledeceVrijednosti);
 		Collection<Termin> prethodniTermini = Termin.getTermini(prethodneVrijednosti);
 
-		System.out.println("OVDJEE: " + prethodneVrijednosti);
-		System.out.println("OVDJEE: " + sledeceVrijednosti);
-
 		VBox root = FXMLLoader.load(getClass().getResource("raspored.fxml"));
 		Scene scene = new Scene(root);
 
@@ -420,16 +424,12 @@ public class Main extends Application {
 		AnchorPane weekDaysPane = (AnchorPane) mainPane.getChildren().get(1);
 		AnchorPane drawPane = (AnchorPane) mainPane.getChildren().get(3);
 		AnchorPane navigacija = (AnchorPane) mainPane.getChildren().get(4);
-		ButtonBar uredjivanje = (ButtonBar) mainPane.getChildren().get(0);
-		ObservableList<Node> sviButtoni = uredjivanje.getButtons();
-		Button dodaj = (Button) sviButtoni.get(0);
-		Button obrisi = (Button) sviButtoni.get(1);
-		Button uredi = (Button) sviButtoni.get(2);
+		Button dodaj = (Button) mainPane.getChildren().get(0);
 
 		if (registrovan) {
-			uredjivanje.setVisible(true);
+			dodaj.setVisible(true);
 		} else {
-			uredjivanje.setVisible(false);
+			dodaj.setVisible(false);
 		}
 
 		AnchorPane defaultBlock = (AnchorPane) drawPane.getChildren().get(12);
@@ -523,6 +523,14 @@ public class Main extends Application {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+		});
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				// Emira ovdje dodaj funkciju koja otvara panel za dodavanje
+				System.out.println("Dodaj panel");
 			}
 		});
 

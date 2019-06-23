@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Query;
 
 import application.Main;
+import models.Korisnik.tipKorisnika;
 import models.Profesor.Usmjerenje;
 
 @Entity
@@ -107,6 +109,48 @@ public class Predmet {
 		Collection<Predmet> rezultat = upit.getResultList();
 		return rezultat;
 
+	}
+	public static boolean unesiPredmet(List<String> unos) {
+		String naziv=unos.get(0);
+		String semestar=unos.get(1);
+		int brojst=Integer.parseInt(unos.get(2));
+		Usmjerenje usm=Usmjerenje.valueOf(unos.get(3));
+		String upitProf="select t from Profesor t where 1=1 and (t.ime='"+unos.get(4)+"'";
+		for(int i=5;i<unos.size();i++) {
+			upitProf+=" or t.ime='"+unos.get(i);
+		}
+		upitProf+=")";
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createQuery(upitProf, Profesor.class);
+		Collection<Profesor> rezultat = upit.getResultList();
+		if(rezultat.size()==0) {
+			System.out.println("Nema profesora");
+			return false;
+		}
+		else {
+			Query finalUpit =em.createQuery("select p from Predmet p where p.naziv='"+naziv+"' and p.usmjerenje=:usmj",Predmet.class);
+			finalUpit.setParameter("usmj",usm);
+			Collection<Predmet> rez= finalUpit.getResultList();
+			if(rez.size()==0) {
+				em.getTransaction().begin();
+				Predmet novi=new Predmet();
+				novi.setNaziv(naziv);
+				novi.setBrojStudenata(brojst);
+				novi.setSemestar(Integer.valueOf(semestar));
+				novi.setUsmjerenje(usm);
+				novi.setProfesore(rezultat);
+				for(Profesor nastavnik : rezultat) {
+					Profesor temp=em.getReference(Profesor.class,nastavnik.getId());
+					temp.setPredmete(rez);
+				}
+				em.persist(novi);
+				em.getTransaction().commit();
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
 	}
 
 }
