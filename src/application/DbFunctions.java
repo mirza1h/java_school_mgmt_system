@@ -11,6 +11,8 @@ import java.time.LocalTime;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import models.Korisnik;
+import models.Korisnik.tipKorisnika;
 import models.Lokacija;
 import models.Predmet;
 import models.Profesor.Usmjerenje;
@@ -60,6 +62,18 @@ public class DbFunctions {
 		novi2.setTip(tipTermina.Predavanje);
 		novi.setLokacija(new Lokacija("FE","101"));
 		em.persist(novi2);
+		em.getTransaction().commit();
+		em.close();
+		
+	}
+	public static void addProdekan() {
+		EntityManager em=Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
+		Korisnik mesak=new Korisnik();
+		mesak.setUsername("mesak");
+		mesak.setPassword("mesak");
+		mesak.setTip(tipKorisnika.Prodekan);
+		em.persist(mesak);
 		em.getTransaction().commit();
 		em.close();
 		

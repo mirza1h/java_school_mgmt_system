@@ -717,7 +717,8 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
-		
+		//DbFunctions.addProdekan();
+		Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);
 		/*

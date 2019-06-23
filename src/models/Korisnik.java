@@ -81,5 +81,13 @@ public class Korisnik {
 		return temp.getTip();
 		
 	}
+	public static void showKorisnici() {
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createNamedQuery("sviKorisnici", Korisnik.class);
+		Collection<Korisnik> rezultat=upit.getResultList();
+		for(Korisnik o:rezultat) {
+			System.out.println(o);
+		}
+		}
 
 }
