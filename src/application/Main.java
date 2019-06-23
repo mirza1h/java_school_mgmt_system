@@ -68,7 +68,7 @@ public class Main extends Application {
 	private static EntityManagerFactory factory;
 
 	private int offsetDatum = 0;
-	
+
 	private String trenutniKorisnik = null;
 
 	public static EntityManagerFactory getFactory() {
@@ -265,7 +265,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					String uneseniUser = trenutniKorisnik = username.getText();
+					String uneseniUser = Main.this.trenutniKorisnik = username.getText();
 					String uneseniPass = password.getText();
 
 					if ((uneseniUser == null) || (uneseniPass == null)) {
@@ -539,7 +539,7 @@ public class Main extends Application {
 				System.out.println("Dodaj panel");
 			}
 		});
-		
+
 		izvjestaj.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -1081,47 +1081,47 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startIzvjestajPage(Stage primaryStage, String mjesec, String datum) throws IOException {
 		VBox izvjestaj = FXMLLoader.load(getClass().getResource("Izvjestaj.fxml"));
 		Scene scene = new Scene(izvjestaj);
-		
+
 		Label izvrsilac1 = (Label) scene.lookup("#izvrsilac1");
 		Label izvrsilac2 = (Label) scene.lookup("#izvrsilac2");
 		Label ukupnoPS = (Label) scene.lookup("#up");
 		Label ukupnoAS = (Label) scene.lookup("#ua");
 		Label zaMjesec = (Label) scene.lookup("#zaMjesec");
 		Label datumLabel = (Label) scene.lookup("#datum");
-		
-		izvrsilac1.setText("IZVRSILAC: " + trenutniKorisnik);
-		izvrsilac2.setText("Izvrsilac: " + trenutniKorisnik);
+
+		izvrsilac1.setText("IZVRSILAC: " + this.trenutniKorisnik);
+		izvrsilac2.setText("Izvrsilac: " + this.trenutniKorisnik);
 		zaMjesec.setText("za mjesec " + Izvjestaj.prevediMjesec(mjesec) + " zimski/ljetni semestar ak. 2018/19 godine");
 		datumLabel.setText("Datum podnosenja izvjestaja: " + datum);
-		
+
 		TableView<IzvjestajInfo> tabela = (TableView<IzvjestajInfo>) scene.lookup("#tabela");
-		
+
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("predmet"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("datum"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("mjesto"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("brojStudenata"));
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("brojP"));
 		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("brojV"));
-		
-		List<IzvjestajInfo> termini = Izvjestaj.getIzvjestaj(trenutniKorisnik, mjesec);
-		
-		int ukupnoP=0, ukupnoV=0;
-		
+
+		List<IzvjestajInfo> termini = Izvjestaj.getIzvjestaj(this.trenutniKorisnik, mjesec);
+
+		int ukupnoP = 0, ukupnoV = 0;
+
 		for (IzvjestajInfo t : termini) {
 			ukupnoP += Integer.parseInt(t.getBrojP());
 			ukupnoV += Integer.parseInt(t.getBrojV());
 		}
-		
+
 		ukupnoPS.setText(String.valueOf(ukupnoP));
 		ukupnoAS.setText(String.valueOf(ukupnoV));
-		
+
 		System.out.println(termini);
 		tabela.getItems().addAll(termini);
-		
+
 		primaryStage.setTitle("Izvjestaj");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -1154,8 +1154,8 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
-//		 DbFunctions.addProdekan();
-		//DbFunctions.addProfesor();
+		DbFunctions.addProdekan();
+		DbFunctions.addProfesor();
 		Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);
