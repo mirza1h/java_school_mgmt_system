@@ -61,13 +61,13 @@
                         <Font size="18.0" />
                      </font>
                   </CheckBox>
-                  <TextField layoutX="213.0" layoutY="54.0" />
-                  <TextField layoutX="213.0" layoutY="87.0" />
-                  <TextField layoutX="213.0" layoutY="121.0" />
-                  <TextField layoutX="213.0" layoutY="154.0" />
-                  <TextField layoutX="213.0" layoutY="187.0" />
-                  <TextField layoutX="213.0" layoutY="220.0" />
-                  <TextField layoutX="213.0" layoutY="252.0" />
+                  <TextField layoutX="213.0" layoutY="54.0" promptText="Zgrada (FE...)" />
+                  <TextField layoutX="213.0" layoutY="87.0" promptText="Sala (101, 008...)" />
+                  <TextField layoutX="213.0" layoutY="121.0" promptText="Ime i prezime" />
+                  <TextField layoutX="213.0" layoutY="154.0" promptText="Godina studija" />
+                  <TextField layoutX="213.0" layoutY="187.0" promptText="Naziv predmeta" />
+                  <TextField layoutX="213.0" layoutY="220.0" promptText="Grupa studenata" />
+                  <TextField layoutX="213.0" layoutY="252.0" promptText="Usmjerenje (RI, ESKE...)" />
                   <Button layoutX="213.0" layoutY="298.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="171.0" text="Potvrdi" />
                   <Label layoutX="15.0" layoutY="346.0" prefHeight="46.0" prefWidth="369.0" text="Ukoliko nisu odabrani drugi filteri, minimalno odabrati godinu i usmjerenje!" textFill="#ff0606" visible="false" wrapText="true">
                      <font>

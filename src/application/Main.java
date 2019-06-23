@@ -105,11 +105,11 @@ public class Main extends Application {
 		} else if (termin.getTip() == Termin.tipTermina.Vjezbe) {
 			novi.setStyle("-fx-background-color: #f79c8a; " + myStyle);
 		} else if (termin.getTip() == Termin.tipTermina.Seminar) {
-			novi.setStyle("-fx-background-color: #6a95fc; " + myStyle);
+			novi.setStyle("-fx-background-color: #f2fc69; " + myStyle);
 		} else if (termin.getTip() == Termin.tipTermina.Nadoknada) {
 			novi.setStyle("-fx-background-color: #424240; " + myStyle);
 		} else if (termin.getTip() == Termin.tipTermina.Laboratorija) {
-			novi.setStyle("-fx-background-color: #f2fc69; " + myStyle);
+			novi.setStyle("-fx-background-color: #6a95fc; " + myStyle);
 		} else {
 			novi.setStyle("-fx-background-color: #ed1ee2; " + myStyle);
 		}
@@ -168,6 +168,7 @@ public class Main extends Application {
 		for (int i = 0; i < 3; ++i) {
 			info.get(i).getStyleClass().add("copyable-label");
 			info.get(i).setPrefWidth(width);
+			info.get(i).setMaxHeight(30);
 			info.get(i).setWrapText(true);
 			info.get(i).setLayoutX(0);
 			if (i == 1) {
