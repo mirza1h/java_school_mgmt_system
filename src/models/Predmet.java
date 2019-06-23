@@ -200,6 +200,14 @@ public class Predmet {
 		
 		return true;
 	}
+	public static boolean deletePredmet(Long id) {
+		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
+		Query upit=em.createQuery("delete from Predmet p where p.id=:var",Predmet.class);
+		upit.setParameter("var", id);
+		upit.executeUpdate();
+		return true;
+	}
 
 	public Long getId() {
 		return id;
