@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Sun Jun 23 15:42:52 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-8493-43f4-000003692de0 
+Sun Jun 23 15:49:23 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-8499-3c88-00000367f070 
 on database directory /home/emira/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
 Loaded from file:/home/emira/raspored/lib/derby.jar
 java.vendor=Oracle Corporation

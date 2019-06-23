@@ -73,6 +73,10 @@ public class Predmet {
 		this.profesori = p;
 	}
 
+	public Profesor getOneProfesor() {
+		return this.profesori.iterator().next();
+	}
+
 	@Override
 	public String toString() {
 		return "Predmet [id=" + this.id + ", naziv=" + this.naziv + ", brojStudenata=" + this.brojStudenata

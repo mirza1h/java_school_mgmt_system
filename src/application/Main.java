@@ -226,7 +226,8 @@ public class Main extends Application {
 		 * t.setEndTime(t.getEndTime().plusDays(7)); em.persist(t); em.flush(); } }
 		 * em.getTransaction().commit();
 		 */
-		System.out.println(res.size());
+
+		// System.out.println(res.size());
 
 		VBox login = FXMLLoader.load(getClass().getResource("login.fxml"));
 		Scene loginScene = new Scene(login);
@@ -612,13 +613,13 @@ public class Main extends Application {
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		TableView<Profesor> tabela = (TableView<Profesor>) scene.lookup("#tabela");
-		
+
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("ime"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("predmeti"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("grupa"));
-		
+
 		Collection<Profesor> c = Profesor.getProfesori();
 		tabela.getItems().addAll(c);
 		
@@ -669,14 +670,14 @@ public class Main extends Application {
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		TableView<Predmet> tabela = (TableView<Predmet>) scene.lookup("#tabela");
-		
+
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("naziv"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("brojStudenata"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("semestar"));
 		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("profesori"));
-		
+
 		Collection<Predmet> c = Predmet.getPredmeti();
 		tabela.getItems().addAll(c);
 		
@@ -727,12 +728,12 @@ public class Main extends Application {
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		TableView<Lokacija> tabela = (TableView<Lokacija>) scene.lookup("#tabela");
-		
+
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("zgrada"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("sala"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("kapacitet"));
-		
+
 		Collection<Lokacija> c = Lokacija.getLokacije();
 		tabela.getItems().addAll(c);
 		
@@ -885,7 +886,7 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
-		//DbFunctions.addProdekan();
+		// DbFunctions.addProdekan();
 		Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);

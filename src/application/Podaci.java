@@ -117,7 +117,11 @@ public class Podaci {
 					termin.setStartTime(vrijeme1);
 					termin.setEndTime(vrijeme2);
 					pocetak += trajanje;
-					if (pocetak >= 20) {
+					if ((vrijeme2.getHour() >= 17) && (m == 0)) {
+						pocetakSemestra = pocetakSemestra.plusDays(1);
+						pocetak = 8;
+					}
+					if ((vrijeme2.getHour() >= 19) && ((m == 1) || (m == 2))) {
 						pocetakSemestra = pocetakSemestra.plusDays(1);
 						pocetak = 8;
 					}
@@ -151,6 +155,7 @@ public class Podaci {
 						em.persist(profObj);
 						predmet.getProfesore().add(profObj);
 					}
+					termin.setProfesor(predmet.getOneProfesor());
 					em.persist(lokacija);
 					termin.setPredmet(predmet);
 					em.persist(termin);

@@ -69,7 +69,8 @@ public class Profesor {
 		}
 		return this.predmeti;
 	}
-	public static Collection<Profesor> getProfesori(){
+
+	public static Collection<Profesor> getProfesori() {
 		EntityManager em = Main.getFactory().createEntityManager();
 		Query upit = em.createNamedQuery("sviProfesori", Profesor.class);
 		Collection<Profesor> rezultat = upit.getResultList();
