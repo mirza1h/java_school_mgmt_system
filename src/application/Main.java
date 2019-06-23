@@ -35,7 +35,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -533,18 +535,18 @@ public class Main extends Application {
 		AnchorPane home = FXMLLoader.load(getClass().getResource("ProdekanHomePage.fxml"));
 		Scene scene = new Scene(home);
 
-		Button nastavnici = (Button) scene.lookup("#b01");
+		Button profesori = (Button) scene.lookup("#b01");
 		Button predmeti = (Button) scene.lookup("#b02");
 		Button prostorije = (Button) scene.lookup("#b03");
 		Button rasporedi = (Button) scene.lookup("#b04");
 
-		nastavnici.setOnAction(new EventHandler<ActionEvent>() {
+		profesori.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
 				try {
-					startNastavnici(primaryStage);
+					startProfesori(primaryStage);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -603,14 +605,27 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	public void startNastavnici(Stage primaryStage) throws IOException {
-		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("NastavniciEditPage.fxml"));
-		Scene scene = new Scene(showNastavnici);
+	public void startProfesori(Stage primaryStage) throws IOException {
+		AnchorPane showProfesori = FXMLLoader.load(getClass().getResource("ProfesoriEditPage.fxml"));
+		Scene scene = new Scene(showProfesori);
 
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
-		Button uredi = (Button) scene.lookup("#uredi");
-		Button obrisi = (Button) scene.lookup("#obrisi");
+		TableView<Profesor> tabela = (TableView<Profesor>) scene.lookup("#tabela");
+		
+		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("ime"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("predmeti"));
+		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
+		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("grupa"));
+		
+		Collection<Profesor> c = Profesor.getProfesori();
+		tabela.getItems().addAll(c);
+		
+		tabela.setOnMouseClicked( event -> {
+			   if( event.getClickCount() == 2 ) {
+			      System.out.println( tabela.getSelectionModel().getSelectedItem());
+			   }});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -627,19 +642,33 @@ public class Main extends Application {
 
 		});
 
-		primaryStage.setTitle("Nastavnici");
+		primaryStage.setTitle("Profesori");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
 	public void startPredmeti(Stage primaryStage) throws IOException {
-		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("PredmetiEditPage.fxml"));
-		Scene scene = new Scene(showNastavnici);
+		AnchorPane showPredmeti = FXMLLoader.load(getClass().getResource("PredmetiEditPage.fxml"));
+		Scene scene = new Scene(showPredmeti);
 
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
-		Button uredi = (Button) scene.lookup("#uredi");
-		Button obrisi = (Button) scene.lookup("#obrisi");
+		TableView<Predmet> tabela = (TableView<Predmet>) scene.lookup("#tabela");
+		
+		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("naziv"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("brojStudenata"));
+		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
+		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("semestar"));
+		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("profesori"));
+		
+		Collection<Predmet> c = Predmet.getPredmeti();
+		tabela.getItems().addAll(c);
+		
+		tabela.setOnMouseClicked( event -> {
+			   if( event.getClickCount() == 2 ) {
+			      System.out.println( tabela.getSelectionModel().getSelectedItem());
+			   }});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -656,19 +685,31 @@ public class Main extends Application {
 
 		});
 
-		primaryStage.setTitle("Nastavnici");
+		primaryStage.setTitle("Predmeti");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 
 	public void startProstorije(Stage primaryStage) throws IOException {
-		AnchorPane showNastavnici = FXMLLoader.load(getClass().getResource("ProstorijeEditPage.fxml"));
-		Scene scene = new Scene(showNastavnici);
+		AnchorPane showProstorije = FXMLLoader.load(getClass().getResource("ProstorijeEditPage.fxml"));
+		Scene scene = new Scene(showProstorije);
 
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
-		Button uredi = (Button) scene.lookup("#uredi");
-		Button obrisi = (Button) scene.lookup("#obrisi");
+		TableView<Lokacija> tabela = (TableView<Lokacija>) scene.lookup("#tabela");
+		
+		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
+		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("zgrada"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("sala"));
+		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("kapacitet"));
+		
+		Collection<Lokacija> c = Lokacija.getLokacije();
+		tabela.getItems().addAll(c);
+		
+		tabela.setOnMouseClicked( event -> {
+			   if( event.getClickCount() == 2 ) {
+			      System.out.println( tabela.getSelectionModel().getSelectedItem());
+			   }});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -685,7 +726,7 @@ public class Main extends Application {
 
 		});
 
-		primaryStage.setTitle("Nastavnici");
+		primaryStage.setTitle("Prostorije");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -694,7 +735,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 
 		try {
-
+			primaryStage.setResizable(false);
 			startLoginPage(primaryStage);
 
 		} catch (Exception e) {

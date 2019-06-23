@@ -25,9 +25,7 @@
                   <TableColumn prefWidth="159.0" text="Kapacitet" />
               </columns>
             </TableView>
-            <Button fx:id="dodaj" layoutX="70.0" layoutY="395.0" mnemonicParsing="false" prefWidth="135.0" text="Dodaj" />
-            <Button fx:id="uredi" layoutX="290.0" layoutY="395.0" mnemonicParsing="false" prefWidth="135.0" text="Uredi" />
-            <Button fx:id="obrisi" layoutX="510.0" layoutY="395.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Obrisi" />
+            <Button fx:id="dodaj" layoutX="280.0" layoutY="395.0" mnemonicParsing="false" prefWidth="155.0" text="Dodaj novi zapis" />
          </children>
       </Pane>
       <Button fx:id="nazad" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-opacity: 0.9;" text="Nazad" />

@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Sun Jun 23 13:42:08 CEST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-8424-ba18-000004f50118 
-on database directory /home/vdm/projekat/deset/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
-Loaded from file:/home/vdm/projekat/deset/raspored/lib/derby.jar
+Sun Jun 23 14:41:08 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-845a-bf1d-0000025f7f20 
+on database directory /home/emira/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Loaded from file:/home/emira/raspored/lib/derby.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_201-b09
-user.dir=/home/vdm/projekat/deset/raspored
+java.runtime.version=1.8.0_211-b12
+user.dir=/home/emira/raspored
 os.name=Linux
 os.arch=amd64
-os.version=4.18.0-21-generic
+os.version=4.15.0-50-generic
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
