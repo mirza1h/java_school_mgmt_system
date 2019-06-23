@@ -18,6 +18,7 @@ import java.util.List;
 import com.sun.javafx.scene.control.skin.Utils;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -406,6 +408,16 @@ public class Main extends Application {
 		AnchorPane weekDaysPane = (AnchorPane) mainPane.getChildren().get(1);
 		AnchorPane drawPane = (AnchorPane) mainPane.getChildren().get(3);
 		AnchorPane navigacija = (AnchorPane) mainPane.getChildren().get(4);
+		ButtonBar uredjivanje = (ButtonBar) mainPane.getChildren().get(0);
+		ObservableList<Node> sviButtoni = uredjivanje.getButtons();
+		Button dodaj = (Button) sviButtoni.get(0);
+		Button obrisi = (Button) sviButtoni.get(1);
+		Button uredi = (Button) sviButtoni.get(2);
+		
+		if (registrovan)
+			uredjivanje.setVisible(true);
+		else
+			uredjivanje.setVisible(false);
 
 		AnchorPane defaultBlock = (AnchorPane) drawPane.getChildren().get(12);
 
@@ -420,12 +432,22 @@ public class Main extends Application {
 
 		Iterator it = mapaTermina.entrySet().iterator();
 		List<AnchorPane> noviBlokovi = new ArrayList<>();
+		
+		String limit = "01/07/2019 00:00";
+		DateTimeFormatter stringToDate = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		LocalDateTime limitDatum = LocalDateTime.parse(limit, stringToDate);
+		
+		LocalDateTime trenutniDatum = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
 		while (it.hasNext()) {
 			HashMap.Entry pair = (HashMap.Entry) it.next();
 			ArrayList<Termin> trenutna = (ArrayList<Termin>) pair.getValue();
 
 			for (int i = 0; i < trenutna.size(); ++i) {
+				if ((trenutna.get(i).getStartTime().compareTo(limitDatum)) < 0) {
+					continue;
+				}
 				AnchorPane noviDodavanje = newBlock(defaultBlock, trenutna.get(i), trenutna.size(), i);
 				noviBlokovi.add(noviDodavanje);
 			}
@@ -437,12 +459,17 @@ public class Main extends Application {
 		}
 
 		List<Node> allDays = weekDaysPane.getChildren();
-
+		
+		String trenutniDan = trenutniDatum.format(formatter);
+		
 		List<String> weekDates = getDates();
 		for (int i = 0; i < 6; ++i) {
 			AnchorPane day = (AnchorPane) allDays.get(i);
 			Label dateLabel = (Label) day.getChildren().get(1);
 			dateLabel.setText(weekDates.get(i));
+			if (dateLabel.getText().equals(trenutniDan)) {
+				day.setStyle("-fx-background-color: #2b6aff;");
+			}
 
 		}
 
