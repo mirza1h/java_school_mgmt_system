@@ -626,6 +626,21 @@ public class Main extends Application {
 			   if( event.getClickCount() == 2 ) {
 			      System.out.println( tabela.getSelectionModel().getSelectedItem());
 			   }});
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startDodajProfesoraPage(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -669,6 +684,21 @@ public class Main extends Application {
 			   if( event.getClickCount() == 2 ) {
 			      System.out.println( tabela.getSelectionModel().getSelectedItem());
 			   }});
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startDodajPredmetPage(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -710,6 +740,21 @@ public class Main extends Application {
 			   if( event.getClickCount() == 2 ) {
 			      System.out.println( tabela.getSelectionModel().getSelectedItem());
 			   }});
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startDodajProstorijePage(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -727,6 +772,88 @@ public class Main extends Application {
 		});
 
 		primaryStage.setTitle("Prostorije");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startDodajProfesoraPage(Stage primaryStage) throws IOException {
+		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaNastavnik.fxml"));
+		Scene scene = new Scene(forma);
+		
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		ponisti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startProfesori(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		});
+		
+		primaryStage.setTitle("Dodaj novi predmet");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startDodajPredmetPage(Stage primaryStage) throws IOException {
+		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaPredmet.fxml"));
+		Scene scene = new Scene(forma);
+		
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		ponisti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startPredmeti(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		});
+		
+		primaryStage.setTitle("Dodaj novi predmet");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startDodajProstorijePage(Stage primaryStage) throws IOException {
+		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaProstorija.fxml"));
+		Scene scene = new Scene(forma);
+		
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		ponisti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					startProstorije(primaryStage);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		});
+
+		
+		primaryStage.setTitle("Dodaj novi predmet");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

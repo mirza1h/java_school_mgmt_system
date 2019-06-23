@@ -7,10 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="390.0" layoutY="241.0" mnemonicParsing="false" text="Primjeni" />
+      <Button fx:id="dodaj" layoutX="390.0" layoutY="241.0" mnemonicParsing="false" text="Dodaj zapis" />
       <TextField layoutX="201.0" layoutY="77.0" promptText="Ime Nastavnika" />
       <Label layoutX="100.0" layoutY="80.0" text="Ime:">
          <font>
@@ -29,5 +28,6 @@
       </Label>
       <TextField layoutX="201.0" layoutY="127.0" promptText="Prezime Nastavnika" />
       <ChoiceBox layoutX="222.0" layoutY="177.0" prefWidth="150.0" />
+      <Button fx:id="ponisti" layoutX="287.0" layoutY="241.0" mnemonicParsing="false" text="Ponisti" />
    </children>
 </AnchorPane>
