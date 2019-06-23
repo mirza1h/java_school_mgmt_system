@@ -649,8 +649,8 @@ public class Main extends Application {
 
 		Collection<ProfesoriIspis> c = ProfesoriGet.getTableProfesor();
 		tabela.getItems().addAll(c);
-		
-		EntityManager em=Main.getFactory().createEntityManager();
+
+		EntityManager em = Main.getFactory().createEntityManager();
 
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
@@ -1021,7 +1021,7 @@ public class Main extends Application {
 
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 		usmjerenje.setValue(prof.getUsmjerenje());
-		
+
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -1030,7 +1030,7 @@ public class Main extends Application {
 
 				List<String> profesor = new ArrayList<String>();
 				profesor.add(id.getText());
-				profesor.add(ime.getText()+" "+prezime.getText());
+				profesor.add(ime.getText() + " " + prezime.getText());
 				profesor.add(usmjerenje.getValue().toString());
 				System.out.println(profesor);
 
@@ -1046,12 +1046,12 @@ public class Main extends Application {
 				}
 			}
 		});
-		
+
 		obrisi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if(Profesor.deleteProfesor(prof.getId()) == true) {
+				if (Profesor.deleteProfesor(prof.getId()) == true) {
 					try {
 //						greska.setVisible(false);
 						startProfesori(primaryStage);
@@ -1088,12 +1088,12 @@ public class Main extends Application {
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
 		Button obrisi = (Button) scene.lookup("#obrisi");
-		
+
 		obrisi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if(Predmet.deletePredmet(pred.getId()) == true) {
+				if (Predmet.deletePredmet(pred.getId()) == true) {
 					try {
 //						greska.setVisible(false);
 						startPredmeti(primaryStage);
@@ -1130,18 +1130,18 @@ public class Main extends Application {
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
 		Button obrisi = (Button) scene.lookup("#obrisi");
-		
+
 		TextField id = (TextField) scene.lookup("#id");
 		TextField sala = (TextField) scene.lookup("#sala");
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
-		
+
 		id.setText(prostorija.getId().toString());
 		sala.setText(prostorija.getSala());
 		zgrada.setText(prostorija.getZgrada());
 		Integer k = (Integer) prostorija.getKapacitet();
 		kapacitet.setText(k.toString());
-		
+
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -1166,12 +1166,12 @@ public class Main extends Application {
 				}
 			}
 		});
-		
+
 		obrisi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if(Lokacija.deleteLokacija(prostorija.getId()) == true) {
+				if (Lokacija.deleteLokacija(prostorija.getId()) == true) {
 					try {
 //						greska.setVisible(false);
 						startProstorije(primaryStage);
@@ -1273,8 +1273,8 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
-		//DbFunctions.addProdekan();
-		//DbFunctions.addProfesor();
+		// DbFunctions.addProdekan();
+		// DbFunctions.addProfesor();
 		Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);

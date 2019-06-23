@@ -57,9 +57,9 @@ public class Profesor {
 	public void setPredmete(Collection<Predmet> p) {
 		this.predmeti = p;
 	}
-	
+
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override
@@ -140,9 +140,10 @@ public class Profesor {
 		Query drugiUpit = em.createQuery("delete from Korisnik k where k.username=:tar");
 		drugiUpit.setParameter("tar", prof.getIme());
 		drugiUpit.executeUpdate();
-		Query upit = em.createQuery("delete from Profesor p where p.id=:var", Predmet.class);
+		Query upit = em.createQuery("delete from Profesor p where p.id=:var", Profesor.class);
 		upit.setParameter("var", id);
 		upit.executeUpdate();
+		em.getTransaction().commit();
 		return true;
 	}
 }

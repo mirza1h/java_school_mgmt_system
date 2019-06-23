@@ -136,6 +136,7 @@ public class Lokacija {
 		Query upit = em.createQuery("delete from Lokacija p where p.id=:var", Lokacija.class);
 		upit.setParameter("var", id);
 		upit.executeUpdate();
+		em.getTransaction().commit();
 		return true;
 	}
 }

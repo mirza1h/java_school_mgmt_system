@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Mon Jun 24 01:16:53 CEST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-016b-86a0-cca2-000004cffc80 
+on database directory /home/mirza/git/raspored/DefaultAddressBook with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Loaded from file:/home/mirza/git/raspored/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_211-b12
+user.dir=/home/mirza/git/raspored
+os.name=Linux
+os.arch=amd64
+os.version=4.15.0-52-generic
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
