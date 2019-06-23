@@ -99,4 +99,26 @@ public class Lokacija {
 		return true;
 	}
 	}
+	public static boolean updateLokacija(List<String> unos) {
+		int id=Integer.valueOf(unos.get(0));
+		String zgrada=unos.get(1);
+		String sala=unos.get(2);
+		int kapacitet=Integer.valueOf(unos.get(3));
+		EntityManager em = Main.getFactory().createEntityManager();
+		Lokacija neka=em.getReference(Lokacija.class, id);
+		Query upit=em.createQuery("select t from Lokacija t where t.zgrada=:var and t.sala=:nest",Lokacija.class);
+		upit.setParameter("var",zgrada);
+		upit.setParameter("nest",sala);
+		Collection<Lokacija> rezultat=upit.getResultList();
+		if(rezultat.size()!=0) {
+			em.close();
+			return false;
+		}
+		neka.setKapacitet(kapacitet);
+		neka.setZgrada(zgrada);
+		neka.setSala(sala);
+		em.close();
+		
+		return true;
+	}
 }
