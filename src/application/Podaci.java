@@ -80,7 +80,7 @@ public class Podaci {
 	}
 
 	public static void napuniBazu() {
-		LocalDateTime pocetakSemestra = LocalDateTime.of(LocalDate.of(2019, 6, 24), LocalTime.of(0, 0, 0));
+		LocalDateTime pocetakSemestra = LocalDateTime.of(LocalDate.of(2019, 6, 10), LocalTime.of(0, 0, 0));
 		int pocetak = 8;
 		int trajanje = 3;
 		boolean dodajSlovo = false;
@@ -153,20 +153,11 @@ public class Podaci {
 					}
 					em.persist(lokacija);
 					termin.setPredmet(predmet);
-					/*
-					 * termin.setStartTime(termin.getStartTime().minusDays(7));
-					 * termin.setEndTime(termin.getEndTime().minusDays(7));
-					 */
 					em.persist(termin);
-					/*
-					 * for (int l = 0; l < 15; ++l) { if (l > 0) { em.detach(termin);
-					 * termin.setId(null); LocalDateTime vr1 = termin.getStartTime(); LocalDateTime
-					 * vr2 = termin.getStartTime(); termin.setStartTime(vr1.plusDays(7));
-					 * termin.setEndTime(vr2.plusDays(7)); em.persist(termin); em.persist(predmet);
-					 * em.flush(); } }
-					 */ em.persist(predmet);
+					em.persist(predmet);
 				}
 			}
+			pocetakSemestra = LocalDateTime.of(LocalDate.of(2019, 6, 10), LocalTime.of(0, 0, 0));
 		}
 
 		em.getTransaction().commit();

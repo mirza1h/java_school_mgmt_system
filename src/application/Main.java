@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Polygon;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -97,7 +99,7 @@ public class Main extends Application {
 		AnchorPane novi = new AnchorPane();
 
 		String myStyle = "-fx-border-color: #c6c6c6; -fx-border-width: 0px 0px 1px 0px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 0.0, 0.0);";
-		
+
 		if (termin.getTip() == Termin.tipTermina.Predavanje) {
 			novi.setStyle("-fx-background-color: #b7f78a; " + myStyle);
 		} else if (termin.getTip() == Termin.tipTermina.Vjezbe) {
@@ -109,7 +111,7 @@ public class Main extends Application {
 		} else if (termin.getTip() == Termin.tipTermina.Laboratorija) {
 			novi.setStyle("-fx-background-color: #f2fc69; " + myStyle);
 		} else {
-			novi.setStyle("-fx-background-color: #ed1ee2; " + myStyle);		
+			novi.setStyle("-fx-background-color: #ed1ee2; " + myStyle);
 		}
 
 		double width = block.getPrefWidth() / velicina;
@@ -168,10 +170,12 @@ public class Main extends Application {
 			info.get(i).setPrefWidth(width);
 			info.get(i).setWrapText(true);
 			info.get(i).setLayoutX(0);
-			if (i == 1)
+			if (i == 1) {
 				info.get(i).setLayoutY(30);
-			if (i == 2)
+			}
+			if (i == 2) {
 				info.get(i).setLayoutY(45);
+			}
 			novi.getChildren().add(info.get(i));
 		}
 		return novi;
@@ -203,20 +207,22 @@ public class Main extends Application {
 
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
+
+		Query q = em.createQuery("Select t from Termin t");
+		List<Termin> res = q.getResultList();
+
 		/*
-		 * Query q = em.createQuery("Select t from Termin t"); List<Termin> res =
-		 * q.getResultList();
-		 * 
 		 * for (Termin t : res) { System.out.println(t); }
-		 * 
+		 */
+
+		/*
 		 * em.getTransaction().begin(); for (Termin t : res) { em.persist(t); for (int i
 		 * = 0; i < 14; ++i) { em.detach(t); t.setId(null);
 		 * t.setStartTime(t.getStartTime().plusDays(7));
 		 * t.setEndTime(t.getEndTime().plusDays(7)); em.persist(t); em.flush(); } }
 		 * em.getTransaction().commit();
-		 * 
-		 * System.out.println(res.size());
 		 */
+		System.out.println(res.size());
 
 		VBox login = FXMLLoader.load(getClass().getResource("login.fxml"));
 		Scene loginScene = new Scene(login);
@@ -413,11 +419,12 @@ public class Main extends Application {
 		Button dodaj = (Button) sviButtoni.get(0);
 		Button obrisi = (Button) sviButtoni.get(1);
 		Button uredi = (Button) sviButtoni.get(2);
-		
-		if (registrovan)
+
+		if (registrovan) {
 			uredjivanje.setVisible(true);
-		else
+		} else {
 			uredjivanje.setVisible(false);
+		}
 
 		AnchorPane defaultBlock = (AnchorPane) drawPane.getChildren().get(12);
 
@@ -432,11 +439,9 @@ public class Main extends Application {
 
 		Iterator it = mapaTermina.entrySet().iterator();
 		List<AnchorPane> noviBlokovi = new ArrayList<>();
-		
-		String limit = "01/07/2019 00:00";
-		DateTimeFormatter stringToDate = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-		LocalDateTime limitDatum = LocalDateTime.parse(limit, stringToDate);
-		
+
+		LocalDateTime limitDatum = LocalDateTime.of(LocalDate.of(2019, 6, 24), LocalTime.of(0, 0, 0));
+
 		LocalDateTime trenutniDatum = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -459,9 +464,9 @@ public class Main extends Application {
 		}
 
 		List<Node> allDays = weekDaysPane.getChildren();
-		
+
 		String trenutniDan = trenutniDatum.format(formatter);
-		
+
 		List<String> weekDates = getDates();
 		for (int i = 0; i < 6; ++i) {
 			AnchorPane day = (AnchorPane) allDays.get(i);
@@ -711,7 +716,7 @@ public class Main extends Application {
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
 
-		Termin.getTermini(vr);
+		// Termin.getTermini(vr);
 		/*
 		 * Termin.getTermini(vr); Predmet.showPredmeti(); Termin.showTermini();
 		 */
