@@ -19,7 +19,7 @@
       </ImageView>
       <Pane layoutX="22.0" layoutY="225.0" opacity="0.7" prefHeight="370.0" prefWidth="398.0" style="-fx-background-color: black; -fx-background-radius: 3;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
          <children>
-            <Button fx:id="ponisti" layoutX="190.0" layoutY="310.0" mnemonicParsing="false" text="Ponisti" />
+            <Button fx:id="ponisti" layoutX="80.0" layoutY="310.0" mnemonicParsing="false" text="Ponisti" />
             <ChoiceBox fx:id="usmjerenje" layoutX="171.0" layoutY="217.0" prefHeight="26.0" prefWidth="149.0" />
             <Label layoutX="50.0" layoutY="220.0" text="Usmjerenje:" textFill="WHITE">
                <font>
@@ -39,6 +39,13 @@
                </font>
             </Label>
             <TextField fx:id="prezime" layoutX="150.0" layoutY="157.0" promptText="Prezime Nastavnika" />
+            <Label layoutX="50.0" layoutY="40.0" text="ID:" textFill="WHITE">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="id" disable="true" layoutX="119.0" layoutY="37.0" prefHeight="26.0" prefWidth="201.0" promptText="ID" />
+            <Button fx:id="obrisi" layoutX="160.0" layoutY="310.0" mnemonicParsing="false" text="Obrisi zapis" />
          </children>
       </Pane>
    </children>

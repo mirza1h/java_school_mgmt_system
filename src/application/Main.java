@@ -32,6 +32,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -545,60 +546,48 @@ public class Main extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startProfesori(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
 
 		predmeti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startPredmeti(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
 
 		prostorije.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startProstorije(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
 
 		rasporedi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startFilterPage(primaryStage, true);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
 
 		primaryStage.setTitle("Pocetna");
@@ -616,46 +605,46 @@ public class Main extends Application {
 
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("ime"));
-		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("predmeti"));
-		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
+		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("predmeti"));
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("grupa"));
 
 		Collection<Profesor> c = Profesor.getProfesori();
 		tabela.getItems().addAll(c);
-		
-		tabela.setOnMouseClicked( event -> {
-			   if( event.getClickCount() == 2 ) {
-			      System.out.println( tabela.getSelectionModel().getSelectedItem());
-			   }});
-		
+
+		tabela.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				try {
+					Profesor prof = tabela.getSelectionModel().getSelectedItem();
+					startUrediProfesora(primaryStage, prof);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startDodajProfesoraPage(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			
 		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startProdekanPage(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
 
 		primaryStage.setTitle("Profesori");
@@ -680,40 +669,39 @@ public class Main extends Application {
 
 		Collection<Predmet> c = Predmet.getPredmeti();
 		tabela.getItems().addAll(c);
-		
-		tabela.setOnMouseClicked( event -> {
-			   if( event.getClickCount() == 2 ) {
-			      System.out.println( tabela.getSelectionModel().getSelectedItem());
-			   }});
-		
+
+		tabela.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				try {
+					startUrediPredmet(primaryStage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startDodajPredmetPage(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			
 		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startProdekanPage(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
 
 		primaryStage.setTitle("Predmeti");
@@ -736,36 +724,36 @@ public class Main extends Application {
 
 		Collection<Lokacija> c = Lokacija.getLokacije();
 		tabela.getItems().addAll(c);
-		
-		tabela.setOnMouseClicked( event -> {
-			   if( event.getClickCount() == 2 ) {
-			      System.out.println( tabela.getSelectionModel().getSelectedItem());
-			   }});
-		
+
+		tabela.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				try {
+					startUrediProstoriju(primaryStage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startDodajProstorijePage(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-			
 		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startProdekanPage(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -776,85 +764,162 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startDodajProfesoraPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaNastavnik.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startProfesori(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
-		
+
 		primaryStage.setTitle("Dodaj novi predmet");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startDodajPredmetPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaPredmet.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startPredmeti(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
-		
+
 		primaryStage.setTitle("Dodaj novi predmet");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startDodajProstorijePage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaProstorija.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
 				try {
 					startProstorije(primaryStage);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-
 		});
 
+		primaryStage.setTitle("Dodaj novu prostoriju");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+
+	public void startUrediProfesora(Stage primaryStage, Profesor prof) throws IOException {
+		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProfesora.fxml"));
+		Scene scene = new Scene(forma);
+
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button ponisti = (Button) scene.lookup("#ponisti");
 		
-		primaryStage.setTitle("Dodaj novi predmet");
+		TextField id = (TextField) scene.lookup("#id");
+		TextField ime = (TextField) scene.lookup("#ime");
+		TextField prezime = (TextField) scene.lookup("#prezime");
+		ChoiceBox<Profesor.Usmjerenje> usmjerenje = (ChoiceBox<Profesor.Usmjerenje>) scene.lookup("#usmjerenje");
+
+		id.setText(prof.getId().toString());
+		
+		String[] profesor = prof.getIme().split(" ");
+		ime.setText(profesor[0]);
+		prezime.setText(profesor[1]);
+		
+		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
+		usmjerenje.setValue(prof.getUsmjerenje());
+
+
+		ponisti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					startProfesori(primaryStage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		primaryStage.setTitle("Uredi profesora");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startUrediPredmet(Stage primaryStage) throws IOException {
+		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediPredmet.fxml"));
+		Scene scene = new Scene(forma);
+
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button ponisti = (Button) scene.lookup("#ponisti");
+
+		ponisti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					startPredmeti(primaryStage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		primaryStage.setTitle("Uredi predmet");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public void startUrediProstoriju(Stage primaryStage) throws IOException {
+		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProstoriju.fxml"));
+		Scene scene = new Scene(forma);
+
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button ponisti = (Button) scene.lookup("#ponisti");
+
+		ponisti.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					startProstorije(primaryStage);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		primaryStage.setTitle("Uredi prostoriju");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -886,7 +951,7 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
-		// DbFunctions.addProdekan();
+//		 DbFunctions.addProdekan();
 		Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);
