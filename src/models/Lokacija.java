@@ -16,6 +16,8 @@ import application.Main;
 import models.Korisnik.tipKorisnika;
 
 @NamedQueries({ @NamedQuery(name = "sveLokacije", query = "select t from Lokacija t") })
+@NamedQuery(name = "unikatneLokacije", query = "select l from Lokacija l where l.id = "
+		+ "(select min(l2.id) from Lokacija l2 where l2.sala = l.sala and l2.zgrada = l.zgrada and l2.kapacitet = l.kapacitet)")
 @Entity
 public class Lokacija {
 
@@ -72,7 +74,7 @@ public class Lokacija {
 	}
 	public static Collection<Lokacija> getLokacije() {
 		EntityManager em = Main.getFactory().createEntityManager();
-		Query upit = em.createNamedQuery("sveLokacije", Lokacija.class);
+		Query upit = em.createNamedQuery("unikatneLokacije", Lokacija.class);
 		Collection<Lokacija> rezultat = upit.getResultList();
 		return rezultat;
 

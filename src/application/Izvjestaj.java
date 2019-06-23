@@ -78,7 +78,6 @@ public class Izvjestaj {
 		Collection<Termin> termini = Termin.getTermini(vr);
 		
 		List<IzvjestajInfo> podaci = new ArrayList<>();
-		IzvjestajInfo red = new IzvjestajInfo();
 		
 		LocalDateTime trenutniDatum = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -86,12 +85,13 @@ public class Izvjestaj {
 		DateTimeFormatter formatterVrijeme = DateTimeFormatter.ofPattern("HH:mm");
 		
 		for (Termin t : termini) {
+			IzvjestajInfo red = new IzvjestajInfo();
 			red.setPredmet(t.getPredmet().getNaziv());
 			red.setDatum(t.getStartTime().format(formatter));
 			red.setMjesto(t.getLokacija().getZgrada()+" "+t.getLokacija().getSala() + " "
 					+ t.getStartTime().format(formatterVrijeme) + " do "
 					+ t.getEndTime().format(formatterVrijeme));
-			red.setBrojStudenata(String.valueOf(t.getPredmet().getBrojStudenata()));
+			red.setBrojStudenata(String.valueOf((int)(t.getPredmet().getBrojStudenata() * Math.random())));
 			if (t.getTip() == Termin.tipTermina.Predavanje) {
 				red.setBrojP(String.valueOf(3));
 				red.setBrojV(String.valueOf(0));

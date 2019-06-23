@@ -640,21 +640,24 @@ public class Main extends Application {
 
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
-		TableView<Profesor> tabela = (TableView<Profesor>) scene.lookup("#tabela");
+		TableView<ProfesoriIspis> tabela = (TableView<ProfesoriIspis>) scene.lookup("#tabela");
 
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("ime"));
+		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("imePrezime"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("predmeti"));
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("grupa"));
 
-		Collection<Profesor> c = Profesor.getProfesori();
+		Collection<ProfesoriIspis> c = ProfesoriGet.getTableProfesor();
 		tabela.getItems().addAll(c);
+		
+		EntityManager em=Main.getFactory().createEntityManager();
 
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				try {
-					Profesor prof = tabela.getSelectionModel().getSelectedItem();
+					String id = tabela.getSelectionModel().getSelectedItem().getId();
+					Profesor prof = em.getReference(Profesor.class, Long.parseLong(id));
 					startUrediProfesora(primaryStage, prof);
 				} catch (IOException e) {
 					e.printStackTrace();
