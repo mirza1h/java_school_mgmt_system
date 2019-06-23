@@ -712,7 +712,8 @@ public class Main extends Application {
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				try {
-					startUrediPredmet(primaryStage);
+					Predmet pred = tabela.getSelectionModel().getSelectedItem();
+					startUrediPredmet(primaryStage, pred);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -767,7 +768,8 @@ public class Main extends Application {
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				try {
-					startUrediProstoriju(primaryStage);
+					Lokacija pros = tabela.getSelectionModel().getSelectedItem();
+					startUrediProstoriju(primaryStage, pros);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -1016,6 +1018,31 @@ public class Main extends Application {
 
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 		usmjerenje.setValue(prof.getUsmjerenje());
+		
+		uredi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				Label greska = (Label) scene.lookup("#greska");
+
+				List<String> profesor = new ArrayList<String>();
+				profesor.add(id.getText());
+				profesor.add(ime.getText()+" "+prezime.getText());
+				profesor.add(usmjerenje.getValue().toString());
+				System.out.println(profesor);
+
+				if (Profesor.updateProfesor(profesor) == true) {
+					try {
+//						greska.setVisible(false);
+						startProstorije(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+//					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1034,7 +1061,7 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	public void startUrediPredmet(Stage primaryStage) throws IOException {
+	public void startUrediPredmet(Stage primaryStage, Predmet pred) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediPredmet.fxml"));
 		Scene scene = new Scene(forma);
 
@@ -1058,12 +1085,48 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	public void startUrediProstoriju(Stage primaryStage) throws IOException {
+	public void startUrediProstoriju(Stage primaryStage, Lokacija prostorija) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProstoriju.fxml"));
 		Scene scene = new Scene(forma);
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		TextField id = (TextField) scene.lookup("#id");
+		TextField sala = (TextField) scene.lookup("#sala");
+		TextField zgrada = (TextField) scene.lookup("#zgrada");
+		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
+		
+		id.setText(prostorija.getId().toString());
+		sala.setText(prostorija.getSala());
+		zgrada.setText(prostorija.getZgrada());
+		Integer k = (Integer) prostorija.getKapacitet();
+		kapacitet.setText(k.toString());
+		
+		uredi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				Label greska = (Label) scene.lookup("#greska");
+
+				List<String> prostorija = new ArrayList<String>();
+				prostorija.add(id.getText());
+				prostorija.add(sala.getText());
+				prostorija.add(zgrada.getText());
+				prostorija.add(kapacitet.getText());
+
+				if (Lokacija.updateLokacija(prostorija) == true) {
+					try {
+//						greska.setVisible(false);
+						startProstorije(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+//					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 

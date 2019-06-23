@@ -111,7 +111,7 @@ public class Profesor {
 		}
 	}
 	public static boolean updateProfesor(List<String> unos) {
-		int id=Integer.valueOf(unos.get(0));
+		Long id=Long.valueOf(unos.get(0));
 		String ime=unos.get(1);
 		Usmjerenje usm=Usmjerenje.valueOf(unos.get(2));
 		EntityManager em = Main.getFactory().createEntityManager();

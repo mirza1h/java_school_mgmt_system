@@ -31,7 +31,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Button fx:id="dodaj" layoutX="270.0" layoutY="310.0" mnemonicParsing="false" text="Dodaj zapis" />
+            <Button fx:id="dodaj" layoutX="270.0" layoutY="310.0" mnemonicParsing="false" text="Uredi zapis" />
             <TextField fx:id="naziv" layoutX="120.0" layoutY="67.0" prefHeight="26.0" prefWidth="205.0" promptText="Naziv predmeta" />
             <Label layoutX="30.0" layoutY="70.0" text="Naziv:" textFill="WHITE">
                <font>

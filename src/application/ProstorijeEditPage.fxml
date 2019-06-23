@@ -22,7 +22,7 @@
                 <TableColumn prefWidth="70.0" text="id" />
                 <TableColumn prefWidth="249.0" text="Sala" />
                   <TableColumn prefWidth="196.0" text="Zgrada" />
-                  <TableColumn prefWidth="159.0" text="Kapacitet" />
+                  <TableColumn prefWidth="144.0" text="Kapacitet" />
               </columns>
             </TableView>
             <Button fx:id="dodaj" layoutX="280.0" layoutY="395.0" mnemonicParsing="false" prefWidth="155.0" text="Dodaj novi zapis" />
