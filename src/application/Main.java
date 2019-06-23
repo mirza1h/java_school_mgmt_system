@@ -68,6 +68,8 @@ public class Main extends Application {
 	private static EntityManagerFactory factory;
 
 	private int offsetDatum = 0;
+	
+	private String trenutniKorisnik = null;
 
 	public static EntityManagerFactory getFactory() {
 		return factory;
@@ -263,7 +265,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					String uneseniUser = username.getText();
+					String uneseniUser = trenutniKorisnik = username.getText();
 					String uneseniPass = password.getText();
 
 					if ((uneseniUser == null) || (uneseniPass == null)) {
@@ -426,11 +428,14 @@ public class Main extends Application {
 		AnchorPane drawPane = (AnchorPane) mainPane.getChildren().get(3);
 		AnchorPane navigacija = (AnchorPane) mainPane.getChildren().get(4);
 		Button dodaj = (Button) mainPane.getChildren().get(0);
+		Button izvjestaj = (Button) mainPane.getChildren().get(5);
 
 		if (registrovan) {
 			dodaj.setVisible(true);
+			izvjestaj.setVisible(true);
 		} else {
 			dodaj.setVisible(false);
+			izvjestaj.setVisible(false);
 		}
 
 		AnchorPane defaultBlock = (AnchorPane) drawPane.getChildren().get(12);
@@ -532,6 +537,18 @@ public class Main extends Application {
 			public void handle(ActionEvent e) {
 				// Emira ovdje dodaj funkciju koja otvara panel za dodavanje
 				System.out.println("Dodaj panel");
+			}
+		});
+		
+		izvjestaj.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				try {
+					startIzvjestajPage(primaryStage, trenutniDatum.getMonth().name(), trenutniDan);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -1058,6 +1075,51 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
+	
+	public void startIzvjestajPage(Stage primaryStage, String mjesec, String datum) throws IOException {
+		VBox izvjestaj = FXMLLoader.load(getClass().getResource("Izvjestaj.fxml"));
+		Scene scene = new Scene(izvjestaj);
+		
+		Label izvrsilac1 = (Label) scene.lookup("#izvrsilac1");
+		Label izvrsilac2 = (Label) scene.lookup("#izvrsilac2");
+		Label ukupnoPS = (Label) scene.lookup("#up");
+		Label ukupnoAS = (Label) scene.lookup("#ua");
+		Label zaMjesec = (Label) scene.lookup("#zaMjesec");
+		Label datumLabel = (Label) scene.lookup("#datum");
+		
+		izvrsilac1.setText("IZVRSILAC: " + trenutniKorisnik);
+		izvrsilac2.setText("Izvrsilac: " + trenutniKorisnik);
+		zaMjesec.setText("za mjesec " + Izvjestaj.prevediMjesec(mjesec) + " zimski/ljetni semestar ak. 2018/19 godine");
+		datumLabel.setText("Datum podnosenja izvjestaja: " + datum);
+		
+		TableView<IzvjestajInfo> tabela = (TableView<IzvjestajInfo>) scene.lookup("#tabela");
+		
+		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("predmet"));
+		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("datum"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("mjesto"));
+		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("brojStudenata"));
+		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("brojP"));
+		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("brojV"));
+		
+		List<IzvjestajInfo> termini = Izvjestaj.getIzvjestaj(trenutniKorisnik, mjesec);
+		
+		int ukupnoP=0, ukupnoV=0;
+		
+		for (IzvjestajInfo t : termini) {
+			ukupnoP += Integer.parseInt(t.getBrojP());
+			ukupnoV += Integer.parseInt(t.getBrojV());
+		}
+		
+		ukupnoPS.setText(String.valueOf(ukupnoP));
+		ukupnoAS.setText(String.valueOf(ukupnoV));
+		
+		System.out.println(termini);
+		tabela.getItems().addAll(termini);
+		
+		primaryStage.setTitle("Izvjestaj");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -1087,6 +1149,7 @@ public class Main extends Application {
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
 //		 DbFunctions.addProdekan();
+		//DbFunctions.addProfesor();
 		Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);

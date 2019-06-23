@@ -78,5 +78,18 @@ public class DbFunctions {
 		em.close();
 		
 	}
+	
+	public static void addProfesor() {
+		EntityManager em=Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
+		Korisnik novi=new Korisnik();
+		novi.setUsername("Amer Hasanović");
+		novi.setPassword("123");
+		novi.setTip(tipKorisnika.Nastavnik);
+		em.persist(novi);
+		em.getTransaction().commit();
+		em.close();
+		
+	}
 
 }
