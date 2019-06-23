@@ -646,7 +646,6 @@ public class Main extends Application {
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("imePrezime"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("predmeti"));
-		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("grupa"));
 
 		Collection<ProfesoriIspis> c = ProfesoriGet.getTableProfesor();
 		tabela.getItems().addAll(c);
@@ -1007,6 +1006,7 @@ public class Main extends Application {
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		Button obrisi = (Button) scene.lookup("#obrisi");
 
 		TextField id = (TextField) scene.lookup("#id");
 		TextField ime = (TextField) scene.lookup("#ime");
@@ -1046,6 +1046,23 @@ public class Main extends Application {
 				}
 			}
 		});
+		
+		obrisi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if(Profesor.deleteProfesor(prof.getId()) == true) {
+					try {
+//						greska.setVisible(false);
+						startProfesori(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+//					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1070,6 +1087,24 @@ public class Main extends Application {
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		Button obrisi = (Button) scene.lookup("#obrisi");
+		
+		obrisi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if(Predmet.deletePredmet(pred.getId()) == true) {
+					try {
+//						greska.setVisible(false);
+						startPredmeti(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+//					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1094,6 +1129,7 @@ public class Main extends Application {
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		Button obrisi = (Button) scene.lookup("#obrisi");
 		
 		TextField id = (TextField) scene.lookup("#id");
 		TextField sala = (TextField) scene.lookup("#sala");
@@ -1119,6 +1155,23 @@ public class Main extends Application {
 				prostorija.add(kapacitet.getText());
 
 				if (Lokacija.updateLokacija(prostorija) == true) {
+					try {
+//						greska.setVisible(false);
+						startProstorije(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+//					greska.setVisible(true);
+				}
+			}
+		});
+		
+		obrisi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if(Lokacija.deleteLokacija(prostorija.getId()) == true) {
 					try {
 //						greska.setVisible(false);
 						startProstorije(primaryStage);
