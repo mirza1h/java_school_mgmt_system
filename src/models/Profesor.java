@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
+
+import application.Main;
 
 @NamedQueries({ @NamedQuery(name = "sviProfesori", query = "select prof from Profesor prof") })
 @Entity
@@ -65,5 +69,10 @@ public class Profesor {
 		}
 		return this.predmeti;
 	}
-
+	public static Collection<Profesor> getProfesori(){
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createNamedQuery("sviProfesori", Profesor.class);
+		Collection<Profesor> rezultat = upit.getResultList();
+		return rezultat;
+	}
 }

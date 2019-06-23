@@ -51,6 +51,7 @@ import javax.persistence.Query;
 
 import models.Korisnik;
 import models.Korisnik.tipKorisnika;
+import models.Lokacija;
 import models.Predmet;
 import models.Profesor;
 import models.Profesor.Usmjerenje;
@@ -716,6 +717,7 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
+		
 
 		// Termin.getTermini(vr);
 		/*

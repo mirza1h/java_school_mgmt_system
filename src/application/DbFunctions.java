@@ -37,7 +37,7 @@ public class DbFunctions {
 	public static void createTermini() {
 		EntityManager em=Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		Collection<Object> predmeti=Predmet.getPredmeti();
+		Collection<Predmet> predmeti=Predmet.getPredmeti();
 		ArrayList<Predmet> pr=new ArrayList<Predmet>();
 		for (Object o: predmeti) {
 			pr.add((Predmet) o);

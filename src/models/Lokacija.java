@@ -1,10 +1,19 @@
 package models;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 
+import application.Main;
+
+@NamedQueries({ @NamedQuery(name = "sveLokacije", query = "select t from Lokacija t") })
 @Entity
 public class Lokacija {
 
@@ -58,5 +67,12 @@ public class Lokacija {
 	@Override
 	public String toString() {
 		return "Lokacija [zgrada=" + this.zgrada + ", sala=" + this.sala + "]";
+	}
+	public static Collection<Lokacija> getLokacije() {
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createNamedQuery("sveLokacije", Lokacija.class);
+		Collection<Lokacija> rezultat = upit.getResultList();
+		return rezultat;
+
 	}
 }

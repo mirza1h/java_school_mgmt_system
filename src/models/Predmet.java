@@ -97,10 +97,10 @@ public class Predmet {
 
 	}
 
-	public static Collection<Object> getPredmeti() {
+	public static Collection<Predmet> getPredmeti() {
 		EntityManager em = Main.getFactory().createEntityManager();
 		Query upit = em.createNamedQuery("sviPredmeti", Predmet.class);
-		Collection<Object> rezultat = upit.getResultList();
+		Collection<Predmet> rezultat = upit.getResultList();
 		return rezultat;
 
 	}
