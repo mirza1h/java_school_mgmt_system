@@ -129,6 +129,13 @@ public class Podaci {
 						pocetakSemestra = pocetakSemestra.plusDays(3);
 					}
 					String randomSala = sale[(int) ((Math.random() * sale.length) - 1) + 0];
+					if (randomSala.equals("FE-008") || randomSala.equals("G-A")) {
+						lokacija.setKapacitet(100);
+					} else if (randomSala.equals("FE-101") || randomSala.equals("STELEKT-A")) {
+						lokacija.setKapacitet(50);
+					} else {
+						lokacija.setKapacitet(20);
+					}
 					String salaZgrada[] = randomSala.split("-");
 					lokacija.setZgrada(salaZgrada[0]);
 					lokacija.setSala(salaZgrada[1]);

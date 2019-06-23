@@ -24,7 +24,7 @@
                   <TableColumn prefWidth="111.0" text="Br studenata" />
                   <TableColumn prefWidth="95.0" text="Usmjerenje" />
                   <TableColumn prefWidth="87.0" text="Semestar" />
-                  <TableColumn prefWidth="126.0" text="Profesori" />
+                  <TableColumn prefWidth="104.0" text="Profesori" />
               </columns>
             </TableView>
             <Button fx:id="dodaj" layoutX="280.0" layoutY="395.0" mnemonicParsing="false" prefWidth="155.0" text="Dodaj novi zapis" />

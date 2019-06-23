@@ -15,9 +15,10 @@ import javax.persistence.Query;
 import application.Main;
 import models.Korisnik.tipKorisnika;
 
-@NamedQueries({ @NamedQuery(name = "sveLokacije", query = "select t from Lokacija t") })
-@NamedQuery(name = "unikatneLokacije", query = "select l from Lokacija l where l.id = "
-		+ "(select min(l2.id) from Lokacija l2 where l2.sala = l.sala and l2.zgrada = l.zgrada and l2.kapacitet = l.kapacitet)")
+@NamedQueries({ @NamedQuery(name = "sveLokacije", query = "select t from Lokacija t"),
+		@NamedQuery(name = "unikatneLokacije", query = "select l from Lokacija l where l.id = "
+				+ "(select min(l2.id) from Lokacija l2 where l2.sala = l.sala and l2.zgrada = l.zgrada and l2.kapacitet = l.kapacitet)") })
+
 @Entity
 public class Lokacija {
 
@@ -72,6 +73,7 @@ public class Lokacija {
 	public String toString() {
 		return "Lokacija [zgrada=" + this.zgrada + ", sala=" + this.sala + "]";
 	}
+
 	public static Collection<Lokacija> getLokacije() {
 		EntityManager em = Main.getFactory().createEntityManager();
 		Query upit = em.createNamedQuery("unikatneLokacije", Lokacija.class);
@@ -79,41 +81,43 @@ public class Lokacija {
 		return rezultat;
 
 	}
+
 	public static boolean unesiLokaciju(List<String> unos) {
-		String zgrada=unos.get(1);
-		String sala=unos.get(0);
-		int kapacitet=Integer.valueOf(unos.get(2));
+		String zgrada = unos.get(1);
+		String sala = unos.get(0);
+		int kapacitet = Integer.valueOf(unos.get(2));
 		EntityManager em = Main.getFactory().createEntityManager();
-		Query upit = em.createQuery("select t from Lokacija t where t.zgrada='"+zgrada+"' and t.sala='"+sala+"'", Lokacija.class);
+		Query upit = em.createQuery(
+				"select t from Lokacija t where t.zgrada='" + zgrada + "' and t.sala='" + sala + "'", Lokacija.class);
 		Collection<Lokacija> rezultat = upit.getResultList();
-		if(rezultat.size()!=0) {
+		if (rezultat.size() != 0) {
 			em.close();
 			return false;
+		} else {
+			em.getTransaction().begin();
+			Lokacija nova = new Lokacija();
+			nova.setZgrada(zgrada);
+			nova.setKapacitet(kapacitet);
+			nova.setSala(sala);
+			em.persist(nova);
+			em.getTransaction().commit();
+			return true;
 		}
-		else {
-		em.getTransaction().begin();
-		Lokacija nova= new Lokacija();
-		nova.setZgrada(zgrada);
-		nova.setKapacitet(kapacitet);
-		nova.setSala(sala);
-		em.persist(nova);
-		em.getTransaction().commit();
-		return true;
 	}
-	}
+
 	public static boolean updateLokacija(List<String> unos) {
-		Long id=Long.valueOf(unos.get(0));
-		String zgrada=unos.get(1);
-		String sala=unos.get(2);
-		int kapacitet=Integer.valueOf(unos.get(3));
+		Long id = Long.valueOf(unos.get(0));
+		String zgrada = unos.get(1);
+		String sala = unos.get(2);
+		int kapacitet = Integer.valueOf(unos.get(3));
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		Lokacija neka=em.getReference(Lokacija.class, id);
-		Query upit=em.createQuery("select t from Lokacija t where t.zgrada=:var and t.sala=:nest",Lokacija.class);
-		upit.setParameter("var",zgrada);
-		upit.setParameter("nest",sala);
-		Collection<Lokacija> rezultat=upit.getResultList();
-		if(rezultat.size()!=0) {
+		Lokacija neka = em.getReference(Lokacija.class, id);
+		Query upit = em.createQuery("select t from Lokacija t where t.zgrada=:var and t.sala=:nest", Lokacija.class);
+		upit.setParameter("var", zgrada);
+		upit.setParameter("nest", sala);
+		Collection<Lokacija> rezultat = upit.getResultList();
+		if (rezultat.size() != 0) {
 			em.close();
 			return false;
 		}
@@ -122,13 +126,14 @@ public class Lokacija {
 		neka.setSala(sala);
 		em.getTransaction().commit();
 		em.close();
-		
+
 		return true;
 	}
+
 	public static boolean deleteLokacija(Long id) {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		Query upit=em.createQuery("delete from Lokacija p where p.id=:var",Lokacija.class);
+		Query upit = em.createQuery("delete from Lokacija p where p.id=:var", Lokacija.class);
 		upit.setParameter("var", id);
 		upit.executeUpdate();
 		return true;

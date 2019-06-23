@@ -40,14 +40,14 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Button fx:id="dodaj" layoutX="270.0" layoutY="310.0" mnemonicParsing="false" prefWidth="95.0" text="Dodaj zapis" />
+            <Button fx:id="dodaj" layoutX="270.0" layoutY="310.0" mnemonicParsing="false" prefWidth="95.0" text="Uredi zapis" />
             <Button fx:id="ponisti" layoutX="80.0" layoutY="310.0" mnemonicParsing="false" text="Ponisti" />
             <Label layoutX="50.0" layoutY="40.0" text="ID:" textFill="WHITE">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="id" disable="true" layoutX="120.0" layoutY="37.0" prefHeight="26.0" prefWidth="216.0" promptText="Unesite salu" />
+            <TextField fx:id="id" editable="false" layoutX="166.0" layoutY="37.0" prefHeight="26.0" prefWidth="170.0" promptText="ID" />
             <Button fx:id="obrisi" layoutX="160.0" layoutY="310.0" mnemonicParsing="false" text="Obrisi zapis" />
          </children>
       </Pane>

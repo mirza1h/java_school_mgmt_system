@@ -23,7 +23,7 @@
                 <TableColumn prefWidth="217.0" text="Ime i Prezime" />
                   <TableColumn prefWidth="109.0" text="Usmjerenje" />
                   <TableColumn prefWidth="190.0" text="Predmeti" />
-                  <TableColumn prefWidth="83.0" text="Grupe" />
+                  <TableColumn prefWidth="65.0" text="Grupe" />
               </columns>
             </TableView>
             <Button fx:id="dodaj" layoutX="280.0" layoutY="395.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="155.0" text="Dodaj novi zapis" />

@@ -68,7 +68,7 @@ public class Main extends Application {
 	private static EntityManagerFactory factory;
 
 	private int offsetDatum = 0;
-	
+
 	private String trenutniKorisnik = null;
 
 	public static EntityManagerFactory getFactory() {
@@ -265,7 +265,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					String uneseniUser = trenutniKorisnik = username.getText();
+					String uneseniUser = Main.this.trenutniKorisnik = username.getText();
 					String uneseniPass = password.getText();
 
 					if ((uneseniUser == null) || (uneseniPass == null)) {
@@ -539,7 +539,7 @@ public class Main extends Application {
 				System.out.println("Dodaj panel");
 			}
 		});
-		
+
 		izvjestaj.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -715,7 +715,8 @@ public class Main extends Application {
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				try {
-					startUrediPredmet(primaryStage);
+					Predmet pred = tabela.getSelectionModel().getSelectedItem();
+					startUrediPredmet(primaryStage, pred);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -770,7 +771,8 @@ public class Main extends Application {
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				try {
-					startUrediProstoriju(primaryStage);
+					Lokacija pros = tabela.getSelectionModel().getSelectedItem();
+					startUrediProstoriju(primaryStage, pros);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -1019,6 +1021,31 @@ public class Main extends Application {
 
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 		usmjerenje.setValue(prof.getUsmjerenje());
+		
+		uredi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				Label greska = (Label) scene.lookup("#greska");
+
+				List<String> profesor = new ArrayList<String>();
+				profesor.add(id.getText());
+				profesor.add(ime.getText()+" "+prezime.getText());
+				profesor.add(usmjerenje.getValue().toString());
+				System.out.println(profesor);
+
+				if (Profesor.updateProfesor(profesor) == true) {
+					try {
+//						greska.setVisible(false);
+						startProfesori(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+//					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1037,7 +1064,7 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	public void startUrediPredmet(Stage primaryStage) throws IOException {
+	public void startUrediPredmet(Stage primaryStage, Predmet pred) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediPredmet.fxml"));
 		Scene scene = new Scene(forma);
 
@@ -1061,12 +1088,48 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 
-	public void startUrediProstoriju(Stage primaryStage) throws IOException {
+	public void startUrediProstoriju(Stage primaryStage, Lokacija prostorija) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProstoriju.fxml"));
 		Scene scene = new Scene(forma);
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		TextField id = (TextField) scene.lookup("#id");
+		TextField sala = (TextField) scene.lookup("#sala");
+		TextField zgrada = (TextField) scene.lookup("#zgrada");
+		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
+		
+		id.setText(prostorija.getId().toString());
+		sala.setText(prostorija.getSala());
+		zgrada.setText(prostorija.getZgrada());
+		Integer k = (Integer) prostorija.getKapacitet();
+		kapacitet.setText(k.toString());
+		
+		uredi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+//				Label greska = (Label) scene.lookup("#greska");
+
+				List<String> prostorija = new ArrayList<String>();
+				prostorija.add(id.getText());
+				prostorija.add(sala.getText());
+				prostorija.add(zgrada.getText());
+				prostorija.add(kapacitet.getText());
+
+				if (Lokacija.updateLokacija(prostorija) == true) {
+					try {
+//						greska.setVisible(false);
+						startProstorije(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+//					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1084,47 +1147,47 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startIzvjestajPage(Stage primaryStage, String mjesec, String datum) throws IOException {
 		VBox izvjestaj = FXMLLoader.load(getClass().getResource("Izvjestaj.fxml"));
 		Scene scene = new Scene(izvjestaj);
-		
+
 		Label izvrsilac1 = (Label) scene.lookup("#izvrsilac1");
 		Label izvrsilac2 = (Label) scene.lookup("#izvrsilac2");
 		Label ukupnoPS = (Label) scene.lookup("#up");
 		Label ukupnoAS = (Label) scene.lookup("#ua");
 		Label zaMjesec = (Label) scene.lookup("#zaMjesec");
 		Label datumLabel = (Label) scene.lookup("#datum");
-		
-		izvrsilac1.setText("IZVRSILAC: " + trenutniKorisnik);
-		izvrsilac2.setText("Izvrsilac: " + trenutniKorisnik);
+
+		izvrsilac1.setText("IZVRSILAC: " + this.trenutniKorisnik);
+		izvrsilac2.setText("Izvrsilac: " + this.trenutniKorisnik);
 		zaMjesec.setText("za mjesec " + Izvjestaj.prevediMjesec(mjesec) + " zimski/ljetni semestar ak. 2018/19 godine");
 		datumLabel.setText("Datum podnosenja izvjestaja: " + datum);
-		
+
 		TableView<IzvjestajInfo> tabela = (TableView<IzvjestajInfo>) scene.lookup("#tabela");
-		
+
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("predmet"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("datum"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("mjesto"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("brojStudenata"));
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("brojP"));
 		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("brojV"));
-		
-		List<IzvjestajInfo> termini = Izvjestaj.getIzvjestaj(trenutniKorisnik, mjesec);
-		
-		int ukupnoP=0, ukupnoV=0;
-		
+
+		List<IzvjestajInfo> termini = Izvjestaj.getIzvjestaj(this.trenutniKorisnik, mjesec);
+
+		int ukupnoP = 0, ukupnoV = 0;
+
 		for (IzvjestajInfo t : termini) {
 			ukupnoP += Integer.parseInt(t.getBrojP());
 			ukupnoV += Integer.parseInt(t.getBrojV());
 		}
-		
+
 		ukupnoPS.setText(String.valueOf(ukupnoP));
 		ukupnoAS.setText(String.valueOf(ukupnoV));
-		
+
 		System.out.println(termini);
 		tabela.getItems().addAll(termini);
-		
+
 		primaryStage.setTitle("Izvjestaj");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -1157,7 +1220,7 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
-//		 DbFunctions.addProdekan();
+		//DbFunctions.addProdekan();
 		//DbFunctions.addProfesor();
 		Korisnik.showKorisnici();
 
