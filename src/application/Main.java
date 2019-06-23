@@ -138,7 +138,7 @@ public class Main extends Application {
 
 		String dan = danDatum.format(formatter);
 		List<String> sviDani = getDates();
-		
+
 		System.out.println("DAAAN " + dan);
 		System.out.println("DANIII NEW BLOCK" + sviDani);
 		int pomjerajX = 0;
@@ -155,7 +155,7 @@ public class Main extends Application {
 		System.out.println(pomjerajX);
 		novi.setLayoutY(pomjerajY);
 
-		novi.setLayoutX(pomjerajX + (poRedu * (width + (velicina - 1) * 2)) + (poRedu * 2));
+		novi.setLayoutX(pomjerajX + (poRedu * (width + ((velicina - 1) * 2))) + (poRedu * 2));
 
 		for (int i = 0; i < 3; ++i) {
 			info.get(i).getStyleClass().add("copyable-label");
@@ -191,10 +191,23 @@ public class Main extends Application {
 	public void startLoginPage(Stage primaryStage) throws IOException {
 		// dodajKorisnike();
 
+		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		EntityManager em = factory.createEntityManager();
 		/*
-		 * factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		 * EntityManager em = factory.createEntityManager();
+		 * Query q = em.createQuery("Select t from Termin t"); List<Termin> res =
+		 * q.getResultList();
+		 * 
+		 * for (Termin t : res) { System.out.println(t); }
+		 * 
+		 * em.getTransaction().begin(); for (Termin t : res) { em.persist(t); for (int i
+		 * = 0; i < 14; ++i) { em.detach(t); t.setId(null);
+		 * t.setStartTime(t.getStartTime().plusDays(7));
+		 * t.setEndTime(t.getEndTime().plusDays(7)); em.persist(t); em.flush(); } }
+		 * em.getTransaction().commit();
+		 * 
+		 * System.out.println(res.size());
 		 */
+
 		VBox login = FXMLLoader.load(getClass().getResource("login.fxml"));
 		Scene loginScene = new Scene(login);
 
@@ -267,7 +280,7 @@ public class Main extends Application {
 
 	public void startFilterPage(Stage primaryStage, boolean registrovan) throws IOException {
 		VBox filter = FXMLLoader.load(getClass().getResource("rasporedFilter.fxml"));
-		
+
 		AnchorPane mainPane = (AnchorPane) filter.getChildren().get(0);
 		AnchorPane secondPane = (AnchorPane) mainPane.getChildren().get(1);
 
@@ -350,33 +363,33 @@ public class Main extends Application {
 
 	}
 
-	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini, List<String> vrijednosti)
-			throws IOException {
+	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini,
+			List<String> vrijednosti) throws IOException {
 
 		List<String> sledeceVrijednosti = new ArrayList<>();
 		List<String> prethodneVrijednosti = new ArrayList<>();
-		
+
 		sledeceVrijednosti.addAll(vrijednosti);
 		prethodneVrijednosti.addAll(vrijednosti);
-		
-		offsetDatum += 7;
+
+		this.offsetDatum += 7;
 		List<String> sledeciDatumi = getDates();
-		offsetDatum -= 7;
+		this.offsetDatum -= 7;
 		sledeceVrijednosti.set(7, sledeciDatumi.get(0));
 		sledeceVrijednosti.set(8, sledeciDatumi.get(5));
-		
-		offsetDatum -= 7;
+
+		this.offsetDatum -= 7;
 		List<String> prethodniDatumi = getDates();
-		offsetDatum += 7;
+		this.offsetDatum += 7;
 		prethodneVrijednosti.set(7, prethodniDatumi.get(0));
 		prethodneVrijednosti.set(8, prethodniDatumi.get(5));
-		
+
 		Collection<Termin> sledeciTermini = Termin.getTermini(sledeceVrijednosti);
 		Collection<Termin> prethodniTermini = Termin.getTermini(prethodneVrijednosti);
-		
-		System.out.println("OVDJEE: "  + prethodneVrijednosti);
-		System.out.println("OVDJEE: "  + sledeceVrijednosti);
-		
+
+		System.out.println("OVDJEE: " + prethodneVrijednosti);
+		System.out.println("OVDJEE: " + sledeceVrijednosti);
+
 		VBox root = FXMLLoader.load(getClass().getResource("raspored.fxml"));
 		Scene scene = new Scene(root);
 
@@ -656,19 +669,19 @@ public class Main extends Application {
 		vr.add(null);
 		vr.add(null);
 		vr.add(null);
+		vr.add("2");
 		vr.add(null);
 		vr.add(null);
-		vr.add(null);
-		vr.add(null);
+		vr.add("RI");
 		vr.add("16/09/2019");
-		vr.add("22/09/2019");
+		vr.add("23/09/2019");
 
 		Termin.getTermini(vr);
 		/*
 		 * Termin.getTermini(vr); Predmet.showPredmeti(); Termin.showTermini();
 		 */
-		// Podaci.napuniBazu()
-		//Termin.showTermini();
+		// Podaci.napuniBazu();
+		// Termin.showTermini();
 		if (Korisnik.nadjiKorisnika("amer", "amer") == tipKorisnika.Nastavnik) {
 			System.out.println("radi");
 		}

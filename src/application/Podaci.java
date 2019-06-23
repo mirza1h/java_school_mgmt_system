@@ -94,73 +94,77 @@ public class Podaci {
 		for (int i = 0; i < predmeti.size(); ++i) {
 			String[] lines = predmeti.get(i).split("\\r?\\n");
 			for (int j = 0; j < lines.length; ++j) {
-				Predmet predmet = new Predmet();
-				Termin termin = new Termin();
-				String sale[];
-				Lokacija lokacija = new Lokacija();
-				termin.setTip(((j % 2) != 0) ? tipTermina.Predavanje : tipTermina.Vjezbe);
-				if (termin.getTip() == tipTermina.Vjezbe) {
-					trajanje = 1;
-					sale = saleVjezbe;
-					dodajSlovo = true;
-				} else {
-					trajanje = 3;
-					sale = salePredavanja;
-					dodajSlovo = false;
-				}
-				LocalDateTime vrijeme1 = pocetakSemestra.plusHours(pocetak);
-				LocalDateTime vrijeme2 = vrijeme1.plusHours(trajanje);
-				termin.setStartTime(vrijeme1);
-				termin.setEndTime(vrijeme2);
-				pocetak += trajanje;
-				if (pocetak >= 20) {
-					vrijeme1.plusDays(1);
-					pocetak = 8;
-				}
-				if (vrijeme1.getDayOfWeek().getValue() == 5) {
-					vrijeme1.plusDays(3);
-				}
-				String randomSala = sale[(int) ((Math.random() * sale.length) - 1) + 0];
-				String salaZgrada[] = randomSala.split("-");
-				lokacija.setZgrada(salaZgrada[0]);
-				lokacija.setSala(salaZgrada[1]);
-				termin.setLokacija(lokacija);
-				predmet.setNaziv(lines[j]);
-				predmet.setUsmjerenje(usmjerenja[i]);
-				predmet.setSemestar((int) (Math.random() * 8) + 1);
-				int godina = izracunajGodinu(predmet.getSemestar());
-				String grupa = godina + "-" + predmet.getUsmjerenje();
-				if (dodajSlovo) {
-					grupa += "a";
-				}
-				termin.setGrupa(grupa);
-				predmet.setBrojStudenata((int) (Math.random() * 90) + 15);
-				int brojProfesora = (int) (Math.random() * 4) + 1;
-				String[] prof = profesori.get(i).split("\\r?\\n");
-				for (int k = 0; k < brojProfesora; ++k) {
-					Profesor profObj = new Profesor();
-					int randomProfesor = (int) (Math.random() * prof.length);
-					if (prof[randomProfesor].equals("koristen")) {
-						continue;
+				for (int m = 0; m < 3; ++m) {
+					Predmet predmet = new Predmet();
+					Termin termin = new Termin();
+					String sale[] = null;
+					Lokacija lokacija = new Lokacija();
+					if (m == 0) {
+						termin.setTip(tipTermina.Predavanje);
+						trajanje = 3;
+						sale = salePredavanja;
+					} else if (m == 1) {
+						termin.setTip(tipTermina.Vjezbe);
+						trajanje = 1;
+						sale = saleVjezbe;
+					} else if (m == 2) {
+						termin.setTip(tipTermina.Laboratorija);
+						trajanje = 1;
+						sale = saleVjezbe;
 					}
-					profObj.setIme(prof[randomProfesor]);
-					prof[randomProfesor] = new String("koristen");
-					profObj.setUsmjerenje(usmjerenja[i]);
-					profObj.getPredmete().add(predmet);
-					em.persist(profObj);
-					predmet.getProfesore().add(profObj);
-				}
-				em.persist(lokacija);
-				termin.setPredmet(predmet);
-				em.persist(termin);
-				for (int l = 0; l < 15; ++l) {
-					em.detach(termin);
-					termin.setId(null);
-					termin.setStartTime(termin.getStartTime().plusDays(7));
-					termin.setEndTime(termin.getEndTime().plusDays(7));
+					LocalDateTime vrijeme1 = pocetakSemestra.plusHours(pocetak);
+					LocalDateTime vrijeme2 = vrijeme1.plusHours(trajanje);
+					termin.setStartTime(vrijeme1);
+					termin.setEndTime(vrijeme2);
+					pocetak += trajanje;
+					if (pocetak >= 20) {
+						pocetakSemestra = pocetakSemestra.plusDays(1);
+						pocetak = 8;
+					}
+					if (vrijeme1.getDayOfWeek().getValue() == 5) {
+						pocetakSemestra = pocetakSemestra.plusDays(3);
+					}
+					String randomSala = sale[(int) ((Math.random() * sale.length) - 1) + 0];
+					String salaZgrada[] = randomSala.split("-");
+					lokacija.setZgrada(salaZgrada[0]);
+					lokacija.setSala(salaZgrada[1]);
+					termin.setLokacija(lokacija);
+					predmet.setNaziv(lines[j]);
+					predmet.setUsmjerenje(usmjerenja[i]);
+					predmet.setSemestar((int) (Math.random() * 8) + 1);
+					int godina = izracunajGodinu(predmet.getSemestar());
+					String grupa = godina + "-" + predmet.getUsmjerenje();
+					termin.setGrupa(grupa);
+					predmet.setBrojStudenata((int) (Math.random() * 90) + 15);
+					int brojProfesora = (int) (Math.random() * 4) + 1;
+					String[] prof = profesori.get(i).split("\\r?\\n");
+					for (int k = 0; k < brojProfesora; ++k) {
+						Profesor profObj = new Profesor();
+						int randomProfesor = (int) (Math.random() * prof.length);
+						if (prof[randomProfesor].equals("koristen")) {
+							continue;
+						}
+						profObj.setIme(prof[randomProfesor]);
+						prof[randomProfesor] = new String("koristen");
+						profObj.setUsmjerenje(usmjerenja[i]);
+						profObj.getPredmete().add(predmet);
+						em.persist(profObj);
+						predmet.getProfesore().add(profObj);
+					}
+					em.persist(lokacija);
+					termin.setPredmet(predmet);
+					/*
+					 * termin.setStartTime(termin.getStartTime().minusDays(7));
+					 * termin.setEndTime(termin.getEndTime().minusDays(7));
+					 */
 					em.persist(termin);
-					em.persist(predmet);
-					em.flush();
+					/*
+					 * for (int l = 0; l < 15; ++l) { if (l > 0) { em.detach(termin);
+					 * termin.setId(null); LocalDateTime vr1 = termin.getStartTime(); LocalDateTime
+					 * vr2 = termin.getStartTime(); termin.setStartTime(vr1.plusDays(7));
+					 * termin.setEndTime(vr2.plusDays(7)); em.persist(termin); em.persist(predmet);
+					 * em.flush(); } }
+					 */ em.persist(predmet);
 				}
 			}
 		}
