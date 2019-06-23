@@ -105,6 +105,7 @@ public class Lokacija {
 		String sala=unos.get(2);
 		int kapacitet=Integer.valueOf(unos.get(3));
 		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
 		Lokacija neka=em.getReference(Lokacija.class, id);
 		Query upit=em.createQuery("select t from Lokacija t where t.zgrada=:var and t.sala=:nest",Lokacija.class);
 		upit.setParameter("var",zgrada);
@@ -117,6 +118,7 @@ public class Lokacija {
 		neka.setKapacitet(kapacitet);
 		neka.setZgrada(zgrada);
 		neka.setSala(sala);
+		em.getTransaction().commit();
 		em.close();
 		
 		return true;

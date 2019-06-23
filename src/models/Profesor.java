@@ -115,6 +115,7 @@ public class Profesor {
 		String ime=unos.get(1);
 		Usmjerenje usm=Usmjerenje.valueOf(unos.get(2));
 		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction();
 		Query testniUpit=em.createQuery("select t from Korisnik t where t.username='"+ime+"'");
 		Collection<Profesor> provjera=testniUpit.getResultList();
 		if(provjera.size()!=0) {
@@ -129,8 +130,13 @@ public class Profesor {
 		}
 		prof.setIme(ime);
 		prof.setUsmjerenje(usm);
+		em.getTransaction().commit();
 		em.close();
 		return true;
 		
+	}
+
+	public Object getId() {
+		return this.id;
 	}
 }

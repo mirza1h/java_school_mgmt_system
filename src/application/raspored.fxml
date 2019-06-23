@@ -14,7 +14,7 @@
          <content>
           <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="828.0" prefWidth="1152.0">
             <children>
-                  <Button layoutX="1052.0" layoutY="422.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Dodaj" textFill="RED" />
+                  <Button layoutX="1052.0" layoutY="422.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Dodaj termin" textFill="RED" />
                   <AnchorPane layoutX="110.0" layoutY="15.0" prefHeight="50.0" prefWidth="775.0" style="-fx-background-color: #7cbdff;">
                      <children>
                         <AnchorPane prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: #4a4b4c;">
@@ -270,6 +270,7 @@
                         </AnchorPane>
                      </children>
                   </AnchorPane>
+                  <Button fx:id="izvjestaj" layoutX="1052.0" layoutY="455.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Izvjestaj" textFill="#f50000" />
             </children>
           </AnchorPane>
          </content>

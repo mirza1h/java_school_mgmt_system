@@ -154,6 +154,7 @@ public class Predmet {
 	}
 	public static boolean updatePredmet(List<String> unos) {
 		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
 		Integer id=Integer.valueOf(unos.get(0));
 		Predmet taj=em.getReference(Predmet.class, id);
 		Collection<Profesor> ukloniti=taj.getProfesore();
@@ -191,6 +192,7 @@ public class Predmet {
 			Profesor temp=em.getReference(Profesor.class,nastavnik.getId());
 			temp.getPredmete().add(taj);
 		}
+		em.getTransaction().commit();
 		
 		em.close();
 		

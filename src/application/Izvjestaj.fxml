@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="629.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="629.0" prefWidth="1361.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label layoutX="93.0" layoutY="25.0" text="UNIVERZITET U TUZLI" />
+            <Label layoutX="93.0" layoutY="50.0" text="FAKULTET: Fakultet elektrotehnike" />
+            <Label layoutX="93.0" layoutY="75.0" text="STUDIJSKI PROGRAM: Elektrotehnika i računarstvo" />
+            <Label fx:id="izvrsilac1" layoutX="93.0" layoutY="100.0" text="IZVRŠILAC: _____________________________" />
+            <Label alignment="CENTER" layoutX="402.0" layoutY="155.0" text="IZVJEŠTAJ O ODRŽAVANOJ NASTAVI/VJEŽBAMA">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="zaMjesec" alignment="CENTER" layoutY="208.0" prefWidth="1250.0" text="za mjesec juli zimski/ljetni semestar ak. 2018/19 godine" />
+            <TableView fx:id="tabela" layoutX="93.0" layoutY="290.0" prefHeight="206.0" prefWidth="1064.0">
+              <columns>
+                <TableColumn prefWidth="268.0" text="Nastavni predmet(i)" />
+                <TableColumn minWidth="0.0" prefWidth="116.0" text="Datum" />
+                  <TableColumn prefWidth="235.0" text="Mjesto i vrijeme održavanja" />
+                  <TableColumn prefWidth="201.0" text="Broj prisutnih studenata" />
+                  <TableColumn prefWidth="122.0" text="Broj časova P" />
+                  <TableColumn prefWidth="122.0" text="Broj časova A" />
+              </columns>
+            </TableView>
+            <Label layoutX="1049.0" layoutY="25.0" text="REDOVNI STUDIJ" />
+            <Label layoutX="128.0" layoutY="506.0" text="*Spiskovi studenata nalaze se kod pretmetnog nastavnika/saradnika" />
+            <Label fx:id="izvrsilac2" layoutX="93.0" layoutY="543.0" text="Izvršilac" />
+            <Label layoutX="1022.0" layoutY="543.0" text="Prodekan za nastavu" />
+            <Label layoutX="1022.0" layoutY="581.0" text="Dekan" />
+            <Label fx:id="datum" layoutX="93.0" layoutY="581.0" text="Datum podnošenja izvještaja" />
+            <Label fx:id="prodekan" layoutX="1022.0" layoutY="559.0" text="dr. sc. Emir Mešković" />
+            <Label layoutX="575.0" layoutY="225.0" prefHeight="16.0" prefWidth="77.0" text="(zaokružiti)" />
+            <Label layoutX="877.0" layoutY="502.0" text="Ukupno sati: " />
+            <Label fx:id="up" layoutX="998.0" layoutY="502.0" text="0" />
+            <Label fx:id="ua" layoutX="1103.0" layoutY="502.0" text="0" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
