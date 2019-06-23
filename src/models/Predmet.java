@@ -141,7 +141,7 @@ public class Predmet {
 				novi.setProfesore(rezultat);
 				for(Profesor nastavnik : rezultat) {
 					Profesor temp=em.getReference(Profesor.class,nastavnik.getId());
-					temp.getPredmete().addAll(rez);
+					temp.getPredmete().add(novi);
 				}
 				em.persist(novi);
 				em.getTransaction().commit();
@@ -153,7 +153,14 @@ public class Predmet {
 		}
 	}
 	public static boolean updatePredmet(List<String> unos) {
+		EntityManager em = Main.getFactory().createEntityManager();
 		Integer id=Integer.valueOf(unos.get(0));
+		Predmet taj=em.getReference(Predmet.class, id);
+		Collection<Profesor> ukloniti=taj.getProfesore();
+		for(Profesor kk :ukloniti) {
+			Profesor temp=em.getReference(Profesor.class,kk.getId());
+			temp.getPredmete().remove(taj);
+		}
 		String naziv=unos.get(1);
 		String semestar=unos.get(2);
 		int brojst=Integer.parseInt(unos.get(3));
@@ -163,7 +170,6 @@ public class Predmet {
 			upitProf+=" or t.ime='"+unos.get(i);
 		}
 		upitProf+=")";
-		EntityManager em = Main.getFactory().createEntityManager();
 		Query profesori=em.createQuery(upitProf,Profesor.class);
 		Collection<Profesor> rezultat=profesori.getResultList();
 		if(rezultat.size()==0) {
@@ -176,11 +182,16 @@ public class Predmet {
 		if(testRez.size()!=0) {
 			return false;
 		}
-		Predmet taj=em.getReference(Predmet.class, id);
+		
 		taj.setNaziv(naziv);
 		taj.setProfesore(rezultat);
 		taj.setSemestar(Integer.valueOf(semestar));
 		taj.setUsmjerenje(usm);
+		for(Profesor nastavnik : rezultat) {
+			Profesor temp=em.getReference(Profesor.class,nastavnik.getId());
+			temp.getPredmete().add(taj);
+		}
+		
 		em.close();
 		
 		
