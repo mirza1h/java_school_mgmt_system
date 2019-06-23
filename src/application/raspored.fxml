@@ -249,7 +249,7 @@
                         </AnchorPane>
                         <AnchorPane layoutX="14.0" layoutY="68.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #f79c8a;">
                            <children>
-                              <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="Vjezbe" textFill="WHITE" />
+                              <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="AV" textFill="WHITE" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="14.0" layoutY="98.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #6a95fc;">
@@ -264,12 +264,17 @@
                         </AnchorPane>
                         <AnchorPane layoutX="14.0" layoutY="158.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #f2fc69;">
                            <children>
+                              <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="LV" textFill="#5c5edd" />
+                           </children>
+                        </AnchorPane>
+                        <Button layoutX="14.0" layoutY="260.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Filter" />
+                        <Button layoutX="14.0" layoutY="295.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Sl. sedmica" />
+                        <Button layoutX="14.0" layoutY="330.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Pr. sedmica" />
+                        <AnchorPane layoutX="14.0" layoutY="189.0" prefHeight="19.0" prefWidth="103.0" style="-fx-background-color: #ed1ee2;">
+                           <children>
                               <Label layoutX="14.0" layoutY="8.0" prefHeight="2.0" prefWidth="73.0" text="Diplomski" textFill="WHITE" />
                            </children>
                         </AnchorPane>
-                        <Button layoutX="14.0" layoutY="210.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Filter" />
-                        <Button layoutX="14.0" layoutY="245.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Sl. sedmica" />
-                        <Button layoutX="14.0" layoutY="279.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" text="Pr. sedmica" />
                      </children>
                   </AnchorPane>
             </children>

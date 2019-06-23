@@ -94,16 +94,20 @@ public class Main extends Application {
 	public AnchorPane newBlock(AnchorPane block, Termin termin, int velicina, int poRedu) {
 		AnchorPane novi = new AnchorPane();
 
+		String myStyle = "-fx-border-color: #c6c6c6; -fx-border-width: 0px 0px 1px 0px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 0.0, 0.0);";
+		
 		if (termin.getTip() == Termin.tipTermina.Predavanje) {
-			novi.setStyle("-fx-background-color: #b7f78a");
+			novi.setStyle("-fx-background-color: #b7f78a; " + myStyle);
 		} else if (termin.getTip() == Termin.tipTermina.Vjezbe) {
-			novi.setStyle("-fx-background-color: #f79c8a");
+			novi.setStyle("-fx-background-color: #f79c8a; " + myStyle);
 		} else if (termin.getTip() == Termin.tipTermina.Seminar) {
-			novi.setStyle("-fx-background-color: #6a95fc");
+			novi.setStyle("-fx-background-color: #6a95fc; " + myStyle);
 		} else if (termin.getTip() == Termin.tipTermina.Nadoknada) {
-			novi.setStyle("-fx-background-color: #424240");
+			novi.setStyle("-fx-background-color: #424240; " + myStyle);
+		} else if (termin.getTip() == Termin.tipTermina.Laboratorija) {
+			novi.setStyle("-fx-background-color: #f2fc69; " + myStyle);
 		} else {
-			novi.setStyle("-fx-background-color: #f2fc69");
+			novi.setStyle("-fx-background-color: #ed1ee2; " + myStyle);		
 		}
 
 		double width = block.getPrefWidth() / velicina;
@@ -160,8 +164,12 @@ public class Main extends Application {
 		for (int i = 0; i < 3; ++i) {
 			info.get(i).getStyleClass().add("copyable-label");
 			info.get(i).setPrefWidth(width);
+			info.get(i).setWrapText(true);
 			info.get(i).setLayoutX(0);
-			info.get(i).setLayoutY(i * 15);
+			if (i == 1)
+				info.get(i).setLayoutY(30);
+			if (i == 2)
+				info.get(i).setLayoutY(45);
 			novi.getChildren().add(info.get(i));
 		}
 		return novi;

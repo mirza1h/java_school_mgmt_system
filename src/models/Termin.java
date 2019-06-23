@@ -150,7 +150,7 @@ public class Termin {
 			finalQuery = finalQuery + " and t.lokacija.sala like '" + vrijednosti.get(1) + "'";
 		}
 		if (vrijednosti.get(2) != null) {
-			finalQuery = finalQuery + " and t.profesor.ime_prezime like '" + vrijednosti.get(2) + "'";
+			finalQuery = finalQuery + " and t.profesor.ime like '" + vrijednosti.get(2) + "'";
 		}
 		if (vrijednosti.get(3) != null) {
 			finalQuery = finalQuery + " and (t.predmet.semestar=" + (2 * Integer.parseInt(vrijednosti.get(3)))
