@@ -101,6 +101,13 @@ public class Main extends Application {
 	public AnchorPane newBlock(AnchorPane block, Termin termin, int velicina, int poRedu) {
 		AnchorPane novi = new AnchorPane();
 
+		novi.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				// Emira pozovi ovdje fju za editovanje i brisanje bloka sa rasporeda
+				System.out.println("Ovdje edit i brisanje");
+			}
+		});
+
 		String myStyle = "-fx-border-color: #c6c6c6; -fx-border-width: 0px 0px 1px 0px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 0.0, 0.0);";
 
 		if (termin.getTip() == Termin.tipTermina.Predavanje) {
@@ -408,9 +415,6 @@ public class Main extends Application {
 		Collection<Termin> sledeciTermini = Termin.getTermini(sledeceVrijednosti);
 		Collection<Termin> prethodniTermini = Termin.getTermini(prethodneVrijednosti);
 
-		System.out.println("OVDJEE: " + prethodneVrijednosti);
-		System.out.println("OVDJEE: " + sledeceVrijednosti);
-
 		VBox root = FXMLLoader.load(getClass().getResource("raspored.fxml"));
 		Scene scene = new Scene(root);
 
@@ -419,16 +423,12 @@ public class Main extends Application {
 		AnchorPane weekDaysPane = (AnchorPane) mainPane.getChildren().get(1);
 		AnchorPane drawPane = (AnchorPane) mainPane.getChildren().get(3);
 		AnchorPane navigacija = (AnchorPane) mainPane.getChildren().get(4);
-		ButtonBar uredjivanje = (ButtonBar) mainPane.getChildren().get(0);
-		ObservableList<Node> sviButtoni = uredjivanje.getButtons();
-		Button dodaj = (Button) sviButtoni.get(0);
-		Button obrisi = (Button) sviButtoni.get(1);
-		Button uredi = (Button) sviButtoni.get(2);
+		Button dodaj = (Button) mainPane.getChildren().get(0);
 
 		if (registrovan) {
-			uredjivanje.setVisible(true);
+			dodaj.setVisible(true);
 		} else {
-			uredjivanje.setVisible(false);
+			dodaj.setVisible(false);
 		}
 
 		AnchorPane defaultBlock = (AnchorPane) drawPane.getChildren().get(12);
@@ -522,6 +522,14 @@ public class Main extends Application {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+			}
+		});
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				// Emira ovdje dodaj funkciju koja otvara panel za dodavanje
+				System.out.println("Dodaj panel");
 			}
 		});
 
@@ -622,12 +630,13 @@ public class Main extends Application {
 
 		Collection<Profesor> c = Profesor.getProfesori();
 		tabela.getItems().addAll(c);
-		
-		tabela.setOnMouseClicked( event -> {
-			   if( event.getClickCount() == 2 ) {
-			      System.out.println( tabela.getSelectionModel().getSelectedItem());
-			   }});
-		
+
+		tabela.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				System.out.println(tabela.getSelectionModel().getSelectedItem());
+			}
+		});
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -640,7 +649,7 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
@@ -680,12 +689,13 @@ public class Main extends Application {
 
 		Collection<Predmet> c = Predmet.getPredmeti();
 		tabela.getItems().addAll(c);
-		
-		tabela.setOnMouseClicked( event -> {
-			   if( event.getClickCount() == 2 ) {
-			      System.out.println( tabela.getSelectionModel().getSelectedItem());
-			   }});
-		
+
+		tabela.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				System.out.println(tabela.getSelectionModel().getSelectedItem());
+			}
+		});
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -698,7 +708,7 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
@@ -736,12 +746,13 @@ public class Main extends Application {
 
 		Collection<Lokacija> c = Lokacija.getLokacije();
 		tabela.getItems().addAll(c);
-		
-		tabela.setOnMouseClicked( event -> {
-			   if( event.getClickCount() == 2 ) {
-			      System.out.println( tabela.getSelectionModel().getSelectedItem());
-			   }});
-		
+
+		tabela.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				System.out.println(tabela.getSelectionModel().getSelectedItem());
+			}
+		});
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -754,7 +765,7 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-			
+
 		});
 
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
@@ -776,14 +787,14 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startDodajProfesoraPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaNastavnik.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -798,19 +809,19 @@ public class Main extends Application {
 			}
 
 		});
-		
+
 		primaryStage.setTitle("Dodaj novi predmet");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startDodajPredmetPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaPredmet.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -825,19 +836,19 @@ public class Main extends Application {
 			}
 
 		});
-		
+
 		primaryStage.setTitle("Dodaj novi predmet");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startDodajProstorijePage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaProstorija.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -853,7 +864,6 @@ public class Main extends Application {
 
 		});
 
-		
 		primaryStage.setTitle("Dodaj novi predmet");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -886,7 +896,7 @@ public class Main extends Application {
 		vr.add("RI");
 		vr.add("16/09/2019");
 		vr.add("23/09/2019");
-		// DbFunctions.addProdekan();
+		DbFunctions.addProdekan();
 		Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);
