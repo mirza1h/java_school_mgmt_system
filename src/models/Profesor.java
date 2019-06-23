@@ -145,8 +145,4 @@ public class Profesor {
 		upit.executeUpdate();
 		return true;
 	}
-
-	public Object getId() {
-		return this.id;
-	}
 }
