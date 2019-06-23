@@ -141,7 +141,7 @@ public class Predmet {
 				novi.setProfesore(rezultat);
 				for(Profesor nastavnik : rezultat) {
 					Profesor temp=em.getReference(Profesor.class,nastavnik.getId());
-					temp.setPredmete(rez);
+					temp.getPredmete().add(novi);
 				}
 				em.persist(novi);
 				em.getTransaction().commit();
@@ -151,6 +151,51 @@ public class Predmet {
 				return false;
 			}
 		}
+	}
+	public static boolean updatePredmet(List<String> unos) {
+		EntityManager em = Main.getFactory().createEntityManager();
+		Integer id=Integer.valueOf(unos.get(0));
+		Predmet taj=em.getReference(Predmet.class, id);
+		Collection<Profesor> ukloniti=taj.getProfesore();
+		for(Profesor kk :ukloniti) {
+			Profesor temp=em.getReference(Profesor.class,kk.getId());
+			temp.getPredmete().remove(taj);
+		}
+		String naziv=unos.get(1);
+		String semestar=unos.get(2);
+		int brojst=Integer.parseInt(unos.get(3));
+		Usmjerenje usm=Usmjerenje.valueOf(unos.get(4));
+		String upitProf="select t from Profesor t where 1=1 and (t.ime='"+unos.get(5)+"'";
+		for(int i=6;i<unos.size();i++) {
+			upitProf+=" or t.ime='"+unos.get(i);
+		}
+		upitProf+=")";
+		Query profesori=em.createQuery(upitProf,Profesor.class);
+		Collection<Profesor> rezultat=profesori.getResultList();
+		if(rezultat.size()==0) {
+			return false;
+		}
+		Query test=em.createQuery("select t from Predmet t where t.naziv=:var and t.usmjerenje=:tar",Predmet.class);
+		test.setParameter("var", naziv);
+		test.setParameter("tar",usm);
+		Collection<Predmet> testRez=test.getResultList();
+		if(testRez.size()!=0) {
+			return false;
+		}
+		
+		taj.setNaziv(naziv);
+		taj.setProfesore(rezultat);
+		taj.setSemestar(Integer.valueOf(semestar));
+		taj.setUsmjerenje(usm);
+		for(Profesor nastavnik : rezultat) {
+			Profesor temp=em.getReference(Profesor.class,nastavnik.getId());
+			temp.getPredmete().add(taj);
+		}
+		
+		em.close();
+		
+		
+		return true;
 	}
 
 }

@@ -40,9 +40,6 @@ public class Profesor {
 	private Usmjerenje usmjerenje;
 	private String grupa;
 
-	public Long getId() {
-		return id;
-	}
 	public String getIme() {
 		return this.ime;
 	}
@@ -105,7 +102,31 @@ public class Profesor {
 		em.persist(novi);
 		em.persist(prof);
 		em.getTransaction().commit();
+		em.close();
 		return true;
 		}
+	}
+	public static boolean updateProfesor(List<String> unos) {
+		int id=Integer.valueOf(unos.get(0));
+		String ime=unos.get(1);
+		Usmjerenje usm=Usmjerenje.valueOf(unos.get(2));
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query testniUpit=em.createQuery("select t from Korisnik t where t.username='"+ime+"'");
+		Collection<Profesor> provjera=testniUpit.getResultList();
+		if(provjera.size()!=0) {
+			return false;
+		}
+		Profesor prof=em.getReference(Profesor.class, id);
+		Query upit = em.createQuery("select t from Korisnik t where t.username='"+prof.getIme()+"'", Profesor.class);
+		Collection<Korisnik> rezultat = upit.getResultList();
+		for(Korisnik k: rezultat) {
+			Korisnik temp=em.getReference(Korisnik.class,k.getId());
+			temp.setUsername(ime);
+		}
+		prof.setIme(ime);
+		prof.setUsmjerenje(usm);
+		em.close();
+		return true;
+		
 	}
 }
