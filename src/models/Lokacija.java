@@ -100,7 +100,7 @@ public class Lokacija {
 	}
 	}
 	public static boolean updateLokacija(List<String> unos) {
-		int id=Integer.valueOf(unos.get(0));
+		Long id=Long.valueOf(unos.get(0));
 		String zgrada=unos.get(1);
 		String sala=unos.get(2);
 		int kapacitet=Integer.valueOf(unos.get(3));

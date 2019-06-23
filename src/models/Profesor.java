@@ -59,10 +59,6 @@ public class Profesor {
 	public void setPredmete(Collection<Predmet> p) {
 		this.predmeti = p;
 	}
-	
-	public Long getId() {
-		return id;
-	}
 
 
 	@Override
@@ -111,11 +107,11 @@ public class Profesor {
 		}
 	}
 	public static boolean updateProfesor(List<String> unos) {
-		int id=Integer.valueOf(unos.get(0));
+		Long id=Long.valueOf(unos.get(0));
 		String ime=unos.get(1);
 		Usmjerenje usm=Usmjerenje.valueOf(unos.get(2));
 		EntityManager em = Main.getFactory().createEntityManager();
-		em.getTransaction();
+		em.getTransaction().begin();
 		Query testniUpit=em.createQuery("select t from Korisnik t where t.username='"+ime+"'");
 		Collection<Profesor> provjera=testniUpit.getResultList();
 		if(provjera.size()!=0) {
@@ -133,7 +129,6 @@ public class Profesor {
 		em.getTransaction().commit();
 		em.close();
 		return true;
-		
 	}
 
 	public Object getId() {
