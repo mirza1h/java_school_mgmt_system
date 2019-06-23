@@ -526,7 +526,7 @@ public class Main extends Application {
 				}
 			}
 		});
-		
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -599,7 +599,7 @@ public class Main extends Application {
 				}
 			}
 		});
-		
+
 		odjava.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -793,12 +793,12 @@ public class Main extends Application {
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		TextField ime = (TextField) scene.lookup("#ime");
 		TextField prezime = (TextField) scene.lookup("#prezime");
 		ChoiceBox<Profesor.Usmjerenje> usmjerenje = (ChoiceBox<Profesor.Usmjerenje>) scene.lookup("#usmjerenje");
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
-		
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -809,8 +809,8 @@ public class Main extends Application {
 				profesor.add(ime.getText());
 				profesor.add(prezime.getText());
 				profesor.add(usmjerenje.getValue().toString());
-				
-				if(Profesor.unesiProfesor(profesor) == true) {
+
+				if (Profesor.unesiProfesor(profesor) == true) {
 					try {
 						greska.setVisible(false);
 						startProfesori(primaryStage);
@@ -846,7 +846,7 @@ public class Main extends Application {
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		TextField naziv = (TextField) scene.lookup("#naziv");
 		TextField semestar = (TextField) scene.lookup("#semestar");
 		TextField brojStudenata = (TextField) scene.lookup("#brojStudenata");
@@ -857,7 +857,6 @@ public class Main extends Application {
 		CheckBox tk = (CheckBox) scene.lookup("#tk");
 		TextField profesori = (TextField) scene.lookup("#profesori");
 
-		
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -868,34 +867,32 @@ public class Main extends Application {
 				predmet.add(naziv.getText());
 				predmet.add(semestar.getText());
 				predmet.add(brojStudenata.getText());
-//				String[] profesoriNiz = ;
-				
-				if(ar.isSelected()) {
-					predmet.add(3, "AR");
+				predmet.add("");
+				String[] profesoriNiz = profesori.getText().split(", ");
+				for (int i = 0; i < profesoriNiz.length; ++i) {
+					predmet.add(4 + i, profesoriNiz[i]);
 				}
-				if(eems.isSelected()) {
-					predmet.add(3, "EEMS");
+				if (ar.isSelected()) {
+					predmet.set(3, "AR");
+					dodajPredmet(predmet, greska, primaryStage);
 				}
-				if(eske.isSelected()) {
-					predmet.add(3, "ESKE");
+				if (eems.isSelected()) {
+					predmet.set(3, "EEMS");
+					dodajPredmet(predmet, greska, primaryStage);
 				}
-				if(ri.isSelected()) {
-					predmet.add(3, "RI");
+				if (eske.isSelected()) {
+					predmet.set(3, "ESKE");
+					dodajPredmet(predmet, greska, primaryStage);
 				}
-				if(tk.isSelected()) {
-					predmet.add(3, "TK");
+				if (ri.isSelected()) {
+					predmet.set(3, "RI");
+					dodajPredmet(predmet, greska, primaryStage);
 				}
-				
-//				if(Predmet.unesiPredmet(predmet) == true) {
-//					try {
-//						greska.setVisible(false);
-//						startPredmeti(primaryStage);
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//				} else {
-//					greska.setVisible(true);
-//				}
+				if (tk.isSelected()) {
+					predmet.set(3, "TK");
+					dodajPredmet(predmet, greska, primaryStage);
+				}
+
 			}
 		});
 
@@ -915,10 +912,20 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
-//	private boolean dodajPredmet(Predmet predmet) {
-//		
-//	}
+
+	private void dodajPredmet(List<String> predmet, Label greska, Stage primaryStage) {
+		System.out.println(predmet);
+		if (Predmet.unesiPredmet(predmet) == true) {
+			try {
+				greska.setVisible(false);
+				startPredmeti(primaryStage);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			greska.setVisible(true);
+		}
+	}
 
 	public void startDodajProstorijePage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaProstorija.fxml"));
@@ -926,11 +933,11 @@ public class Main extends Application {
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		TextField sala = (TextField) scene.lookup("#sala");
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
-		
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -941,8 +948,8 @@ public class Main extends Application {
 				prostorija.add(sala.getText());
 				prostorija.add(zgrada.getText());
 				prostorija.add(kapacitet.getText());
-				
-				if(Lokacija.unesiLokaciju(prostorija) == true) {
+
+				if (Lokacija.unesiLokaciju(prostorija) == true) {
 					try {
 						greska.setVisible(false);
 						startProstorije(primaryStage);
@@ -978,21 +985,20 @@ public class Main extends Application {
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
-		
+
 		TextField id = (TextField) scene.lookup("#id");
 		TextField ime = (TextField) scene.lookup("#ime");
 		TextField prezime = (TextField) scene.lookup("#prezime");
 		ChoiceBox<Profesor.Usmjerenje> usmjerenje = (ChoiceBox<Profesor.Usmjerenje>) scene.lookup("#usmjerenje");
 
 		id.setText(prof.getId().toString());
-		
+
 		String[] profesor = prof.getIme().split(" ");
 		ime.setText(profesor[0]);
 		prezime.setText(profesor[1]);
-		
+
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 		usmjerenje.setValue(prof.getUsmjerenje());
-
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1010,7 +1016,7 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startUrediPredmet(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediPredmet.fxml"));
 		Scene scene = new Scene(forma);
@@ -1034,7 +1040,7 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public void startUrediProstoriju(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProstoriju.fxml"));
 		Scene scene = new Scene(forma);

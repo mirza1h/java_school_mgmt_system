@@ -167,7 +167,7 @@ public class Predmet {
 		Usmjerenje usm=Usmjerenje.valueOf(unos.get(4));
 		String upitProf="select t from Profesor t where 1=1 and (t.ime='"+unos.get(5)+"'";
 		for(int i=6;i<unos.size();i++) {
-			upitProf+=" or t.ime='"+unos.get(i);
+			upitProf+=(" or t.ime='"+unos.get(i)+"'");
 		}
 		upitProf+=")";
 		Query profesori=em.createQuery(upitProf,Profesor.class);
