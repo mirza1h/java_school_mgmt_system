@@ -123,4 +123,12 @@ public class Lokacija {
 		
 		return true;
 	}
+	public static boolean deleteLokacija(Long id) {
+		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
+		Query upit=em.createQuery("delete from Lokacija p where p.id=:var",Lokacija.class);
+		upit.setParameter("var", id);
+		upit.executeUpdate();
+		return true;
+	}
 }

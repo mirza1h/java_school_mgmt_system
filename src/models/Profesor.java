@@ -130,7 +130,18 @@ public class Profesor {
 		em.close();
 		return true;
 	}
-
+	public static boolean deleteProfesor(Long id) {
+		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
+		Profesor prof=em.getReference(Profesor.class, id);
+		Query drugiUpit=em.createQuery("delete from Korisnik k where k.username=:tar");
+		drugiUpit.setParameter("tar",prof.getIme());
+		drugiUpit.executeUpdate();
+		Query upit=em.createQuery("delete from Predmet p where p.id=:var",Predmet.class);
+		upit.setParameter("var", id);
+		upit.executeUpdate();
+		return true;
+	}
 	public Object getId() {
 		return this.id;
 	}
