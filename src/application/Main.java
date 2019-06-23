@@ -1034,7 +1034,7 @@ public class Main extends Application {
 				if (Profesor.updateProfesor(profesor) == true) {
 					try {
 //						greska.setVisible(false);
-						startProstorije(primaryStage);
+						startProfesori(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
