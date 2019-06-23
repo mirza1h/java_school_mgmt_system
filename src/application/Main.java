@@ -33,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
@@ -549,6 +550,7 @@ public class Main extends Application {
 		Button predmeti = (Button) scene.lookup("#b02");
 		Button prostorije = (Button) scene.lookup("#b03");
 		Button rasporedi = (Button) scene.lookup("#b04");
+		Button odjava = (Button) scene.lookup("#odjava");
 
 		profesori.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -592,6 +594,18 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				try {
 					startFilterPage(primaryStage, true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		odjava.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					startLoginPage(primaryStage);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -779,6 +793,35 @@ public class Main extends Application {
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		TextField ime = (TextField) scene.lookup("#ime");
+		TextField prezime = (TextField) scene.lookup("#prezime");
+		ChoiceBox<Profesor.Usmjerenje> usmjerenje = (ChoiceBox<Profesor.Usmjerenje>) scene.lookup("#usmjerenje");
+		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Label greska = (Label) scene.lookup("#greska");
+
+				List<String> profesor = new ArrayList<String>();
+				profesor.add(ime.getText());
+				profesor.add(prezime.getText());
+				profesor.add(usmjerenje.getValue().toString());
+				
+				if(Profesor.unesiProfesor(profesor) == true) {
+					try {
+						greska.setVisible(false);
+						startProfesori(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -803,6 +846,58 @@ public class Main extends Application {
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		TextField naziv = (TextField) scene.lookup("#naziv");
+		TextField semestar = (TextField) scene.lookup("#semestar");
+		TextField brojStudenata = (TextField) scene.lookup("#brojStudenata");
+		CheckBox ar = (CheckBox) scene.lookup("#ar");
+		CheckBox eems = (CheckBox) scene.lookup("#eems");
+		CheckBox eske = (CheckBox) scene.lookup("#eske");
+		CheckBox ri = (CheckBox) scene.lookup("#ri");
+		CheckBox tk = (CheckBox) scene.lookup("#tk");
+		TextField profesori = (TextField) scene.lookup("#profesori");
+
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Label greska = (Label) scene.lookup("#greska");
+
+				List<String> predmet = new ArrayList<String>();
+				predmet.add(naziv.getText());
+				predmet.add(semestar.getText());
+				predmet.add(brojStudenata.getText());
+//				String[] profesoriNiz = ;
+				
+				if(ar.isSelected()) {
+					predmet.add(3, "AR");
+				}
+				if(eems.isSelected()) {
+					predmet.add(3, "EEMS");
+				}
+				if(eske.isSelected()) {
+					predmet.add(3, "ESKE");
+				}
+				if(ri.isSelected()) {
+					predmet.add(3, "RI");
+				}
+				if(tk.isSelected()) {
+					predmet.add(3, "TK");
+				}
+				
+//				if(Predmet.unesiPredmet(predmet) == true) {
+//					try {
+//						greska.setVisible(false);
+//						startPredmeti(primaryStage);
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				} else {
+//					greska.setVisible(true);
+//				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -820,6 +915,10 @@ public class Main extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
+	
+//	private boolean dodajPredmet(Predmet predmet) {
+//		
+//	}
 
 	public void startDodajProstorijePage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaProstorija.fxml"));
@@ -827,6 +926,34 @@ public class Main extends Application {
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
+		
+		TextField sala = (TextField) scene.lookup("#sala");
+		TextField zgrada = (TextField) scene.lookup("#zgrada");
+		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
+		
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Label greska = (Label) scene.lookup("#greska");
+
+				List<String> prostorija = new ArrayList<String>();
+				prostorija.add(sala.getText());
+				prostorija.add(zgrada.getText());
+				prostorija.add(kapacitet.getText());
+				
+				if(Lokacija.unesiLokaciju(prostorija) == true) {
+					try {
+						greska.setVisible(false);
+						startProstorije(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					greska.setVisible(true);
+				}
+			}
+		});
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -849,7 +976,7 @@ public class Main extends Application {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProfesora.fxml"));
 		Scene scene = new Scene(forma);
 
-		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
 		
 		TextField id = (TextField) scene.lookup("#id");
@@ -888,7 +1015,7 @@ public class Main extends Application {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediPredmet.fxml"));
 		Scene scene = new Scene(forma);
 
-		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {
@@ -912,7 +1039,7 @@ public class Main extends Application {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProstoriju.fxml"));
 		Scene scene = new Scene(forma);
 
-		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
 
 		ponisti.setOnAction(new EventHandler<ActionEvent>() {

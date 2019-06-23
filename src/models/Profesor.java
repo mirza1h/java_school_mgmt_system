@@ -62,10 +62,7 @@ public class Profesor {
 	public void setPredmete(Collection<Predmet> p) {
 		this.predmeti = p;
 	}
-	
-	public Long getId() {
-		return id;
-	}
+
 
 	@Override
 	public String toString() {

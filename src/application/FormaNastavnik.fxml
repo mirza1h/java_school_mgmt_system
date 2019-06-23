@@ -39,6 +39,11 @@
                </font>
             </Label>
             <TextField fx:id="prezime" layoutX="150.0" layoutY="157.0" promptText="Prezime Nastavnika" />
+            <Label fx:id="greska" layoutX="50.0" layoutY="265.0" text="Korisnik vec postoji u bazi!" textFill="#dd0000" visible="false">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

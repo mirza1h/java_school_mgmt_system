@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -26,7 +25,6 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="profesori" layoutX="176.0" layoutY="247.0" prefWidth="150.0" />
             <TextField fx:id="semestar" layoutX="176.0" layoutY="112.0" prefHeight="26.0" prefWidth="150.0" promptText="Semestar" />
             <Label layoutX="30.0" layoutY="205.0" text="Usmjerenje:" textFill="WHITE">
                <font>
@@ -50,8 +48,33 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="usmjerenje" layoutX="176.0" layoutY="202.0" prefWidth="150.0" />
             <Button fx:id="ponisti" layoutX="190.0" layoutY="310.0" mnemonicParsing="false" text="Ponisti" />
+            <CheckBox fx:id="ar" layoutX="136.0" layoutY="208.0" mnemonicParsing="false" text="AR" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="eems" layoutX="181.0" layoutY="208.0" mnemonicParsing="false" text="EEMS" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="eske" layoutX="245.0" layoutY="208.0" mnemonicParsing="false" text="ESKE" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="ri" layoutX="302.0" layoutY="208.0" mnemonicParsing="false" text="RI" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="tk" layoutX="347.0" layoutY="208.0" mnemonicParsing="false" text="TK" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </CheckBox>
+            <TextField fx:id="profesori" layoutX="160.0" layoutY="247.0" promptText="Unesite profesore" />
          </children>
       </Pane>
    </children>
