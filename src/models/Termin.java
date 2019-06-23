@@ -103,6 +103,14 @@ public class Termin {
 		this.tip = tip;
 	}
 
+	public Profesor getProfesor() {
+		return this.profesor;
+	}
+
+	public void setProfesor(Profesor profesor) {
+		this.profesor = profesor;
+	}
+
 	@Override
 	public String toString() {
 		return "Termin [lokacija=" + this.lokacija + ", vrijeme1=" + this.startTime + ", vrijeme2=" + this.endTime
@@ -139,9 +147,9 @@ public class Termin {
 	}
 
 	public static Collection<Termin> getTermini(List<String> vrijednosti) {
-		boolean datum=false;
-		LocalDateTime datumPrvi=null;
-		LocalDateTime datumDrugi=null;
+		boolean datum = false;
+		LocalDateTime datumPrvi = null;
+		LocalDateTime datumDrugi = null;
 		String finalQuery = "select distinct t from Termin t where 1=1";
 		if (vrijednosti.get(0) != null) {
 			finalQuery = finalQuery + " and t.lokacija.zgrada like '" + vrijednosti.get(0) + "'";
@@ -153,8 +161,8 @@ public class Termin {
 			finalQuery = finalQuery + " and t.profesor.ime like '" + vrijednosti.get(2) + "'";
 		}
 		if (vrijednosti.get(3) != null) {
-			finalQuery = finalQuery + " and (t.predmet.semestar=" + (2 * Integer.parseInt(vrijednosti.get(3)))
-					+ " or t.predmet.semestar=" + ((2 * Integer.parseInt(vrijednosti.get(3))) + 1) + ")";
+			finalQuery = finalQuery + " and (t.predmet.semestar=" + ((2 * Integer.parseInt(vrijednosti.get(3))) - 1)
+					+ " or t.predmet.semestar=" + ((2 * Integer.parseInt(vrijednosti.get(3)))) + ")";
 		}
 		if (vrijednosti.get(4) != null) {
 			finalQuery = finalQuery + " and t.predmet.naziv like '" + vrijednosti.get(4) + "'";
@@ -165,24 +173,22 @@ public class Termin {
 		if (vrijednosti.get(6) != null) {
 			finalQuery = finalQuery + " and t.predmet.usmjerenje like '" + vrijednosti.get(6) + "'";
 		}
-		if(vrijednosti.get(7)!=null && vrijednosti.get(8)!=null) {
-			DateTimeFormatter nesto=DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			LocalDate datum1=LocalDate.parse(vrijednosti.get(7), nesto);
-			datumPrvi=LocalDateTime.of(datum1,LocalTime.of(8, 0));
-			LocalDate datum2=LocalDate.parse(vrijednosti.get(8), nesto);
-			datumDrugi=LocalDateTime.of(datum2,LocalTime.of(8, 0));
+		if ((vrijednosti.get(7) != null) && (vrijednosti.get(8) != null)) {
+			DateTimeFormatter nesto = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			LocalDate datum1 = LocalDate.parse(vrijednosti.get(7), nesto);
+			datumPrvi = LocalDateTime.of(datum1, LocalTime.of(8, 0));
+			LocalDate datum2 = LocalDate.parse(vrijednosti.get(8), nesto);
+			datumDrugi = LocalDateTime.of(datum2, LocalTime.of(8, 0));
 			finalQuery = finalQuery + " and t.startTime >= :prvo and t.endTime <= :drugo";
-			datum=true;
-			
-			
+			datum = true;
+
 		}
-		
 
 		EntityManager em = Main.getFactory().createEntityManager();
 		Query upit = em.createQuery(finalQuery, Termin.class);
-		if(datum) {
-			upit.setParameter("prvo",datumPrvi);
-			upit.setParameter("drugo",datumDrugi );
+		if (datum) {
+			upit.setParameter("prvo", datumPrvi);
+			upit.setParameter("drugo", datumDrugi);
 		}
 		Collection<Termin> rezultat = upit.getResultList();
 		for (Termin o : rezultat) {
@@ -190,7 +196,7 @@ public class Termin {
 		}
 		em.close();
 
-		System.out.println("Mirza"+rezultat.size());
+		System.out.println("Mirza" + rezultat.size());
 		return rezultat;
 	}
 
