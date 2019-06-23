@@ -44,7 +44,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="id" disable="true" layoutX="119.0" layoutY="37.0" prefHeight="26.0" prefWidth="201.0" promptText="ID" />
+            <TextField fx:id="id" editable="false" layoutX="150.0" layoutY="37.0" prefHeight="26.0" prefWidth="170.0" promptText="ID" />
             <Button fx:id="obrisi" layoutX="160.0" layoutY="310.0" mnemonicParsing="false" text="Obrisi zapis" />
          </children>
       </Pane>

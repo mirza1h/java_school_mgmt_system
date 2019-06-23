@@ -135,8 +135,4 @@ public class Profesor {
 		return true;
 		
 	}
-
-	public Object getId() {
-		return this.id;
-	}
 }
