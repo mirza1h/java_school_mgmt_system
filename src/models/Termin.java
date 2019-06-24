@@ -129,7 +129,7 @@ public class Termin {
 
 	}
 
-	public static void deleteTermin(int id,boolean sve) {
+	public static void deleteTermin(long id,boolean sve) {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
 		if(sve) {
@@ -141,8 +141,8 @@ public class Termin {
 			List<Termin> rez=ostaliTermini.getResultList();
 			for(Termin o : rez) {
 				Query izbrisiTermini=em.createQuery("delete from Termin p where p.id=:tar",Termin.class);
-				ostaliTermini.setParameter("var", o.getId());
-				ostaliTermini.executeUpdate();
+				izbrisiTermini.setParameter("tar", o.getId());
+				izbrisiTermini.executeUpdate();
 				
 			}
 			em.getTransaction().commit();

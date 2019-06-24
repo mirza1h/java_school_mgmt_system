@@ -13,12 +13,12 @@
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="397.0" prefWidth="717.0" VBox.vgrow="ALWAYS">
          <children>
-            <ImageView fitHeight="414.0" fitWidth="717.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="451.0" fitWidth="756.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/bg.png" />
                </image>
             </ImageView>
-            <AnchorPane layoutX="52.0" layoutY="14.0" opacity="0.79" prefHeight="377.0" prefWidth="614.0" style="-fx-background-color: black;">
+            <AnchorPane layoutX="71.0" layoutY="14.0" opacity="0.79" prefHeight="408.0" prefWidth="614.0" style="-fx-background-color: black;">
                <children>
                   <TextField fx:id="predmet" layoutX="244.0" layoutY="60.0" prefHeight="26.0" prefWidth="233.0" promptText="Naziv predmeta" />
                   <TextField fx:id="pocetak" layoutX="244.0" layoutY="96.0" prefHeight="26.0" prefWidth="233.0" promptText="22/05/2019 08:00" />
@@ -44,7 +44,7 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Button fx:id="dodaj" layoutX="242.0" layoutY="338.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Dodaj" />
+                  <Button fx:id="dodaj" layoutX="239.0" layoutY="381.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Dodaj" />
                   <Label fx:id="greska" alignment="CENTER" layoutY="30.0" prefWidth="614.0" textFill="RED">
                      <font>
                         <Font name="System Bold" size="13.0" />
@@ -71,6 +71,12 @@
                   </Label>
                   <TextField fx:id="grupa" layoutX="244.0" layoutY="305.0" prefHeight="26.0" prefWidth="233.0" promptText="1-RI, 2-RI ..." />
                   <Label layoutX="137.0" layoutY="310.0" text="Grupa" textFill="#e13434">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="profesortext" layoutX="244.0" layoutY="337.0" prefHeight="26.0" prefWidth="233.0" promptText="Ime profesora za dodijelu" />
+                  <Label fx:id="profesorlabel" layoutX="137.0" layoutY="342.0" text="Profesor" textFill="#e13434">
                      <font>
                         <Font size="16.0" />
                      </font>
