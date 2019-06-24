@@ -83,7 +83,7 @@ public class Profesor {
 		return rezultat;
 	}
 
-	public static boolean unesiProfesor(List<String> unos) {
+	public static int unesiProfesor(List<String> unos) {
 		String ime = unos.get(0) + " " + unos.get(1);
 		Usmjerenje usm = Usmjerenje.valueOf(unos.get(2));
 		EntityManager em = Main.getFactory().createEntityManager();
@@ -91,7 +91,7 @@ public class Profesor {
 		Collection<Profesor> rezultat = upit.getResultList();
 		if (rezultat.size() != 0) {
 			em.close();
-			return false;
+			return -1;
 		} else {
 			em.getTransaction().begin();
 			Profesor novi = new Profesor();
@@ -105,7 +105,7 @@ public class Profesor {
 			em.persist(prof);
 			em.getTransaction().commit();
 			em.close();
-			return true;
+			return 1;
 		}
 	}
 

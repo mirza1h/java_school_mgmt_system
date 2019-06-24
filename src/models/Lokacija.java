@@ -82,7 +82,7 @@ public class Lokacija {
 
 	}
 
-	public static boolean unesiLokaciju(List<String> unos) {
+	public static int unesiLokaciju(List<String> unos) {
 		String zgrada = unos.get(1);
 		String sala = unos.get(0);
 		int kapacitet = Integer.valueOf(unos.get(2));
@@ -92,7 +92,7 @@ public class Lokacija {
 		Collection<Lokacija> rezultat = upit.getResultList();
 		if (rezultat.size() != 0) {
 			em.close();
-			return false;
+			return -1;
 		} else {
 			em.getTransaction().begin();
 			Lokacija nova = new Lokacija();
@@ -101,7 +101,7 @@ public class Lokacija {
 			nova.setSala(sala);
 			em.persist(nova);
 			em.getTransaction().commit();
-			return true;
+			return 1;
 		}
 	}
 
@@ -138,8 +138,9 @@ public class Lokacija {
 		termini.setParameter("var", p.getZgrada());
 		termini.setParameter("tar",p.getSala());
 		termini.executeUpdate();
-		Query upit = em.createQuery("delete from Lokacija p where p.id=:var", Lokacija.class);
-		upit.setParameter("var", id);
+		Query upit = em.createQuery("delete from Lokacija p where p.zgrada=?1 and p.sala = ?2");
+		upit.setParameter(1, p.getZgrada());
+		upit.setParameter(2, p.getSala());
 		upit.executeUpdate();
 		em.getTransaction().commit();
 		return true;

@@ -83,9 +83,18 @@ public class Predmet {
 
 	public String getProfString() {
 		String izlaz = new String();
+		ArrayList<String> nesto=new ArrayList<String>();
+		int i;
 		for (Profesor o : this.getProfesore()) {
-			izlaz += o.getIme() + " ";
+			nesto.add(o.getIme());
 		}
+		if(nesto.size()==0) {
+			return null;
+		}
+		for(i=0;i<nesto.size()-1;i++) {
+			izlaz=izlaz+nesto.get(i)+", ";
+		}
+		izlaz+=nesto.get(i);
 		return izlaz;
 	}
 
@@ -121,7 +130,7 @@ public class Predmet {
 
 	}
 
-	public static boolean unesiPredmet(List<String> unos) {
+	public static int unesiPredmet(List<String> unos) {
 		String naziv = unos.get(0);
 		String semestar = unos.get(1);
 		int brojst = Integer.parseInt(unos.get(2));
@@ -136,7 +145,7 @@ public class Predmet {
 		Collection<Profesor> rezultat = upit.getResultList();
 		if (rezultat.size() == 0) {
 			System.out.println("Nema profesora");
-			return false;
+			return -1;
 		} else {
 			Query finalUpit = em.createQuery(
 					"select p from Predmet p where p.naziv='" + naziv + "' and p.usmjerenje=:usmj", Predmet.class);
@@ -156,9 +165,9 @@ public class Predmet {
 				}
 				em.persist(novi);
 				em.getTransaction().commit();
-				return true;
+				return 1;
 			} else {
-				return false;
+				return -2;
 			}
 		}
 	}
