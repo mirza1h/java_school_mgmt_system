@@ -145,8 +145,8 @@ public class Profesor {
 		Query drugiUpit = em.createQuery("delete from Korisnik k where k.username=:tar");
 		drugiUpit.setParameter("tar", prof.getIme());
 		drugiUpit.executeUpdate();
-		Query upit = em.createQuery("delete from Profesor p where p.id=:var", Profesor.class);
-		upit.setParameter("var", id);
+		Query upit = em.createQuery("delete from Profesor p where p.ime=?1");
+		upit.setParameter(1, prof.getIme());
 		upit.executeUpdate();
 		em.getTransaction().commit();
 		return true;
