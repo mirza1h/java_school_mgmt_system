@@ -13,11 +13,6 @@
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="345.0" prefWidth="649.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="407.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/bg.png" />
@@ -50,7 +45,7 @@
                      </font>
                   </Label>
                   <Button fx:id="dodaj" layoutX="239.0" layoutY="278.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Dodaj" />
-                  <Label fx:id="greska" alignment="CENTER" layoutY="233.0" prefWidth="614.0" textFill="RED">
+                  <Label fx:id="greska" alignment="CENTER" layoutY="30.0" prefWidth="614.0" textFill="RED">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
@@ -58,6 +53,12 @@
                   <Button fx:id="nazad" layoutX="526.0" layoutY="26.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Nazad" />
                   <TextField fx:id="kraj" layoutX="244.0" layoutY="132.0" prefHeight="26.0" prefWidth="233.0" promptText="22/05/2019 10:30" />
                   <Label layoutX="139.0" layoutY="138.0" text="Kraj" textFill="#e13434">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="usmjerenje" layoutX="244.0" layoutY="236.0" prefHeight="26.0" prefWidth="233.0" promptText="RI, AR, EEMS, TK, ESKE" />
+                  <Label layoutX="137.0" layoutY="239.0" text="Usmjerenje" textFill="#e13434">
                      <font>
                         <Font size="16.0" />
                      </font>

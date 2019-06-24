@@ -462,11 +462,20 @@ public class Main extends Application {
 				Termin temp = trenutna.get(i);
 				noviDodavanje.setOnMouseClicked(event -> {
 					if (event.getClickCount() == 2) {
-						try {
-							startTerminObrisiPage(primaryStage, registrovan, termini, vrijednosti, temp);
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
+						if(!registrovan)
+							System.out.println("Ne mozete uredjivati!");
+						else if (trenutniKorisnik.equals(temp.getProfesor().getIme()) ||
+								 trenutniKorisnik.equals("Emir Mešković")) {
+							try {
+								startTerminObrisiPage(primaryStage, registrovan, termini, vrijednosti, temp);
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+	
+						else {
+							System.out.println("Ne mozete uredjivati!");
 						}
 					}
 				});
@@ -1282,6 +1291,7 @@ public class Main extends Application {
 		TextField kraj = (TextField) scene.lookup("#kraj");
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField sala = (TextField) scene.lookup("#sala");
+		TextField usmjerenje = (TextField) scene.lookup("#usmjerenje");
 		Label greska = (Label) scene.lookup("#greska");
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
@@ -1294,7 +1304,7 @@ public class Main extends Application {
 
 				List<String> terminInfo = new ArrayList<String>();
 				if (predmet.getText().equals("") || pocetak.getText().equals("") || zgrada.getText().equals("")
-						|| sala.getText().equals("") || kraj.getText().equals("")) {
+						|| sala.getText().equals("") || kraj.getText().equals("") || usmjerenje.getText().equals("")) {
 					greska.setVisible(true);
 					greska.setText("Niste unijeli sve podatke");
 				}
@@ -1305,6 +1315,7 @@ public class Main extends Application {
 					terminInfo.add(kraj.getText());
 					terminInfo.add(zgrada.getText());
 					terminInfo.add(sala.getText());
+					terminInfo.add(usmjerenje.getText());
 				}
 			}
 		});
