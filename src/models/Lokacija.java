@@ -133,10 +133,23 @@ public class Lokacija {
 	public static boolean deleteLokacija(Long id) {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
+		Lokacija p=em.getReference(Lokacija.class,id);
+		Query termini=em.createQuery("delete from Termin t where t.lokacija.zgrada=:var and t.lokacija.sala=:tar",Termin.class);
+		termini.setParameter("var", p.getZgrada());
+		termini.setParameter("tar",p.getSala());
+		termini.executeUpdate();
 		Query upit = em.createQuery("delete from Lokacija p where p.id=:var", Lokacija.class);
 		upit.setParameter("var", id);
 		upit.executeUpdate();
 		em.getTransaction().commit();
 		return true;
+	}
+	public static void showLokacija() {
+		EntityManager em = Main.getFactory().createEntityManager();
+		Query upit = em.createNamedQuery("sveLokacije", Lokacija.class);
+		Collection<Lokacija> rezultat = upit.getResultList();
+		for(Lokacija kk: rezultat) {
+			System.out.println(kk);
+		}
 	}
 }

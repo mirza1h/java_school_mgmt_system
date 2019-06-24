@@ -199,5 +199,60 @@ public class Termin {
 		System.out.println("Mirza" + rezultat.size());
 		return rezultat;
 	}
+	public static boolean dodajTermin(List<String> unos) {
+		String nazivPred=unos.get(0);
+		DateTimeFormatter form= DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		LocalDateTime datum1=LocalDateTime.parse(unos.get(1),form);
+		LocalDateTime datum2=LocalDateTime.parse(unos.get(2),form);
+		String zgrada=unos.get(3);
+		String sala=unos.get(4);
+		Usmjerenje usm=Usmjerenje.valueOf(unos.get(5));
+		String korisnik=unos.get(6);
+		tipTermina tip=tipTermina.valueOf(unos.get(7));
+		String grupa=unos.get(8);
+		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
+		Query predmUpit=em.createQuery("select p from Predmet p where p.naziv=:var and p.usmjerenje=:tar",Predmet.class);
+		predmUpit.setParameter("var", nazivPred);
+		predmUpit.setParameter("tar", usm);
+		List<Predmet> broj=predmUpit.getResultList();
+		if(broj.size()==0) {
+			return false;
+		}
+		Query lokacijaUpit=em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",Lokacija.class);
+		lokacijaUpit.setParameter("sar",zgrada);
+		lokacijaUpit.setParameter("lar", sala);
+		List<Lokacija> brojLok=lokacijaUpit.getResultList();
+		if(brojLok.size()==0) {
+			return false;
+		}
+		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar",Termin.class);
+		terminUpit.setParameter("kar",datum1);
+		terminUpit.setParameter("dar",datum2);
+		Collection<Termin> brojTer=terminUpit.getResultList();
+		if(brojTer.size()!=0) {
+			return false;
+		}
+		Query korisnikUpit=em.createQuery("select p from Profesor p where p.ime=:mar",Profesor.class);
+		korisnikUpit.setParameter("mar",korisnik);
+		List<Profesor> brojProf=korisnikUpit.getResultList();
+		if(brojProf.size()==0) {
+			return false;
+		}
+		Termin novi=new Termin();
+		novi.setPredmet(broj.get(0));
+		novi.setLokacija(brojLok.get(0));
+		novi.setProfesor(brojProf.get(0));
+		novi.setTip(tip);
+		novi.setStartTime(datum1);
+		novi.setEndTime(datum2);
+		novi.setGrupa(grupa);
+		em.persist(novi);
+		em.getTransaction().commit();
+		em.close();
+		
+		
+		return true;
+	}
 
 }

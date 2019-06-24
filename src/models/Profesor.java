@@ -137,6 +137,9 @@ public class Profesor {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
 		Profesor prof = em.getReference(Profesor.class, id);
+		Query termini=em.createQuery("delete from Termin t where t.profesor.ime=:var",Termin.class);
+		termini.setParameter("var", prof.getIme());
+		termini.executeUpdate();
 		Query drugiUpit = em.createQuery("delete from Korisnik k where k.username=:tar");
 		drugiUpit.setParameter("tar", prof.getIme());
 		drugiUpit.executeUpdate();
