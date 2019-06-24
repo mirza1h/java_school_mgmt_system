@@ -830,6 +830,11 @@ public class Main extends Application {
 	public void startDodajProfesoraPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaNastavnik.fxml"));
 		Scene scene = new Scene(forma);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Dodaj novog profesora");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
@@ -859,6 +864,7 @@ public class Main extends Application {
 				if (Profesor.unesiProfesor(profesor) == true) {
 					try {
 						greska.setVisible(false);
+						secondStage.close();
 						startProfesori(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -875,21 +881,23 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					secondStage.close();
 					startProfesori(primaryStage);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-		});
-
-		primaryStage.setTitle("Dodaj novi predmet");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		});	
 	}
 
 	public void startDodajPredmetPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaPredmet.fxml"));
 		Scene scene = new Scene(forma);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Dodaj novi predmet");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
@@ -929,23 +937,23 @@ public class Main extends Application {
 				}
 				if (ar.isSelected()) {
 					predmet.set(3, "AR");
-					dodajPredmet(predmet, greska, primaryStage);
+					dodajPredmet(predmet, greska, primaryStage, secondStage);
 				}
 				if (eems.isSelected()) {
 					predmet.set(3, "EEMS");
-					dodajPredmet(predmet, greska, primaryStage);
+					dodajPredmet(predmet, greska, primaryStage, secondStage);
 				}
 				if (eske.isSelected()) {
 					predmet.set(3, "ESKE");
-					dodajPredmet(predmet, greska, primaryStage);
+					dodajPredmet(predmet, greska, primaryStage, secondStage);
 				}
 				if (ri.isSelected()) {
 					predmet.set(3, "RI");
-					dodajPredmet(predmet, greska, primaryStage);
+					dodajPredmet(predmet, greska, primaryStage, secondStage);
 				}
 				if (tk.isSelected()) {
 					predmet.set(3, "TK");
-					dodajPredmet(predmet, greska, primaryStage);
+					dodajPredmet(predmet, greska, primaryStage, secondStage);
 				}
 
 			}
@@ -956,29 +964,27 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					secondStage.close();
 					startPredmeti(primaryStage);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
-		primaryStage.setTitle("Dodaj novi predmet");
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
-	private void dodajPredmet(List<String> predmet, Label greska, Stage primaryStage) {
+	private void dodajPredmet(List<String> predmet, Label greska, Stage primaryStage, Stage secondStage) {
 		System.out.println(predmet);
 		if (Predmet.unesiPredmet(predmet) == true) {
 			try {
-				greska.setText("Predmet vec postoji u bazi!");
 				greska.setVisible(false);
+				secondStage.close();
 				startPredmeti(primaryStage);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else {
+		} else {				
+			greska.setText("Predmet vec postoji u bazi!");
 			greska.setVisible(true);
 		}
 	}
@@ -986,6 +992,11 @@ public class Main extends Application {
 	public void startDodajProstorijePage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaProstorija.fxml"));
 		Scene scene = new Scene(forma);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Dodaj novu prostoriju");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
@@ -1017,19 +1028,20 @@ public class Main extends Application {
 						int temp = Integer.parseInt(kapacitet.getText());
 						if (Lokacija.unesiLokaciju(prostorija) == true) {
 							try {
-								greska.setText("Prostorija vec postoji u bazi!");
 								greska.setVisible(false);
+								secondStage.close();
 								startProstorije(primaryStage);
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						} else {
+							greska.setText("Prostorija vec postoji u bazi!");
 							greska.setVisible(true);
 						}
 					}
 					catch (Exception e) {
 						greska.setVisible(true);
-						greska.setText("Pogresan kapacitet");
+						greska.setText("Pogresan kapacitet!");
 					}
 				}
 			}
@@ -1040,16 +1052,13 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					secondStage.close();
 					startProstorije(primaryStage);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
-		primaryStage.setTitle("Dodaj novu prostoriju");
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
 	public void startUrediProfesora(Stage primaryStage, Profesor prof) throws IOException {
