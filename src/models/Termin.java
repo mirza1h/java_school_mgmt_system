@@ -218,7 +218,7 @@ public class Termin {
 		System.out.println("Mirza" + rezultat.size());
 		return rezultat;
 	}
-	public static boolean dodajTermin(List<String> unos) {
+	public static int dodajTermin(List<String> unos) {
 		String nazivPred=unos.get(0);
 		DateTimeFormatter form= DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		LocalDateTime datum1=LocalDateTime.parse(unos.get(1),form);
@@ -237,7 +237,7 @@ public class Termin {
 		predmUpit.setParameter("tar", usm);
 		List<Predmet> broj=predmUpit.getResultList();
 		if(broj.size()==0) {
-			return false;
+			return -1;
 		}
 		Query lokacijaUpit=em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",Lokacija.class);
 		lokacijaUpit.setParameter("sar",zgrada);
@@ -245,7 +245,7 @@ public class Termin {
 		List<Lokacija> brojLok=lokacijaUpit.getResultList();
 		if(brojLok.size()==0) {
 			System.out.println("Nema lokacije");
-			return false;
+			return -2;
 		}
 		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
 				+ "p.lokacija.sala=:tvoj",Termin.class);
@@ -256,7 +256,7 @@ public class Termin {
 		Collection<Termin> brojTer=terminUpit.getResultList();
 		if(brojTer.size()!=0) {
 			System.out.println("Zauzet termin");
-			return false;
+			return -3;
 		}
 		
 		Query korisnikUpit=em.createQuery("select p from Profesor p where p.ime=:mar",Profesor.class);
@@ -264,7 +264,7 @@ public class Termin {
 		List<Profesor> brojProf=korisnikUpit.getResultList();
 		if(brojProf.size()==0) {
 			System.out.println("Nema profesora sa tim imenom");
-			return false;
+			return -4;
 		}
 		
 		Termin novi=new Termin();
@@ -280,7 +280,7 @@ public class Termin {
 		em.close();
 		
 		
-		return true;
+		return 1;
 	}
 
 }

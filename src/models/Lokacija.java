@@ -82,7 +82,7 @@ public class Lokacija {
 
 	}
 
-	public static boolean unesiLokaciju(List<String> unos) {
+	public static int unesiLokaciju(List<String> unos) {
 		String zgrada = unos.get(1);
 		String sala = unos.get(0);
 		int kapacitet = Integer.valueOf(unos.get(2));
@@ -92,7 +92,7 @@ public class Lokacija {
 		Collection<Lokacija> rezultat = upit.getResultList();
 		if (rezultat.size() != 0) {
 			em.close();
-			return false;
+			return -1;
 		} else {
 			em.getTransaction().begin();
 			Lokacija nova = new Lokacija();
@@ -101,7 +101,7 @@ public class Lokacija {
 			nova.setSala(sala);
 			em.persist(nova);
 			em.getTransaction().commit();
-			return true;
+			return 1;
 		}
 	}
 
