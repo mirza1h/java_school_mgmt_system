@@ -137,7 +137,7 @@ public class Predmet {
 		Usmjerenje usm = Usmjerenje.valueOf(unos.get(3));
 		String upitProf = "select t from Profesor t where 1=1 and (t.ime='" + unos.get(4) + "'";
 		for (int i = 5; i < unos.size(); i++) {
-			upitProf += " or t.ime='" + unos.get(i);
+			upitProf += " or t.ime='" + unos.get(i)+"'";
 		}
 		upitProf += ")";
 		EntityManager em = Main.getFactory().createEntityManager();
@@ -159,10 +159,10 @@ public class Predmet {
 				novi.setSemestar(Integer.valueOf(semestar));
 				novi.setUsmjerenje(usm);
 				novi.setProfesore(rezultat);
-				for (Profesor nastavnik : rezultat) {
-					Profesor temp = em.getReference(Profesor.class, nastavnik.getId());
-					temp.getPredmete().add(novi);
-				}
+				//for (Profesor nastavnik : rezultat) {
+				//	Profesor temp = em.getReference(Profesor.class, nastavnik.getId());
+				//	temp.getPredmete().add(novi);
+				//}
 				em.persist(novi);
 				em.getTransaction().commit();
 				return 1;

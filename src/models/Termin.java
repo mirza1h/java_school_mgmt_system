@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -219,60 +220,56 @@ public class Termin {
 		return rezultat;
 	}
 
-	public static int dodajTermin(List<String> unos) {
-		String nazivPred = unos.get(0);
-		DateTimeFormatter form = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-		LocalDateTime datum1 = LocalDateTime.parse(unos.get(1), form);
-		LocalDateTime datum2 = LocalDateTime.parse(unos.get(2), form);
-		String zgrada = unos.get(3);
-		String sala = unos.get(4);
-		Usmjerenje usm = Usmjerenje.valueOf(unos.get(5));
-		String korisnik = unos.get(6);
-		tipTermina tip = tipTermina.valueOf(unos.get(7));
-		String grupa = unos.get(8);
-		String kojemProf = unos.get(9);
+	public static int dodajTermin(List<String> unos,boolean sedmice) {
+		String nazivPred=unos.get(0);
+		DateTimeFormatter form= DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		LocalDateTime datum1=LocalDateTime.parse(unos.get(1),form);
+		LocalDateTime datum2=LocalDateTime.parse(unos.get(2),form);
+		String zgrada=unos.get(3);
+		String sala=unos.get(4);
+		Usmjerenje usm=Usmjerenje.valueOf(unos.get(5));
+		String korisnik=unos.get(6);
+		tipTermina tip=tipTermina.valueOf(unos.get(7));
+		String grupa=unos.get(8);
+		String kojemProf=unos.get(9);
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		Query predmUpit = em.createQuery("select p from Predmet p where p.naziv=:var and p.usmjerenje=:tar",
-				Predmet.class);
+		Query predmUpit=em.createQuery("select p from Predmet p where p.naziv=:var and p.usmjerenje=:tar",Predmet.class);
 		predmUpit.setParameter("var", nazivPred);
 		predmUpit.setParameter("tar", usm);
-		List<Predmet> broj = predmUpit.getResultList();
-		if (broj.size() == 0) {
+		List<Predmet> broj=predmUpit.getResultList();
+		if(broj.size()==0) {
 			return -1;
 		}
-		Query lokacijaUpit = em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",
-				Lokacija.class);
-		lokacijaUpit.setParameter("sar", zgrada);
+		Query lokacijaUpit=em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",Lokacija.class);
+		lokacijaUpit.setParameter("sar",zgrada);
 		lokacijaUpit.setParameter("lar", sala);
-		List<Lokacija> brojLok = lokacijaUpit.getResultList();
-		if (brojLok.size() == 0) {
+		List<Lokacija> brojLok=lokacijaUpit.getResultList();
+		if(brojLok.size()==0) {
 			System.out.println("Nema lokacije");
 			return -2;
 		}
-		Query terminUpit = em.createQuery(
-				"select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
-						+ "p.lokacija.sala=:tvoj",
-				Termin.class);
-		terminUpit.setParameter("kar", datum1);
-		terminUpit.setParameter("dar", datum2);
+		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
+				+ "p.lokacija.sala=:tvoj",Termin.class);
+		terminUpit.setParameter("kar",datum1);
+		terminUpit.setParameter("dar",datum2);
 		terminUpit.setParameter("moj", zgrada);
 		terminUpit.setParameter("tvoj", sala);
-		Collection<Termin> brojTer = terminUpit.getResultList();
-		if (brojTer.size() != 0) {
+		Collection<Termin> brojTer=terminUpit.getResultList();
+		if(brojTer.size()!=0) {
 			System.out.println("Zauzet termin");
 			return -3;
 		}
-
-		Query korisnikUpit = em.createQuery("select p from Profesor p where p.ime=:mar", Profesor.class);
-		korisnikUpit.setParameter("mar", kojemProf);
-		List<Profesor> brojProf = korisnikUpit.getResultList();
-		if (brojProf.size() == 0) {
+		
+		Query korisnikUpit=em.createQuery("select p from Profesor p where p.ime=:mar",Profesor.class);
+		korisnikUpit.setParameter("mar",kojemProf);
+		List<Profesor> brojProf=korisnikUpit.getResultList();
+		if(brojProf.size()==0) {
 			System.out.println("Nema profesora sa tim imenom");
 			return -4;
 		}
-
-		Termin novi = new Termin();
+		
+		Termin novi=new Termin();
 		novi.setPredmet(broj.get(0));
 		novi.setLokacija(brojLok.get(0));
 		novi.setProfesor(brojProf.get(0));
@@ -280,11 +277,99 @@ public class Termin {
 		novi.setStartTime(datum1);
 		novi.setEndTime(datum2);
 		novi.setGrupa(grupa);
+		if(sedmice) {
+			int mjesec = datum1.getMonthValue();
+			int dan=datum1.getDayOfMonth();
+			for(;mjesec<=6;mjesec=datum1.getMonthValue()) {
+				datum1.plusDays(7);
+				datum2.plusDays(7);
+				List<String> listic=new ArrayList<String>();
+				String mojDatum1=datum1.format(form);
+				String mojDatum2=datum2.format(form);
+				listic.add(nazivPred);
+				listic.add(mojDatum1);
+				listic.add(mojDatum2);
+				listic.add(zgrada);
+				listic.add(sala);
+				listic.add(usm.toString());
+				listic.add(korisnik);
+				listic.add(tip.toString());
+				listic.add(grupa);
+				listic.add(kojemProf);
+				Termin.dodajTermin(listic, false);
+			}
+			for(;mjesec>=9;mjesec=datum1.getMonthValue()) {
+				datum1.plusDays(7);
+				datum2.plusDays(7);
+				List<String> listic=new ArrayList<String>();
+				String mojDatum1=datum1.format(form);
+				String mojDatum2=datum2.format(form);
+				listic.add(nazivPred);
+				listic.add(mojDatum1);
+				listic.add(mojDatum2);
+				listic.add(zgrada);
+				listic.add(sala);
+				listic.add(usm.toString());
+				listic.add(korisnik);
+				listic.add(tip.toString());
+				listic.add(grupa);
+				listic.add(kojemProf);
+				Termin.dodajTermin(listic, false);
+			}
+		}
 		em.persist(novi);
 		em.getTransaction().commit();
 		em.close();
-
+		
+		
 		return 1;
+	}
+	public static boolean updateTermin(List<String> unos) {
+		Long id=Long.valueOf(unos.get(0));
+		String nazivPred=unos.get(1);
+		DateTimeFormatter form= DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		LocalDateTime datum1=LocalDateTime.parse(unos.get(2),form);
+		LocalDateTime datum2=LocalDateTime.parse(unos.get(3),form);
+		String zgrada=unos.get(4);
+		String sala=unos.get(5);
+		EntityManager em = Main.getFactory().createEntityManager();
+		em.getTransaction().begin();
+		Query predmUpit=em.createQuery("select p from Predmet p where p.naziv=:var",Predmet.class);
+		predmUpit.setParameter("var", nazivPred);
+		List<Predmet> broj=predmUpit.getResultList();
+		if(broj.size()==0) {
+			return false;
+		}
+		Query lokacijaUpit=em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",Lokacija.class);
+		lokacijaUpit.setParameter("sar",zgrada);
+		lokacijaUpit.setParameter("lar", sala);
+		List<Lokacija> brojLok=lokacijaUpit.getResultList();
+		if(brojLok.size()==0) {
+			System.out.println("Nema lokacije");
+			return false;
+		}
+		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
+				+ "p.lokacija.sala=:tvoj",Termin.class);
+		terminUpit.setParameter("kar",datum1);
+		terminUpit.setParameter("dar",datum2);
+		terminUpit.setParameter("moj", zgrada);
+		terminUpit.setParameter("tvoj", sala);
+		Collection<Termin> brojTer=terminUpit.getResultList();
+		if(brojTer.size()!=0) {
+			System.out.println("Zauzet termin");
+			return false;
+		}
+		Termin temp=em.getReference(Termin.class,id);
+		temp.setPredmet(broj.get(0));
+		temp.getLokacija().setZgrada(zgrada);
+		temp.getLokacija().setSala(sala);
+		temp.setStartTime(datum1);
+		temp.setEndTime(datum2);
+		em.getTransaction().commit();
+		em.close();
+		
+		return true;
 	}
 
 }
+
