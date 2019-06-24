@@ -463,10 +463,10 @@ public class Main extends Application {
 				Termin temp = trenutna.get(i);
 				noviDodavanje.setOnMouseClicked(event -> {
 					if (event.getClickCount() == 2) {
-						if(!registrovan)
+						if (!registrovan) {
 							System.out.println("Ne mozete uredjivati!");
-						else if (trenutniKorisnik.equals(temp.getProfesor().getIme()) ||
-								 trenutniKorisnik.equals("Emir Mešković")) {
+						} else if (this.trenutniKorisnik.equals(temp.getProfesor().getIme())
+								|| this.trenutniKorisnik.equals("Emir Mešković")) {
 							try {
 								startTerminObrisiPage(primaryStage, registrovan, termini, vrijednosti, temp);
 							} catch (IOException e1) {
@@ -474,7 +474,7 @@ public class Main extends Application {
 								e1.printStackTrace();
 							}
 						}
-	
+
 						else {
 							System.out.println("Ne mozete uredjivati!");
 						}
@@ -831,7 +831,7 @@ public class Main extends Application {
 	public void startDodajProfesoraPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaNastavnik.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Dodaj novog profesora");
 		secondStage.setScene(scene);
@@ -850,8 +850,9 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
-				
-				if (ime.getText().trim().equals("") || prezime.getText().trim().equals("") || usmjerenje.getValue().toString().equals("")) {
+
+				if (ime.getText().trim().equals("") || prezime.getText().trim().equals("")
+						|| usmjerenje.getValue().toString().equals("")) {
 					greska.setText("Niste unijeli sve podatke!");
 					greska.setVisible(true);
 					return;
@@ -888,13 +889,13 @@ public class Main extends Application {
 					e.printStackTrace();
 				}
 			}
-		});	
+		});
 	}
 
 	public void startDodajPredmetPage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaPredmet.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Dodaj novi predmet");
 		secondStage.setScene(scene);
@@ -918,10 +919,11 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
-				
-				if (naziv.getText().trim().equals("") || semestar.getText().trim().equals("") || 
-						brojStudenata.getText().trim().equals("") || profesori.getText().trim().equals("") ||
-						(!ar.isSelected() && !eems.isSelected() && !eske.isSelected() && !ri.isSelected() && !tk.isSelected())) {
+
+				if (naziv.getText().trim().equals("") || semestar.getText().trim().equals("")
+						|| brojStudenata.getText().trim().equals("") || profesori.getText().trim().equals("")
+						|| (!ar.isSelected() && !eems.isSelected() && !eske.isSelected() && !ri.isSelected()
+								&& !tk.isSelected())) {
 					greska.setText("Niste unijeli sve podatke!");
 					greska.setVisible(true);
 					return;
@@ -984,7 +986,7 @@ public class Main extends Application {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else {				
+		} else {
 			greska.setText("Predmet vec postoji u bazi!");
 			greska.setVisible(true);
 		}
@@ -993,7 +995,7 @@ public class Main extends Application {
 	public void startDodajProstorijePage(Stage primaryStage) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("FormaProstorija.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Dodaj novu prostoriju");
 		secondStage.setScene(scene);
@@ -1005,7 +1007,7 @@ public class Main extends Application {
 		TextField sala = (TextField) scene.lookup("#sala");
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
-		
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -1013,18 +1015,18 @@ public class Main extends Application {
 				Label greska = (Label) scene.lookup("#greska");
 
 				List<String> prostorija = new ArrayList<String>();
-				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("") || 
-						kapacitet.getText().toString().equals("")) {
+				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("")
+						|| kapacitet.getText().toString().equals("")) {
 					greska.setText("Niste unijeli sve podatke!");
 					greska.setVisible(true);
 				}
-					
+
 				else {
 
 					prostorija.add(sala.getText());
 					prostorija.add(zgrada.getText());
 					prostorija.add(kapacitet.getText());
-					
+
 					try {
 						int temp = Integer.parseInt(kapacitet.getText());
 						if (Lokacija.unesiLokaciju(prostorija) == true) {
@@ -1039,8 +1041,7 @@ public class Main extends Application {
 							greska.setText("Prostorija vec postoji u bazi!");
 							greska.setVisible(true);
 						}
-					}
-					catch (Exception e) {
+					} catch (Exception e) {
 						greska.setVisible(true);
 						greska.setText("Pogresan kapacitet!");
 					}
@@ -1065,7 +1066,7 @@ public class Main extends Application {
 	public void startUrediProfesora(Stage primaryStage, Profesor prof) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProfesora.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Uredi profesora");
 		secondStage.setScene(scene);
@@ -1094,8 +1095,9 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
-				
-				if (ime.getText().trim().equals("") || prezime.getText().trim().equals("") || usmjerenje.getValue().toString().equals("")) {
+
+				if (ime.getText().trim().equals("") || prezime.getText().trim().equals("")
+						|| usmjerenje.getValue().toString().equals("")) {
 					greska.setText("Niste unijeli sve podatke!");
 					greska.setVisible(true);
 					return;
@@ -1106,7 +1108,6 @@ public class Main extends Application {
 				profesor.add(ime.getText() + " " + prezime.getText());
 				profesor.add(usmjerenje.getValue().toString());
 
-				
 				if (Profesor.updateProfesor(profesor) == true) {
 					try {
 						greska.setVisible(false);
@@ -1157,7 +1158,7 @@ public class Main extends Application {
 	public void startUrediPredmet(Stage primaryStage, Predmet pred) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediPredmet.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Uredi predmet");
 		secondStage.setScene(scene);
@@ -1166,7 +1167,7 @@ public class Main extends Application {
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
 		Button obrisi = (Button) scene.lookup("#obrisi");
-		
+
 		TextField id = (TextField) scene.lookup("#id");
 		TextField naziv = (TextField) scene.lookup("#naziv");
 		TextField semestar = (TextField) scene.lookup("#semestar");
@@ -1177,32 +1178,32 @@ public class Main extends Application {
 		CheckBox ri = (CheckBox) scene.lookup("#ri");
 		CheckBox tk = (CheckBox) scene.lookup("#tk");
 		TextField profesori = (TextField) scene.lookup("#profesori");
-		
+
 		id.setText(pred.getId().toString());
 		naziv.setText(pred.getNaziv());
 		Integer s = (Integer) pred.getSemestar();
 		semestar.setText(s.toString());
 		Integer b = (Integer) pred.getBrojStudenata();
 		brojStudenata.setText(b.toString());
-//		profesori.setText(pred.getProfesoriString());
-		
-		
+		profesori.setText(pred.getProfString());
+
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
-				
-				if (naziv.getText().trim().equals("") || semestar.getText().trim().equals("") || 
-						brojStudenata.getText().trim().equals("") || profesori.getText().trim().equals("") ||
-						(!ar.isSelected() && !eems.isSelected() && !eske.isSelected() && !ri.isSelected() && !tk.isSelected())) {
+
+				if (naziv.getText().trim().equals("") || semestar.getText().trim().equals("")
+						|| brojStudenata.getText().trim().equals("") || profesori.getText().trim().equals("")
+						|| (!ar.isSelected() && !eems.isSelected() && !eske.isSelected() && !ri.isSelected()
+								&& !tk.isSelected())) {
 					greska.setText("Niste unijeli sve podatke!");
 					greska.setVisible(true);
 					return;
 				}
-				
+
 				System.out.println("uredi");
-				
+
 			}
 		});
 
@@ -1241,7 +1242,7 @@ public class Main extends Application {
 	public void startUrediProstoriju(Stage primaryStage, Lokacija prostorija) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProstoriju.fxml"));
 		Scene scene = new Scene(forma);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Uredi prostoriju");
 		secondStage.setScene(scene);
@@ -1267,9 +1268,9 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
-				
-				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("") || 
-						kapacitet.getText().toString().trim().equals("")) {
+
+				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("")
+						|| kapacitet.getText().toString().trim().equals("")) {
 					greska.setText("Niste unijeli sve podatke!");
 					greska.setVisible(true);
 					return;
@@ -1331,7 +1332,7 @@ public class Main extends Application {
 	public void startIzvjestajPage(Stage primaryStage, String mjesec, String datum) throws IOException {
 		VBox izvjestaj = FXMLLoader.load(getClass().getResource("Izvjestaj.fxml"));
 		Scene scene = new Scene(izvjestaj);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Izvjestaj");
 		secondStage.setScene(scene);
@@ -1384,7 +1385,7 @@ public class Main extends Application {
 		secondStage.setTitle("Dodaj termin");
 		secondStage.setScene(scene);
 		secondStage.show();
-		
+
 		TextField predmet = (TextField) scene.lookup("#predmet");
 		TextField pocetak = (TextField) scene.lookup("#pocetak");
 		TextField kraj = (TextField) scene.lookup("#kraj");
@@ -1399,12 +1400,11 @@ public class Main extends Application {
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button nazad = (Button) scene.lookup("#nazad");
-		
-		if (trenutniKorisnik.equals("Emir Mešković")) {
+
+		if (this.trenutniKorisnik.equals("Emir Mešković")) {
 			profesorlabela.setVisible(true);
 			profesor.setVisible(true);
-		}
-		else {
+		} else {
 			profesorlabela.setVisible(false);
 			profesor.setVisible(false);
 		}
@@ -1420,42 +1420,37 @@ public class Main extends Application {
 						|| tip.getText().equals("")) {
 					greska.setVisible(true);
 					greska.setText("Niste unijeli sve podatke");
-				}
-				else {
-					
-					if (!trenutniKorisnik.equals("Emir Mešković") &&
-					   (tip.getText().equals("Predavanje") || tip.getText().equals("Vjezbe") || tip.getText().equals("Labaratorija"))){
+				} else {
+
+					if (!Main.this.trenutniKorisnik.equals("Emir Mešković") && (tip.getText().equals("Predavanje")
+							|| tip.getText().equals("Vjezbe") || tip.getText().equals("Labaratorija"))) {
 						greska.setText("Nastavnik ne može dodavati te termine!");
-					}
-					else {
+					} else {
 						terminInfo.add(predmet.getText());
 						terminInfo.add(pocetak.getText());
 						terminInfo.add(kraj.getText());
 						terminInfo.add(zgrada.getText());
 						terminInfo.add(sala.getText());
 						terminInfo.add(usmjerenje.getText());
-						terminInfo.add(trenutniKorisnik);
+						terminInfo.add(Main.this.trenutniKorisnik);
 						terminInfo.add(tip.getText());
 						terminInfo.add(grupa.getText());
-						if (trenutniKorisnik.equals("Emir Mešković")) {
+						if (Main.this.trenutniKorisnik.equals("Emir Mešković")) {
 							terminInfo.add(profesor.getText());
+						} else {
+							terminInfo.add(Main.this.trenutniKorisnik);
 						}
-						else {
-							terminInfo.add(trenutniKorisnik);
-						}
-						
+
 						if (Termin.dodajTermin(terminInfo)) {
 							greska.setText("Dodato!");
-						}
-						else {
+						} else {
 							greska.setText("Dogodila se greska!");
 						}
-					}			
+					}
 				}
 			}
 		});
 
-		
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -1471,13 +1466,13 @@ public class Main extends Application {
 			}
 		});
 	}
-	
+
 	public void startTerminObrisiPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini,
 			List<String> vrijednosti, Termin t) throws IOException {
 
 		VBox terminObrisiPage = FXMLLoader.load(getClass().getResource("FormaTerminObrisi.fxml"));
 		Scene scene = new Scene(terminObrisiPage);
-		
+
 		Stage secondStage = new Stage();
 		secondStage.setTitle("Obrisi termin");
 		secondStage.setScene(scene);
@@ -1489,17 +1484,17 @@ public class Main extends Application {
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField sala = (TextField) scene.lookup("#sala");
 		Label greska = (Label) scene.lookup("#greska");
-		
+
 		long id = t.getId();
 
 		Button uredi = (Button) scene.lookup("#uredi");
 		Button obrisi = (Button) scene.lookup("#izbrisi");
 		Button nazad = (Button) scene.lookup("#nazad");
-		
+
 		CheckBox check = (CheckBox) scene.lookup("#check");
-		
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-		
+
 		predmet.setText(t.getPredmet().getNaziv());
 		pocetak.setText(t.getStartTime().format(formatter));
 		kraj.setText(t.getEndTime().format(formatter));
@@ -1516,8 +1511,7 @@ public class Main extends Application {
 						|| sala.getText().equals("") || kraj.getText().equals("")) {
 					greska.setVisible(true);
 					greska.setText("Niste unijeli sve podatke");
-				}
-				else {
+				} else {
 					terminInfo.add(predmet.getText());
 					terminInfo.add(pocetak.getText());
 					terminInfo.add(kraj.getText());
@@ -1530,24 +1524,26 @@ public class Main extends Application {
 				}
 			}
 		});
-		
+
 		obrisi.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				// Pozvati funkciju za DELETE (proslijediti ID)
 				Collection<Termin> obrisan = new ArrayList<>();
-				
+
 				for (Termin t : termini) {
-					if (t.getId() != id)
+					if (t.getId() != id) {
 						obrisan.add(t);
+					}
 				}
-				
-				if (check.isSelected())
-					Termin.deleteTermin((int)id, true);
-				else
-					Termin.deleteTermin((int)id, false);
-				
+
+				if (check.isSelected()) {
+					Termin.deleteTermin((int) id, true);
+				} else {
+					Termin.deleteTermin((int) id, false);
+				}
+
 				try {
 					secondStage.close();
 					startRasporedPage(primaryStage, registrovan, obrisan, vrijednosti);
@@ -1557,8 +1553,7 @@ public class Main extends Application {
 				}
 			}
 		});
-		
-		
+
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -1607,9 +1602,9 @@ public class Main extends Application {
 
 		// Termin.getTermini(vr);
 		/*
-		 * Termin.getTermini(vr); Predmet.showPredmeti(); 
+		 * Termin.getTermini(vr); Predmet.showPredmeti();
 		 */
-		
+
 		Termin.showTermini();
 		// Podaci.napuniBazu();
 		// Termin.showTermini();

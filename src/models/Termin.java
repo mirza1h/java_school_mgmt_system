@@ -258,14 +258,9 @@ public class Termin {
 			System.out.println("Zauzet termin");
 			return false;
 		}
-
+		
 		Query korisnikUpit=em.createQuery("select p from Profesor p where p.ime=:mar",Profesor.class);
-		if(tipKorisnika.Prodekan==tipKorisnika.valueOf(korisnik)) {
-			korisnikUpit.setParameter("mar",kojemProf);
-		}
-		else {
-		korisnikUpit.setParameter("mar",korisnik);
-		}
+		korisnikUpit.setParameter("mar",kojemProf);
 		List<Profesor> brojProf=korisnikUpit.getResultList();
 		if(brojProf.size()==0) {
 			System.out.println("Nema profesora sa tim imenom");

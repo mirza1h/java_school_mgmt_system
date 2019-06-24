@@ -20,7 +20,9 @@ import javax.persistence.Query;
 import application.Main;
 import models.Korisnik.tipKorisnika;
 
-@NamedQueries({ @NamedQuery(name = "sviProfesori", query = "select prof from Profesor prof") })
+@NamedQueries({ @NamedQuery(name = "sviProfesori", query = "select prof from Profesor prof"),
+		@NamedQuery(name = "unikatniProfesori", query = "select p from Profesor p where p.id = "
+				+ "(select min(p2.id) from Profesor p2 where p2.ime = p.ime and p2.usmjerenje = p.usmjerenje)") })
 @Entity
 public class Profesor {
 	public enum Usmjerenje {
@@ -76,7 +78,7 @@ public class Profesor {
 
 	public static Collection<Profesor> getProfesori() {
 		EntityManager em = Main.getFactory().createEntityManager();
-		Query upit = em.createNamedQuery("sviProfesori", Profesor.class);
+		Query upit = em.createNamedQuery("unikatniProfesori", Profesor.class);
 		Collection<Profesor> rezultat = upit.getResultList();
 		return rezultat;
 	}
@@ -137,14 +139,14 @@ public class Profesor {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
 		Profesor prof = em.getReference(Profesor.class, id);
-		Query termini=em.createQuery("delete from Termin t where t.profesor.ime=:var",Termin.class);
+		Query termini = em.createQuery("delete from Termin t where t.profesor.ime=:var", Termin.class);
 		termini.setParameter("var", prof.getIme());
 		termini.executeUpdate();
 		Query drugiUpit = em.createQuery("delete from Korisnik k where k.username=:tar");
 		drugiUpit.setParameter("tar", prof.getIme());
 		drugiUpit.executeUpdate();
-		Query upit = em.createQuery("delete from Profesor p where p.id=:var", Profesor.class);
-		upit.setParameter("var", id);
+		Query upit = em.createQuery("delete from Profesor p where p.ime=?1");
+		upit.setParameter(1, prof.getIme());
 		upit.executeUpdate();
 		em.getTransaction().commit();
 		return true;
