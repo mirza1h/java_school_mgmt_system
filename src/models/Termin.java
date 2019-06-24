@@ -224,19 +224,25 @@ public class Termin {
 		lokacijaUpit.setParameter("lar", sala);
 		List<Lokacija> brojLok=lokacijaUpit.getResultList();
 		if(brojLok.size()==0) {
+			System.out.println("Nema lokacije");
 			return false;
 		}
-		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar",Termin.class);
+		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and"
+				+ "p.lokacija.sala=:tvoj",Termin.class);
 		terminUpit.setParameter("kar",datum1);
 		terminUpit.setParameter("dar",datum2);
+		terminUpit.setParameter("moj", zgrada);
+		terminUpit.setParameter("tvoj", sala);
 		Collection<Termin> brojTer=terminUpit.getResultList();
 		if(brojTer.size()!=0) {
+			System.out.println("Zauzet termin");
 			return false;
 		}
 		Query korisnikUpit=em.createQuery("select p from Profesor p where p.ime=:mar",Profesor.class);
 		korisnikUpit.setParameter("mar",korisnik);
 		List<Profesor> brojProf=korisnikUpit.getResultList();
 		if(brojProf.size()==0) {
+			System.out.println("Nema korisnika sa tim imenom");
 			return false;
 		}
 		Termin novi=new Termin();
