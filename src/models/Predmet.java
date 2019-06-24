@@ -78,6 +78,19 @@ public class Predmet {
 	public Profesor getOneProfesor() {
 		return this.profesori.iterator().next();
 	}
+	
+//	public String getProfesoriString() {
+//		Profesor[] profesori = (Profesor[]) this.profesori.toArray();
+//		String profesoriString = "";
+//		for(int i = 0; i < profesori.length; ++i) {
+//			if(i != profesori.length - 2) {
+//				profesoriString += profesori[i].getIme();
+//			} else {
+//				profesoriString += profesori[i].getIme() + ", ";
+//			}
+//		}
+//		return profesoriString;
+//	}
 
 	@Override
 	public String toString() {

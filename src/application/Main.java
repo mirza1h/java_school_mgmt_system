@@ -760,8 +760,8 @@ public class Main extends Application {
 		TableView<Lokacija> tabela = (TableView<Lokacija>) scene.lookup("#tabela");
 
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("zgrada"));
-		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("sala"));
+		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("sala"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("zgrada"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("kapacitet"));
 
 		Collection<Lokacija> c = Lokacija.getLokacije();
@@ -825,6 +825,12 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
+				
+				if (ime.getText().trim().equals("") || prezime.getText().trim().equals("") || usmjerenje.getValue().toString().equals("")) {
+					greska.setText("Niste unijeli sve podatke!");
+					greska.setVisible(true);
+					return;
+				}
 
 				List<String> profesor = new ArrayList<String>();
 				profesor.add(ime.getText());
@@ -839,6 +845,7 @@ public class Main extends Application {
 						e.printStackTrace();
 					}
 				} else {
+					greska.setText("Korisnik vec postoji u bazi!");
 					greska.setVisible(true);
 				}
 			}
@@ -883,6 +890,14 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
+				
+				if (naziv.getText().trim().equals("") || semestar.getText().trim().equals("") || 
+						brojStudenata.getText().trim().equals("") || profesori.getText().trim().equals("") ||
+						(!ar.isSelected() && !eems.isSelected() && !eske.isSelected() && !ri.isSelected() && !tk.isSelected())) {
+					greska.setText("Niste unijeli sve podatke!");
+					greska.setVisible(true);
+					return;
+				}
 
 				List<String> predmet = new ArrayList<String>();
 				predmet.add(naziv.getText());
@@ -938,6 +953,7 @@ public class Main extends Application {
 		System.out.println(predmet);
 		if (Predmet.unesiPredmet(predmet) == true) {
 			try {
+				greska.setText("Predmet vec postoji u bazi!");
 				greska.setVisible(false);
 				startPredmeti(primaryStage);
 			} catch (IOException e) {
@@ -964,6 +980,13 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
+				
+				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("") || 
+						kapacitet.getText().toString().trim().equals("")) {
+					greska.setText("Niste unijeli sve podatke!");
+					greska.setVisible(true);
+					return;
+				}
 
 				List<String> prostorija = new ArrayList<String>();
 				prostorija.add(sala.getText());
@@ -978,6 +1001,7 @@ public class Main extends Application {
 						e.printStackTrace();
 					}
 				} else {
+					greska.setText("Prostorija vec postoji u bazi!");
 					greska.setVisible(true);
 				}
 			}
@@ -1026,23 +1050,30 @@ public class Main extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				Label greska = (Label) scene.lookup("#greska");
+				Label greska = (Label) scene.lookup("#greska");
+				
+				if (ime.getText().trim().equals("") || prezime.getText().trim().equals("") || usmjerenje.getValue().toString().equals("")) {
+					greska.setText("Niste unijeli sve podatke!");
+					greska.setVisible(true);
+					return;
+				}
 
 				List<String> profesor = new ArrayList<String>();
 				profesor.add(id.getText());
 				profesor.add(ime.getText() + " " + prezime.getText());
 				profesor.add(usmjerenje.getValue().toString());
-				System.out.println(profesor);
 
+				
 				if (Profesor.updateProfesor(profesor) == true) {
 					try {
-//						greska.setVisible(false);
+						greska.setVisible(false);
 						startProfesori(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				} else {
-//					greska.setVisible(true);
+					greska.setText("Unesite ispravne podatke!");
+					greska.setVisible(true);
 				}
 			}
 		});
@@ -1088,6 +1119,45 @@ public class Main extends Application {
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
 		Button obrisi = (Button) scene.lookup("#obrisi");
+		
+		TextField id = (TextField) scene.lookup("#id");
+		TextField naziv = (TextField) scene.lookup("#naziv");
+		TextField semestar = (TextField) scene.lookup("#semestar");
+		TextField brojStudenata = (TextField) scene.lookup("#brojStudenata");
+		CheckBox ar = (CheckBox) scene.lookup("#ar");
+		CheckBox eems = (CheckBox) scene.lookup("#eems");
+		CheckBox eske = (CheckBox) scene.lookup("#eske");
+		CheckBox ri = (CheckBox) scene.lookup("#ri");
+		CheckBox tk = (CheckBox) scene.lookup("#tk");
+		TextField profesori = (TextField) scene.lookup("#profesori");
+		
+		id.setText(pred.getId().toString());
+		naziv.setText(pred.getNaziv());
+		Integer s = (Integer) pred.getSemestar();
+		semestar.setText(s.toString());
+		Integer b = (Integer) pred.getBrojStudenata();
+		brojStudenata.setText(b.toString());
+//		profesori.setText(pred.getProfesoriString());
+		
+		
+		uredi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Label greska = (Label) scene.lookup("#greska");
+				
+				if (naziv.getText().trim().equals("") || semestar.getText().trim().equals("") || 
+						brojStudenata.getText().trim().equals("") || profesori.getText().trim().equals("") ||
+						(!ar.isSelected() && !eems.isSelected() && !eske.isSelected() && !ri.isSelected() && !tk.isSelected())) {
+					greska.setText("Niste unijeli sve podatke!");
+					greska.setVisible(true);
+					return;
+				}
+				
+				System.out.println("uredi");
+				
+			}
+		});
 
 		obrisi.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1146,7 +1216,14 @@ public class Main extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-//				Label greska = (Label) scene.lookup("#greska");
+				Label greska = (Label) scene.lookup("#greska");
+				
+				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("") || 
+						kapacitet.getText().toString().trim().equals("")) {
+					greska.setText("Niste unijeli sve podatke!");
+					greska.setVisible(true);
+					return;
+				}
 
 				List<String> prostorija = new ArrayList<String>();
 				prostorija.add(id.getText());
@@ -1156,13 +1233,14 @@ public class Main extends Application {
 
 				if (Lokacija.updateLokacija(prostorija) == true) {
 					try {
-//						greska.setVisible(false);
+						greska.setVisible(false);
 						startProstorije(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				} else {
-//					greska.setVisible(true);
+					greska.setText("Unesite ispravne podatke!");
+					greska.setVisible(true);
 				}
 			}
 		});

@@ -75,6 +75,11 @@
                </font>
             </CheckBox>
             <TextField fx:id="profesori" layoutX="125.0" layoutY="247.0" prefHeight="26.0" prefWidth="205.0" promptText="Unesite profesore" />
+            <Label fx:id="greska" layoutX="51.0" layoutY="279.0" text="Predmet vec postoji u bazi!" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

@@ -82,6 +82,11 @@
             </Label>
             <TextField fx:id="id" editable="false" layoutX="120.0" layoutY="27.0" prefHeight="26.0" prefWidth="205.0" promptText="ID" />
             <Button fx:id="obrisi" layoutX="160.0" layoutY="310.0" mnemonicParsing="false" text="Obrisi zapis" />
+            <Label fx:id="greska" layoutX="50.0" layoutY="280.0" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
