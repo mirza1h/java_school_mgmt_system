@@ -217,6 +217,11 @@ public class Predmet {
 	public static boolean deletePredmet(Long id) {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
+		Predmet p=em.getReference(Predmet.class,id);
+		Query termini=em.createQuery("delete from Termin t where t.naziv=:var and t.usmjerenje=:tar",Termin.class);
+		termini.setParameter("var", p.getNaziv());
+		termini.setParameter("tar",p.getUsmjerenje());
+		termini.executeUpdate();
 		Query upit = em.createQuery("delete from Predmet p where p.id=:var", Predmet.class);
 		upit.setParameter("var", id);
 		upit.executeUpdate();
