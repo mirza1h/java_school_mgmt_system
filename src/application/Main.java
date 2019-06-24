@@ -683,7 +683,7 @@ public class Main extends Application {
 				}
 			}
 		});
-
+		
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
