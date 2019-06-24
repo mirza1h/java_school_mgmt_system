@@ -306,6 +306,13 @@ public class Main extends Application {
 	public void startFilterPage(Stage primaryStage, boolean registrovan) throws IOException {
 		VBox filter = FXMLLoader.load(getClass().getResource("rasporedFilter.fxml"));
 
+		Scene filterScene = new Scene(filter);
+		filterScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Filter");
+		secondStage.setScene(filterScene);
+		secondStage.show();
+
 		AnchorPane mainPane = (AnchorPane) filter.getChildren().get(0);
 		AnchorPane secondPane = (AnchorPane) mainPane.getChildren().get(1);
 
@@ -362,6 +369,7 @@ public class Main extends Application {
 							upozorenje2.setVisible(false);
 							Collection<Termin> termini = Termin.getTermini(vrijednosti);
 							System.out.println(termini.size());
+							secondStage.close();
 							startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 						}
 
@@ -379,13 +387,6 @@ public class Main extends Application {
 				}
 			}
 		});
-
-		Scene filterScene = new Scene(filter);
-		filterScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		primaryStage.setResizable(false);
-		primaryStage.setScene(filterScene);
-		primaryStage.show();
-
 	}
 
 	public void startRasporedPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini,
