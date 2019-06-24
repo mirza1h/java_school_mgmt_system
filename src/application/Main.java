@@ -1064,6 +1064,11 @@ public class Main extends Application {
 	public void startUrediProfesora(Stage primaryStage, Profesor prof) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProfesora.fxml"));
 		Scene scene = new Scene(forma);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Uredi profesora");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
@@ -1104,6 +1109,7 @@ public class Main extends Application {
 				if (Profesor.updateProfesor(profesor) == true) {
 					try {
 						greska.setVisible(false);
+						secondStage.close();
 						startProfesori(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -1122,6 +1128,7 @@ public class Main extends Application {
 				if (Profesor.deleteProfesor(prof.getId()) == true) {
 					try {
 //						greska.setVisible(false);
+						secondStage.close();
 						startProfesori(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -1137,21 +1144,23 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					secondStage.close();
 					startProfesori(primaryStage);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
-		primaryStage.setTitle("Uredi profesora");
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
 	public void startUrediPredmet(Stage primaryStage, Predmet pred) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediPredmet.fxml"));
 		Scene scene = new Scene(forma);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Uredi predmet");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
@@ -1203,6 +1212,7 @@ public class Main extends Application {
 				if (Predmet.deletePredmet(pred.getId()) == true) {
 					try {
 //						greska.setVisible(false);
+						secondStage.close();
 						startPredmeti(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -1218,21 +1228,23 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					secondStage.close();
 					startPredmeti(primaryStage);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
-		primaryStage.setTitle("Uredi predmet");
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
 	public void startUrediProstoriju(Stage primaryStage, Lokacija prostorija) throws IOException {
 		AnchorPane forma = FXMLLoader.load(getClass().getResource("UrediProstoriju.fxml"));
 		Scene scene = new Scene(forma);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Uredi prostoriju");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		Button uredi = (Button) scene.lookup("#dodaj");
 		Button ponisti = (Button) scene.lookup("#ponisti");
@@ -1271,6 +1283,7 @@ public class Main extends Application {
 				if (Lokacija.updateLokacija(prostorija) == true) {
 					try {
 						greska.setVisible(false);
+						secondStage.close();
 						startProstorije(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -1289,6 +1302,7 @@ public class Main extends Application {
 				if (Lokacija.deleteLokacija(prostorija.getId()) == true) {
 					try {
 //						greska.setVisible(false);
+						secondStage.close();
 						startProstorije(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -1304,16 +1318,13 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					secondStage.close();
 					startProstorije(primaryStage);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
-		primaryStage.setTitle("Uredi prostoriju");
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
 	public void startIzvjestajPage(Stage primaryStage, String mjesec, String datum) throws IOException {
