@@ -865,6 +865,8 @@ public class Main extends Application {
 		ChoiceBox<Profesor.Usmjerenje> usmjerenje = (ChoiceBox<Profesor.Usmjerenje>) scene.lookup("#usmjerenje");
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 
+		ime.requestFocus();
+		
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -934,6 +936,8 @@ public class Main extends Application {
 		CheckBox ri = (CheckBox) scene.lookup("#ri");
 		CheckBox tk = (CheckBox) scene.lookup("#tk");
 		TextField profesori = (TextField) scene.lookup("#profesori");
+		
+		naziv.requestFocus();
 
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1032,6 +1036,8 @@ public class Main extends Application {
 		TextField sala = (TextField) scene.lookup("#sala");
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
+		
+		sala.requestFocus();
 
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1115,6 +1121,8 @@ public class Main extends Application {
 
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 		usmjerenje.setValue(prof.getUsmjerenje());
+		
+		ime.requestFocus();
 
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1239,6 +1247,8 @@ public class Main extends Application {
 				break;
 			}
 		}
+		
+		naziv.requestFocus();
 
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1341,6 +1351,8 @@ public class Main extends Application {
 		zgrada.setText(prostorija.getZgrada());
 		Integer k = (Integer) prostorija.getKapacitet();
 		kapacitet.setText(k.toString());
+		
+		sala.requestFocus();
 
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
 
