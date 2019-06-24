@@ -78,7 +78,13 @@ public class Predmet {
 	public Profesor getOneProfesor() {
 		return this.profesori.iterator().next();
 	}
-	
+	public String getProfString() {
+		String izlaz=new String();
+		for(Profesor o : this.getProfesore()) {
+			izlaz+=o.getIme()+" ";
+		}
+		return izlaz;
+	}
 //	public String getProfesoriString() {
 //		Profesor[] profesori = (Profesor[]) this.profesori.toArray();
 //		String profesoriString = "";
