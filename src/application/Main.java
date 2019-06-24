@@ -105,13 +105,6 @@ public class Main extends Application {
 	public AnchorPane newBlock(AnchorPane block, Termin termin, int velicina, int poRedu) {
 		AnchorPane novi = new AnchorPane();
 
-		novi.setOnMouseClicked(event -> {
-			if (event.getClickCount() == 2) {
-				// Emira pozovi ovdje fju za editovanje i brisanje bloka sa rasporeda
-				System.out.println("Ovdje edit i brisanje");
-			}
-		});
-
 		String myStyle = "-fx-border-color: #c6c6c6; -fx-border-width: 0px 0px 1px 0px; -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 5, 0.3, 0.0, 0.0);";
 
 		if (termin.getTip() == Termin.tipTermina.Predavanje) {
@@ -466,6 +459,17 @@ public class Main extends Application {
 					continue;
 				}
 				AnchorPane noviDodavanje = newBlock(defaultBlock, trenutna.get(i), trenutna.size(), i);
+				Termin temp = trenutna.get(i);
+				noviDodavanje.setOnMouseClicked(event -> {
+					if (event.getClickCount() == 2) {
+						try {
+							startTerminObrisiPage(primaryStage, registrovan, termini, vrijednosti, temp);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
 				noviBlokovi.add(noviDodavanje);
 			}
 			it.remove(); // avoids a ConcurrentModificationException
@@ -535,8 +539,12 @@ public class Main extends Application {
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				// Emira ovdje dodaj funkciju koja otvara panel za dodavanje
-				System.out.println("Dodaj panel");
+				try {
+					startTerminPage(primaryStage, registrovan, termini, vrijednosti);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -699,7 +707,7 @@ public class Main extends Application {
 
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
-		TableView<Predmet> tabela = (TableView<Predmet>) scene.lookup("#tabela");
+		TableView<PredmetiIspis> tabela = (TableView<PredmetiIspis>) scene.lookup("#tabela");
 
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("naziv"));
@@ -708,13 +716,15 @@ public class Main extends Application {
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("semestar"));
 		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("profesori"));
 
-		Collection<Predmet> c = Predmet.getPredmeti();
+		Collection<PredmetiIspis> c = PredmetiGet.getTablePredmeti();
 		tabela.getItems().addAll(c);
+		EntityManager em = Main.getFactory().createEntityManager();
 
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				try {
-					Predmet pred = tabela.getSelectionModel().getSelectedItem();
+					String id = tabela.getSelectionModel().getSelectedItem().getId();
+					Predmet pred = em.getReference(Predmet.class, Long.parseLong(id));
 					startUrediPredmet(primaryStage, pred);
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -760,8 +770,8 @@ public class Main extends Application {
 		TableView<Lokacija> tabela = (TableView<Lokacija>) scene.lookup("#tabela");
 
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
-		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("zgrada"));
-		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("sala"));
+		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("sala"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("zgrada"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("kapacitet"));
 
 		Collection<Lokacija> c = Lokacija.getLokacije();
@@ -966,19 +976,34 @@ public class Main extends Application {
 				Label greska = (Label) scene.lookup("#greska");
 
 				List<String> prostorija = new ArrayList<String>();
-				prostorija.add(sala.getText());
-				prostorija.add(zgrada.getText());
-				prostorija.add(kapacitet.getText());
-
-				if (Lokacija.unesiLokaciju(prostorija) == true) {
-					try {
-						greska.setVisible(false);
-						startProstorije(primaryStage);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else {
+				if (sala.getText().equals("") || zgrada.getText().equals("") || kapacitet.getText().equals("")) {
 					greska.setVisible(true);
+					greska.setText("Niste unijeli sve podatke");
+				}
+
+				else {
+
+					prostorija.add(sala.getText());
+					prostorija.add(zgrada.getText());
+					prostorija.add(kapacitet.getText());
+
+					try {
+						int temp = Integer.parseInt(kapacitet.getText());
+						if (Lokacija.unesiLokaciju(prostorija) == true) {
+							try {
+								greska.setText("Taj podatak vec postoji!");
+								greska.setVisible(false);
+								startProstorije(primaryStage);
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else {
+							greska.setVisible(true);
+						}
+					} catch (Exception e) {
+						greska.setVisible(true);
+						greska.setText("Pogresan kapacitet");
+					}
 				}
 			}
 		});
@@ -1244,6 +1269,154 @@ public class Main extends Application {
 		primaryStage.setTitle("Izvjestaj");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+
+	public void startTerminPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini,
+			List<String> vrijednosti) throws IOException {
+
+		VBox terminPage = FXMLLoader.load(getClass().getResource("FormaTermin.fxml"));
+		Scene scene = new Scene(terminPage);
+
+		TextField predmet = (TextField) scene.lookup("#predmet");
+		TextField pocetak = (TextField) scene.lookup("#pocetak");
+		TextField kraj = (TextField) scene.lookup("#kraj");
+		TextField zgrada = (TextField) scene.lookup("#zgrada");
+		TextField sala = (TextField) scene.lookup("#sala");
+		Label greska = (Label) scene.lookup("#greska");
+
+		Button dodaj = (Button) scene.lookup("#dodaj");
+		Button nazad = (Button) scene.lookup("#nazad");
+
+		dodaj.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				List<String> terminInfo = new ArrayList<String>();
+				if (predmet.getText().equals("") || pocetak.getText().equals("") || zgrada.getText().equals("")
+						|| sala.getText().equals("") || kraj.getText().equals("")) {
+					greska.setVisible(true);
+					greska.setText("Niste unijeli sve podatke");
+				}
+				else {
+					greska.setText("Dodato!");
+					terminInfo.add(predmet.getText());
+					terminInfo.add(pocetak.getText());
+					terminInfo.add(kraj.getText());
+					terminInfo.add(zgrada.getText());
+					terminInfo.add(sala.getText());
+				}
+			}
+		});
+		
+		nazad.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					greska.setText("");
+					startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		primaryStage.setTitle("Dodaj termin");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+
+	}
+	
+	public void startTerminObrisiPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini,
+			List<String> vrijednosti, Termin t) throws IOException {
+
+		VBox terminObrisiPage = FXMLLoader.load(getClass().getResource("FormaTerminObrisi.fxml"));
+		Scene scene = new Scene(terminObrisiPage);
+
+		TextField predmet = (TextField) scene.lookup("#predmet");
+		TextField pocetak = (TextField) scene.lookup("#pocetak");
+		TextField kraj = (TextField) scene.lookup("#kraj");
+		TextField zgrada = (TextField) scene.lookup("#zgrada");
+		TextField sala = (TextField) scene.lookup("#sala");
+		Label greska = (Label) scene.lookup("#greska");
+		
+		long id = t.getId();
+
+		Button uredi = (Button) scene.lookup("#uredi");
+		Button obrisi = (Button) scene.lookup("#izbrisi");
+		Button nazad = (Button) scene.lookup("#nazad");
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		
+		predmet.setText(t.getPredmet().getNaziv());
+		pocetak.setText(t.getStartTime().format(formatter));
+		kraj.setText(t.getEndTime().format(formatter));
+		zgrada.setText(t.getLokacija().getZgrada());
+		sala.setText(t.getLokacija().getSala());
+
+		uredi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				List<String> terminInfo = new ArrayList<String>();
+				if (predmet.getText().equals("") || pocetak.getText().equals("") || zgrada.getText().equals("")
+						|| sala.getText().equals("") || kraj.getText().equals("")) {
+					greska.setVisible(true);
+					greska.setText("Niste unijeli sve podatke");
+				}
+				else {
+					terminInfo.add(predmet.getText());
+					terminInfo.add(pocetak.getText());
+					terminInfo.add(kraj.getText());
+					terminInfo.add(zgrada.getText());
+					terminInfo.add(sala.getText());
+					// Pozvati fju za UPDATE
+				}
+			}
+		});
+		
+		obrisi.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				// Pozvati funkciju za DELETE (proslijediti ID)
+				Collection<Termin> obrisan = new ArrayList<>();
+				
+				for (Termin t : termini) {
+					if (t.getId() != id)
+						obrisan.add(t);
+				}
+				
+				try {
+					startRasporedPage(primaryStage, registrovan, obrisan, vrijednosti);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
+		nazad.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		primaryStage.setTitle("Dodaj termin");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+
 	}
 
 	@Override
