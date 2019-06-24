@@ -1292,6 +1292,8 @@ public class Main extends Application {
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField sala = (TextField) scene.lookup("#sala");
 		TextField usmjerenje = (TextField) scene.lookup("#usmjerenje");
+		TextField tip = (TextField) scene.lookup("#tip");
+		TextField grupa = (TextField) scene.lookup("#grupa");
 		Label greska = (Label) scene.lookup("#greska");
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
@@ -1304,18 +1306,35 @@ public class Main extends Application {
 
 				List<String> terminInfo = new ArrayList<String>();
 				if (predmet.getText().equals("") || pocetak.getText().equals("") || zgrada.getText().equals("")
-						|| sala.getText().equals("") || kraj.getText().equals("") || usmjerenje.getText().equals("")) {
+						|| sala.getText().equals("") || kraj.getText().equals("") || usmjerenje.getText().equals("")
+						|| tip.getText().equals("")) {
 					greska.setVisible(true);
 					greska.setText("Niste unijeli sve podatke");
 				}
 				else {
-					greska.setText("Dodato!");
-					terminInfo.add(predmet.getText());
-					terminInfo.add(pocetak.getText());
-					terminInfo.add(kraj.getText());
-					terminInfo.add(zgrada.getText());
-					terminInfo.add(sala.getText());
-					terminInfo.add(usmjerenje.getText());
+					
+					if (!trenutniKorisnik.equals("Emir Mešković") &&
+					   (tip.getText().equals("Predavanje") || tip.getText().equals("Vjezbe") || tip.getText().equals("Labaratorija"))){
+						greska.setText("Nastavnik ne može dodavati te termine!");
+					}
+					else {
+						
+						terminInfo.add(predmet.getText());
+						terminInfo.add(pocetak.getText());
+						terminInfo.add(kraj.getText());
+						terminInfo.add(zgrada.getText());
+						terminInfo.add(sala.getText());
+						terminInfo.add(usmjerenje.getText());
+						terminInfo.add(trenutniKorisnik);
+						terminInfo.add(tip.getText());
+						terminInfo.add(grupa.getText());
+						if (Termin.dodajTermin(terminInfo)) {
+							greska.setText("Dodato!");
+						}
+						else {
+							greska.setText("Dogodila se greska!");
+						}
+					}			
 				}
 			}
 		});
@@ -1401,6 +1420,8 @@ public class Main extends Application {
 						obrisan.add(t);
 				}
 				
+				Termin.deleteTermin((int)id);
+				
 				try {
 					startRasporedPage(primaryStage, registrovan, obrisan, vrijednosti);
 				} catch (IOException e) {
@@ -1463,8 +1484,10 @@ public class Main extends Application {
 
 		// Termin.getTermini(vr);
 		/*
-		 * Termin.getTermini(vr); Predmet.showPredmeti(); Termin.showTermini();
+		 * Termin.getTermini(vr); Predmet.showPredmeti(); 
 		 */
+		
+		Termin.showTermini();
 		// Podaci.napuniBazu();
 		// Termin.showTermini();
 		if (Korisnik.nadjiKorisnika("amer", "amer") == tipKorisnika.Nastavnik) {
