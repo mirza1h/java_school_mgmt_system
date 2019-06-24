@@ -1366,10 +1366,21 @@ public class Main extends Application {
 		TextField usmjerenje = (TextField) scene.lookup("#usmjerenje");
 		TextField tip = (TextField) scene.lookup("#tip");
 		TextField grupa = (TextField) scene.lookup("#grupa");
+		TextField profesor = (TextField) scene.lookup("#profesortext");
 		Label greska = (Label) scene.lookup("#greska");
+		Label profesorlabela = (Label) scene.lookup("#profesorlabel");
 
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button nazad = (Button) scene.lookup("#nazad");
+		
+		if (trenutniKorisnik.equals("Emir Mešković")) {
+			profesorlabela.setVisible(true);
+			profesor.setVisible(true);
+		}
+		else {
+			profesorlabela.setVisible(false);
+			profesor.setVisible(false);
+		}
 
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1390,7 +1401,6 @@ public class Main extends Application {
 						greska.setText("Nastavnik ne može dodavati te termine!");
 					}
 					else {
-						
 						terminInfo.add(predmet.getText());
 						terminInfo.add(pocetak.getText());
 						terminInfo.add(kraj.getText());
@@ -1400,6 +1410,13 @@ public class Main extends Application {
 						terminInfo.add(trenutniKorisnik);
 						terminInfo.add(tip.getText());
 						terminInfo.add(grupa.getText());
+						if (trenutniKorisnik.equals("Emir Mešković")) {
+							terminInfo.add(profesor.getText());
+						}
+						else {
+							terminInfo.add(trenutniKorisnik);
+						}
+						
 						if (Termin.dodajTermin(terminInfo)) {
 							greska.setText("Dodato!");
 						}
@@ -1410,6 +1427,7 @@ public class Main extends Application {
 				}
 			}
 		});
+
 		
 		nazad.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1417,7 +1435,7 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				try {
 					greska.setText("");
-					startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
+					startRasporedPage(primaryStage, registrovan, Termin.getTermini(vrijednosti), vrijednosti);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -1449,6 +1467,8 @@ public class Main extends Application {
 		Button uredi = (Button) scene.lookup("#uredi");
 		Button obrisi = (Button) scene.lookup("#izbrisi");
 		Button nazad = (Button) scene.lookup("#nazad");
+		
+		CheckBox check = (CheckBox) scene.lookup("#check");
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		
@@ -1492,7 +1512,10 @@ public class Main extends Application {
 						obrisan.add(t);
 				}
 				
-				Termin.deleteTermin((int)id);
+				if (check.isSelected())
+					Termin.deleteTermin((int)id, true);
+				else
+					Termin.deleteTermin((int)id, false);
 				
 				try {
 					startRasporedPage(primaryStage, registrovan, obrisan, vrijednosti);
