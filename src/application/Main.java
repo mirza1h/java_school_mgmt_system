@@ -1330,6 +1330,11 @@ public class Main extends Application {
 	public void startIzvjestajPage(Stage primaryStage, String mjesec, String datum) throws IOException {
 		VBox izvjestaj = FXMLLoader.load(getClass().getResource("Izvjestaj.fxml"));
 		Scene scene = new Scene(izvjestaj);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Izvjestaj");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		Label izvrsilac1 = (Label) scene.lookup("#izvrsilac1");
 		Label izvrsilac2 = (Label) scene.lookup("#izvrsilac2");
@@ -1366,10 +1371,6 @@ public class Main extends Application {
 
 		System.out.println(termini);
 		tabela.getItems().addAll(termini);
-
-		primaryStage.setTitle("Izvjestaj");
-		primaryStage.setScene(scene);
-		primaryStage.show();
 	}
 
 	public void startTerminPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini,
@@ -1378,6 +1379,11 @@ public class Main extends Application {
 		VBox terminPage = FXMLLoader.load(getClass().getResource("FormaTermin.fxml"));
 		Scene scene = new Scene(terminPage);
 
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Dodaj termin");
+		secondStage.setScene(scene);
+		secondStage.show();
+		
 		TextField predmet = (TextField) scene.lookup("#predmet");
 		TextField pocetak = (TextField) scene.lookup("#pocetak");
 		TextField kraj = (TextField) scene.lookup("#kraj");
@@ -1455,6 +1461,7 @@ public class Main extends Application {
 			public void handle(ActionEvent event) {
 				try {
 					greska.setText("");
+					secondStage.close();
 					startRasporedPage(primaryStage, registrovan, Termin.getTermini(vrijednosti), vrijednosti);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -1462,11 +1469,6 @@ public class Main extends Application {
 				}
 			}
 		});
-		
-		primaryStage.setTitle("Dodaj termin");
-		primaryStage.setScene(scene);
-		primaryStage.show();
-
 	}
 	
 	public void startTerminObrisiPage(Stage primaryStage, boolean registrovan, Collection<Termin> termini,
@@ -1474,6 +1476,11 @@ public class Main extends Application {
 
 		VBox terminObrisiPage = FXMLLoader.load(getClass().getResource("FormaTerminObrisi.fxml"));
 		Scene scene = new Scene(terminObrisiPage);
+		
+		Stage secondStage = new Stage();
+		secondStage.setTitle("Obrisi termin");
+		secondStage.setScene(scene);
+		secondStage.show();
 
 		TextField predmet = (TextField) scene.lookup("#predmet");
 		TextField pocetak = (TextField) scene.lookup("#pocetak");
@@ -1516,6 +1523,9 @@ public class Main extends Application {
 					terminInfo.add(zgrada.getText());
 					terminInfo.add(sala.getText());
 					// Pozvati fju za UPDATE
+					System.out.println("UPDATE");
+					secondStage.close();
+					// Vratit se na raspored
 				}
 			}
 		});
@@ -1538,6 +1548,7 @@ public class Main extends Application {
 					Termin.deleteTermin((int)id, false);
 				
 				try {
+					secondStage.close();
 					startRasporedPage(primaryStage, registrovan, obrisan, vrijednosti);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -1552,6 +1563,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					secondStage.close();
 					startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -1559,11 +1571,6 @@ public class Main extends Application {
 				}
 			}
 		});
-		
-		primaryStage.setTitle("Dodaj termin");
-		primaryStage.setScene(scene);
-		primaryStage.show();
-
 	}
 
 	@Override
