@@ -70,8 +70,8 @@ public class DbFunctions {
 		EntityManager em=Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
 		Korisnik mesak=new Korisnik();
-		mesak.setUsername("mesak");
-		mesak.setPassword("mesak");
+		mesak.setUsername("Emir Mešković");
+		mesak.setPassword("123");
 		mesak.setTip(tipKorisnika.Prodekan);
 		em.persist(mesak);
 		em.getTransaction().commit();
@@ -83,7 +83,7 @@ public class DbFunctions {
 		EntityManager em=Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
 		Korisnik novi=new Korisnik();
-		novi.setUsername("Amer Hasanović");
+		novi.setUsername("Emir Mešković");
 		novi.setPassword("123");
 		novi.setTip(tipKorisnika.Nastavnik);
 		em.persist(novi);

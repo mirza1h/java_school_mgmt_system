@@ -227,7 +227,7 @@ public class Termin {
 			System.out.println("Nema lokacije");
 			return false;
 		}
-		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and"
+		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
 				+ "p.lokacija.sala=:tvoj",Termin.class);
 		terminUpit.setParameter("kar",datum1);
 		terminUpit.setParameter("dar",datum2);
