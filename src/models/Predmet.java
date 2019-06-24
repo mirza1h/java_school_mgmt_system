@@ -26,7 +26,9 @@ import models.Profesor.Usmjerenje;
 @Entity
 @NamedQueries({ @NamedQuery(name = "sviPredmeti", query = "select p from Predmet p"),
 		@NamedQuery(name = "sviPredmetiProfesora", query = "select pred from Predmet pred, Profesor prof WHERE pred.profesori = prof AND prof.ime = ?1"),
-		@NamedQuery(name = "dohvatiPredmet", query = "select p from Predmet p where p.naziv = ?1") })
+		@NamedQuery(name = "dohvatiPredmet", query = "select p from Predmet p where p.naziv = ?1"),
+		@NamedQuery(name = "unikatniPredmeti", query = "select p from Predmet p where p.id = "
+				+ "(select min(p2.id) from Predmet p2 where p2.naziv = p.naziv and p2.usmjerenje = p.usmjerenje)") })
 public class Predmet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,25 +80,14 @@ public class Predmet {
 	public Profesor getOneProfesor() {
 		return this.profesori.iterator().next();
 	}
+
 	public String getProfString() {
-		String izlaz=new String();
-		for(Profesor o : this.getProfesore()) {
-			izlaz+=o.getIme()+" ";
+		String izlaz = new String();
+		for (Profesor o : this.getProfesore()) {
+			izlaz += o.getIme() + " ";
 		}
 		return izlaz;
 	}
-//	public String getProfesoriString() {
-//		Profesor[] profesori = (Profesor[]) this.profesori.toArray();
-//		String profesoriString = "";
-//		for(int i = 0; i < profesori.length; ++i) {
-//			if(i != profesori.length - 2) {
-//				profesoriString += profesori[i].getIme();
-//			} else {
-//				profesoriString += profesori[i].getIme() + ", ";
-//			}
-//		}
-//		return profesoriString;
-//	}
 
 	@Override
 	public String toString() {
@@ -114,7 +105,7 @@ public class Predmet {
 
 	public static void showPredmeti() {
 		EntityManager em = Main.getFactory().createEntityManager();
-		Query upit = em.createNamedQuery("sviPredmeti", Predmet.class);
+		Query upit = em.createNamedQuery("unikatniPredmeti", Predmet.class);
 		Collection<Object> rezultat = upit.getResultList();
 		for (Object o : rezultat) {
 			System.out.println(o);
@@ -124,7 +115,7 @@ public class Predmet {
 
 	public static Collection<Predmet> getPredmeti() {
 		EntityManager em = Main.getFactory().createEntityManager();
-		Query upit = em.createNamedQuery("sviPredmeti", Predmet.class);
+		Query upit = em.createNamedQuery("unikatniPredmeti", Predmet.class);
 		Collection<Predmet> rezultat = upit.getResultList();
 		return rezultat;
 
@@ -223,10 +214,9 @@ public class Predmet {
 	public static boolean deletePredmet(Long id) {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		Predmet p=em.getReference(Predmet.class,id);
-		Query termini=em.createQuery("delete from Termin t where t.naziv=:var and t.usmjerenje=:tar",Termin.class);
-		termini.setParameter("var", p.getNaziv());
-		termini.setParameter("tar",p.getUsmjerenje());
+		Predmet p = em.getReference(Predmet.class, id);
+		Query termini = em.createQuery("delete from Termin t where t.predmet = ?1");
+		termini.setParameter(1, p);
 		termini.executeUpdate();
 		Query upit = em.createQuery("delete from Predmet p where p.id=:var", Predmet.class);
 		upit.setParameter("var", id);
