@@ -8,18 +8,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="514.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="421.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitWidth="915.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@images/bg.png" />
          </image>
       </ImageView>
-      <Pane layoutX="247.0" layoutY="91.0" opacity="0.7" prefHeight="394.0" prefWidth="715.0" style="-fx-background-color: black; -fx-background-radius: 3;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="40.0">
+      <Pane layoutX="247.0" layoutY="91.0" opacity="0.7" prefHeight="650.0" prefWidth="1100.0" style="-fx-background-color: black; -fx-background-radius: 3;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="40.0">
          <children>
             <TableView fx:id="tabela" layoutX="20.0" layoutY="20.0" prefHeight="354.0" prefWidth="675.0" style="-fx-background-color: #ccc;">
               <columns>
-                <TableColumn prefWidth="70.0" text="id" />
+                <TableColumn minWidth="-Infinity" prefWidth="70.0" text="id" />
                 <TableColumn prefWidth="192.0" text="Naziv Predmeta" />
                   <TableColumn prefWidth="111.0" text="Br studenata" />
                   <TableColumn prefWidth="95.0" text="Usmjerenje" />

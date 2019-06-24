@@ -765,7 +765,9 @@ public class Main extends Application {
 				}
 			}
 		});
-
+		
+//		primaryStage.setX(0);
+//		primaryStage.setY(0);
 		primaryStage.setTitle("Predmeti");
 		primaryStage.setScene(scene);
 		primaryStage.show();
