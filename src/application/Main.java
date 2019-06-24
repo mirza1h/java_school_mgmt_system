@@ -993,37 +993,31 @@ public class Main extends Application {
 		TextField sala = (TextField) scene.lookup("#sala");
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
-
+		
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				Label greska = (Label) scene.lookup("#greska");
-				
-				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("") || 
-						kapacitet.getText().toString().trim().equals("")) {
-					greska.setText("Niste unijeli sve podatke!");
-					greska.setVisible(true);
-					return;
-				}
 
 				List<String> prostorija = new ArrayList<String>();
-				if (sala.getText().equals("") || zgrada.getText().equals("") || kapacitet.getText().equals("")) {
+				if (sala.getText().trim().equals("") || zgrada.getText().trim().equals("") || 
+						kapacitet.getText().toString().equals("")) {
+					greska.setText("Niste unijeli sve podatke!");
 					greska.setVisible(true);
-					greska.setText("Niste unijeli sve podatke");
 				}
-
+					
 				else {
 
 					prostorija.add(sala.getText());
 					prostorija.add(zgrada.getText());
 					prostorija.add(kapacitet.getText());
-
+					
 					try {
 						int temp = Integer.parseInt(kapacitet.getText());
 						if (Lokacija.unesiLokaciju(prostorija) == true) {
 							try {
-								greska.setText("Taj podatak vec postoji!");
+								greska.setText("Prostorija vec postoji u bazi!");
 								greska.setVisible(false);
 								startProstorije(primaryStage);
 							} catch (IOException e) {
@@ -1032,16 +1026,11 @@ public class Main extends Application {
 						} else {
 							greska.setVisible(true);
 						}
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						greska.setVisible(true);
 						greska.setText("Pogresan kapacitet");
 					}
-<<<<<<< HEAD
-				} else {
-					greska.setText("Prostorija vec postoji u bazi!");
-					greska.setVisible(true);
-=======
->>>>>>> abff95ea2d479f350b726d7fb1a4c6b009d7e9a3
 				}
 			}
 		});

@@ -42,11 +42,7 @@
             </Label>
             <Button fx:id="dodaj" layoutX="270.0" layoutY="310.0" mnemonicParsing="false" prefWidth="95.0" text="Dodaj zapis" />
             <Button fx:id="ponisti" layoutX="190.0" layoutY="310.0" mnemonicParsing="false" text="Ponisti" />
-<<<<<<< HEAD
             <Label fx:id="greska" layoutX="50.0" layoutY="265.0" textFill="RED" visible="false">
-=======
-            <Label fx:id="greska" layoutX="50.0" layoutY="265.0" text="Prostorija vec postoji u bazi!" textFill="RED" visible="false">
->>>>>>> abff95ea2d479f350b726d7fb1a4c6b009d7e9a3
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
