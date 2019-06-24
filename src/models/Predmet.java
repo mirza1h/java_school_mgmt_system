@@ -218,8 +218,8 @@ public class Predmet {
 		Query termini = em.createQuery("delete from Termin t where t.predmet.naziv = ?1");
 		termini.setParameter(1, p.getNaziv());
 		termini.executeUpdate();
-		Query upit = em.createQuery("delete from Predmet p where p.id=:var", Predmet.class);
-		upit.setParameter("var", id);
+		Query upit = em.createQuery("delete from Predmet p where p.naziv=?1");
+		upit.setParameter(1, p.getNaziv());
 		upit.executeUpdate();
 		em.getTransaction().commit();
 		return true;
