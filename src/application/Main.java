@@ -20,7 +20,10 @@ import java.util.List;
 import com.sun.javafx.scene.control.skin.Utils;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -211,27 +214,8 @@ public class Main extends Application {
 	}
 
 	public void startLoginPage(Stage primaryStage) throws IOException {
-		// dodajKorisnike();
-
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		EntityManager em = factory.createEntityManager();
-
-		Query q = em.createQuery("Select t from Termin t");
-		List<Termin> res = q.getResultList();
-
-		/*
-		 * for (Termin t : res) { System.out.println(t); }
-		 */
-
-		/*
-		 * em.getTransaction().begin(); for (Termin t : res) { em.persist(t); for (int i
-		 * = 0; i < 14; ++i) { em.detach(t); t.setId(null);
-		 * t.setStartTime(t.getStartTime().plusDays(7));
-		 * t.setEndTime(t.getEndTime().plusDays(7)); em.persist(t); em.flush(); } }
-		 * em.getTransaction().commit();
-		 */
-
-		// System.out.println(res.size());
 
 		VBox login = FXMLLoader.load(getClass().getResource("login.fxml"));
 		Scene loginScene = new Scene(login);
@@ -653,20 +637,38 @@ public class Main extends Application {
 	}
 
 	public void startProfesori(Stage primaryStage) throws IOException {
+		ObservableList<ProfesoriIspis> masterData = FXCollections.observableArrayList();
+		Collection<ProfesoriIspis> c = ProfesoriGet.getTableProfesor();
+		masterData.addAll(c);
 		AnchorPane showProfesori = FXMLLoader.load(getClass().getResource("ProfesoriEditPage.fxml"));
 		Scene scene = new Scene(showProfesori);
-
+		TextField pretraga = (TextField) scene.lookup("#pretraga");
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		TableView<ProfesoriIspis> tabela = (TableView<ProfesoriIspis>) scene.lookup("#tabela");
-
+		FilteredList<ProfesoriIspis> filteredData = new FilteredList<>(masterData, p -> true);
+		pretraga.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(person -> {
+				if ((newValue == null) || newValue.isEmpty()) {
+					return true;
+				}
+				String lowerCaseFilter = newValue.toLowerCase();
+				if (person.getImePrezime().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				if (person.getUsmjerenje().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				return false;
+			});
+		});
+		SortedList<ProfesoriIspis> sortedData = new SortedList<>(filteredData);
+		sortedData.comparatorProperty().bind(tabela.comparatorProperty());
+		tabela.setItems(sortedData);
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("imePrezime"));
 		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("predmeti"));
-
-		Collection<ProfesoriIspis> c = ProfesoriGet.getTableProfesor();
-		tabela.getItems().addAll(c);
 
 		EntityManager em = Main.getFactory().createEntityManager();
 
@@ -709,15 +711,19 @@ public class Main extends Application {
 		primaryStage.setTitle("Profesori");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
 	}
 
 	public void startPredmeti(Stage primaryStage) throws IOException {
 		AnchorPane showPredmeti = FXMLLoader.load(getClass().getResource("PredmetiEditPage.fxml"));
 		Scene scene = new Scene(showPredmeti);
-
+		ObservableList<PredmetiIspis> masterData = FXCollections.observableArrayList();
+		Collection<PredmetiIspis> c = PredmetiGet.getTablePredmeti();
+		masterData.addAll(c);
 		Button nazad = (Button) scene.lookup("#nazad");
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		TableView<PredmetiIspis> tabela = (TableView<PredmetiIspis>) scene.lookup("#tabela");
+		TextField pretraga = (TextField) scene.lookup("#pretraga");
 
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("naziv"));
@@ -726,9 +732,23 @@ public class Main extends Application {
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("semestar"));
 		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("profesori"));
 
-		Collection<PredmetiIspis> c = PredmetiGet.getTablePredmeti();
-		tabela.getItems().addAll(c);
 		EntityManager em = Main.getFactory().createEntityManager();
+		FilteredList<PredmetiIspis> filteredData = new FilteredList<>(masterData, p -> true);
+		pretraga.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredData.setPredicate(person -> {
+				if ((newValue == null) || newValue.isEmpty()) {
+					return true;
+				}
+				String lowerCaseFilter = newValue.toLowerCase();
+				if (person.getNaziv().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				return false;
+			});
+		});
+		SortedList<PredmetiIspis> sortedData = new SortedList<>(filteredData);
+		sortedData.comparatorProperty().bind(tabela.comparatorProperty());
+		tabela.setItems(sortedData);
 
 		tabela.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
@@ -1679,14 +1699,14 @@ public class Main extends Application {
 		vr.add("23/09/2019");
 		// DbFunctions.addProdekan();
 		// DbFunctions.addProfesor();
-		Korisnik.showKorisnici();
+		// Korisnik.showKorisnici();
 
 		// Termin.getTermini(vr);
 		/*
 		 * Termin.getTermini(vr); Predmet.showPredmeti();
 		 */
 
-		Termin.showTermini();
+		// Termin.showTermini();
 		// Podaci.napuniBazu();
 		// Termin.showTermini();
 		if (Korisnik.nadjiKorisnika("amer", "amer") == tipKorisnika.Nastavnik) {

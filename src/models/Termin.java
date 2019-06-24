@@ -129,31 +129,31 @@ public class Termin {
 
 	}
 
-	public static void deleteTermin(long id,boolean sve) {
+	public static void deleteTermin(long id, boolean sve) {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		if(sve) {
-			Termin temp=em.getReference(Termin.class,id);
-			Query ostaliTermini=em.createQuery("select p from Termin p where p.predmet.naziv=:var and p.tip=:sar and p.grupa=:ban",Termin.class);
+		if (sve) {
+			Termin temp = em.getReference(Termin.class, id);
+			Query ostaliTermini = em.createQuery(
+					"select p from Termin p where p.predmet.naziv=:var and p.tip=:sar and p.grupa=:ban", Termin.class);
 			ostaliTermini.setParameter("var", temp.getPredmet().getNaziv());
 			ostaliTermini.setParameter("sar", temp.getTip());
-			ostaliTermini.setParameter("ban",temp.getGrupa());
-			List<Termin> rez=ostaliTermini.getResultList();
-			for(Termin o : rez) {
-				Query izbrisiTermini=em.createQuery("delete from Termin p where p.id=:tar",Termin.class);
+			ostaliTermini.setParameter("ban", temp.getGrupa());
+			List<Termin> rez = ostaliTermini.getResultList();
+			for (Termin o : rez) {
+				Query izbrisiTermini = em.createQuery("delete from Termin p where p.id=:tar", Termin.class);
 				izbrisiTermini.setParameter("tar", o.getId());
 				izbrisiTermini.executeUpdate();
-				
+
 			}
 			em.getTransaction().commit();
 			em.close();
-		}
-		else {
-		Query upit = em.createNamedQuery("izbrisiTermin", Termin.class);
-		upit.setParameter(1, id);
-		upit.executeUpdate();
-		em.getTransaction().commit();
-		em.close();
+		} else {
+			Query upit = em.createNamedQuery("izbrisiTermin", Termin.class);
+			upit.setParameter(1, id);
+			upit.executeUpdate();
+			em.getTransaction().commit();
+			em.close();
 		}
 	}
 
@@ -218,56 +218,61 @@ public class Termin {
 		System.out.println("Mirza" + rezultat.size());
 		return rezultat;
 	}
+
 	public static int dodajTermin(List<String> unos) {
-		String nazivPred=unos.get(0);
-		DateTimeFormatter form= DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-		LocalDateTime datum1=LocalDateTime.parse(unos.get(1),form);
-		LocalDateTime datum2=LocalDateTime.parse(unos.get(2),form);
-		String zgrada=unos.get(3);
-		String sala=unos.get(4);
-		Usmjerenje usm=Usmjerenje.valueOf(unos.get(5));
-		String korisnik=unos.get(6);
-		tipTermina tip=tipTermina.valueOf(unos.get(7));
-		String grupa=unos.get(8);
-		String kojemProf=unos.get(9);
+		String nazivPred = unos.get(0);
+		DateTimeFormatter form = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		LocalDateTime datum1 = LocalDateTime.parse(unos.get(1), form);
+		LocalDateTime datum2 = LocalDateTime.parse(unos.get(2), form);
+		String zgrada = unos.get(3);
+		String sala = unos.get(4);
+		Usmjerenje usm = Usmjerenje.valueOf(unos.get(5));
+		String korisnik = unos.get(6);
+		tipTermina tip = tipTermina.valueOf(unos.get(7));
+		String grupa = unos.get(8);
+		String kojemProf = unos.get(9);
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		Query predmUpit=em.createQuery("select p from Predmet p where p.naziv=:var and p.usmjerenje=:tar",Predmet.class);
+		Query predmUpit = em.createQuery("select p from Predmet p where p.naziv=:var and p.usmjerenje=:tar",
+				Predmet.class);
 		predmUpit.setParameter("var", nazivPred);
 		predmUpit.setParameter("tar", usm);
-		List<Predmet> broj=predmUpit.getResultList();
-		if(broj.size()==0) {
+		List<Predmet> broj = predmUpit.getResultList();
+		if (broj.size() == 0) {
 			return -1;
 		}
-		Query lokacijaUpit=em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",Lokacija.class);
-		lokacijaUpit.setParameter("sar",zgrada);
+		Query lokacijaUpit = em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",
+				Lokacija.class);
+		lokacijaUpit.setParameter("sar", zgrada);
 		lokacijaUpit.setParameter("lar", sala);
-		List<Lokacija> brojLok=lokacijaUpit.getResultList();
-		if(brojLok.size()==0) {
+		List<Lokacija> brojLok = lokacijaUpit.getResultList();
+		if (brojLok.size() == 0) {
 			System.out.println("Nema lokacije");
 			return -2;
 		}
-		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
-				+ "p.lokacija.sala=:tvoj",Termin.class);
-		terminUpit.setParameter("kar",datum1);
-		terminUpit.setParameter("dar",datum2);
+		Query terminUpit = em.createQuery(
+				"select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
+						+ "p.lokacija.sala=:tvoj",
+				Termin.class);
+		terminUpit.setParameter("kar", datum1);
+		terminUpit.setParameter("dar", datum2);
 		terminUpit.setParameter("moj", zgrada);
 		terminUpit.setParameter("tvoj", sala);
-		Collection<Termin> brojTer=terminUpit.getResultList();
-		if(brojTer.size()!=0) {
+		Collection<Termin> brojTer = terminUpit.getResultList();
+		if (brojTer.size() != 0) {
 			System.out.println("Zauzet termin");
 			return -3;
 		}
-		
-		Query korisnikUpit=em.createQuery("select p from Profesor p where p.ime=:mar",Profesor.class);
-		korisnikUpit.setParameter("mar",kojemProf);
-		List<Profesor> brojProf=korisnikUpit.getResultList();
-		if(brojProf.size()==0) {
+
+		Query korisnikUpit = em.createQuery("select p from Profesor p where p.ime=:mar", Profesor.class);
+		korisnikUpit.setParameter("mar", kojemProf);
+		List<Profesor> brojProf = korisnikUpit.getResultList();
+		if (brojProf.size() == 0) {
 			System.out.println("Nema profesora sa tim imenom");
 			return -4;
 		}
-		
-		Termin novi=new Termin();
+
+		Termin novi = new Termin();
 		novi.setPredmet(broj.get(0));
 		novi.setLokacija(brojLok.get(0));
 		novi.setProfesor(brojProf.get(0));
@@ -278,8 +283,7 @@ public class Termin {
 		em.persist(novi);
 		em.getTransaction().commit();
 		em.close();
-		
-		
+
 		return 1;
 	}
 
