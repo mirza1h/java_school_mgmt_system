@@ -215,8 +215,8 @@ public class Predmet {
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
 		Predmet p = em.getReference(Predmet.class, id);
-		Query termini = em.createQuery("delete from Termin t where t.predmet = ?1");
-		termini.setParameter(1, p);
+		Query termini = em.createQuery("delete from Termin t where t.predmet.naziv = ?1");
+		termini.setParameter(1, p.getNaziv());
 		termini.executeUpdate();
 		Query upit = em.createQuery("delete from Predmet p where p.id=:var", Predmet.class);
 		upit.setParameter("var", id);
