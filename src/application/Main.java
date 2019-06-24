@@ -765,9 +765,7 @@ public class Main extends Application {
 				}
 			}
 		});
-		
-//		primaryStage.setX(0);
-//		primaryStage.setY(0);
+
 		primaryStage.setTitle("Predmeti");
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -865,7 +863,8 @@ public class Main extends Application {
 				profesor.add(prezime.getText());
 				profesor.add(usmjerenje.getValue().toString());
 
-				if (Profesor.unesiProfesor(profesor) == true) {
+				int code = Profesor.unesiProfesor(profesor);
+				if (code == 1) {
 					try {
 						greska.setVisible(false);
 						secondStage.close();
@@ -979,8 +978,9 @@ public class Main extends Application {
 	}
 
 	private void dodajPredmet(List<String> predmet, Label greska, Stage primaryStage, Stage secondStage) {
-		System.out.println(predmet);
-		if (Predmet.unesiPredmet(predmet) == true) {
+		System.out.println(predmet.toString());
+		int code = Predmet.unesiPredmet(predmet);
+		if (code == 1) {
 			try {
 				greska.setVisible(false);
 				secondStage.close();
@@ -988,8 +988,11 @@ public class Main extends Application {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		} else {
+		} else if (code == -2) {
 			greska.setText("Predmet vec postoji u bazi!");
+			greska.setVisible(true);
+		} else {
+			greska.setText("Nema profesora u bazi!");
 			greska.setVisible(true);
 		}
 	}
@@ -1031,7 +1034,8 @@ public class Main extends Application {
 
 					try {
 						int temp = Integer.parseInt(kapacitet.getText());
-						if (Lokacija.unesiLokaciju(prostorija) == true) {
+						int code = Lokacija.unesiLokaciju(prostorija);
+						if (code == 1) {
 							try {
 								greska.setVisible(false);
 								secondStage.close();
@@ -1188,6 +1192,33 @@ public class Main extends Application {
 		Integer b = (Integer) pred.getBrojStudenata();
 		brojStudenata.setText(b.toString());
 		profesori.setText(pred.getProfString());
+		ar.setDisable(true);
+		eems.setDisable(true);
+		eske.setDisable(true);
+		ri.setDisable(true);
+		tk.setDisable(true);
+		switch(pred.getUsmjerenje()) {
+			case AR:{
+				ar.setSelected(true);
+				break;
+			}
+			case EEMS:{
+				eems.setSelected(true);
+				break;
+			}
+			case ESKE:{
+				eske.setSelected(true);
+				break;
+			}
+			case RI:{
+				ri.setSelected(true);
+				break;
+			}
+			case TK:{
+				tk.setSelected(true);
+				break;
+			}
+		}
 
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -1205,6 +1236,32 @@ public class Main extends Application {
 				}
 
 				System.out.println("uredi");
+				
+				List<String> predmet = new ArrayList<String>();
+				predmet.add(id.getText());
+				predmet.add(naziv.getText());
+				predmet.add(semestar.getText());
+				predmet.add(brojStudenata.getText());
+				predmet.add(pred.getUsmjerenje().toString());
+				String[] profesoriNiz = profesori.getText().split(", ");
+				for (int i = 0; i < profesoriNiz.length; ++i) {
+					predmet.add(5 + i, profesoriNiz[i]);
+				}
+				
+				System.out.println(predmet);
+				
+				if (Predmet.updatePredmet(predmet) == true) {
+					try {
+						greska.setVisible(false);
+						secondStage.close();
+						startProfesori(primaryStage);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					greska.setText("Unesite ispravne podatke!");
+					greska.setVisible(true);
+				}
 
 			}
 		});
@@ -1443,10 +1500,32 @@ public class Main extends Application {
 							terminInfo.add(Main.this.trenutniKorisnik);
 						}
 
-						if (Termin.dodajTermin(terminInfo)) {
-							greska.setText("Dodato!");
-						} else {
-							greska.setText("Dogodila se greska!");
+						int code = Termin.dodajTermin(terminInfo);
+						switch(code) {
+						case 1: {
+							greska.setText("Dodano!");
+							break;
+						}
+						case -1: {
+							greska.setText("Postoji termin za predmet/usmjerenje!");
+							greska.setVisible(true);
+							break;
+						}
+						case -2: {
+							greska.setText("Ne postoji trazena sala!");
+							greska.setVisible(true);
+							break;
+						}
+						case -3: {
+							greska.setText("Zauzeta sala u trazenom terminu!");
+							greska.setVisible(true);
+							break;
+						}
+						case -4: {
+							greska.setText("Ne postoji trazeni profesor!");
+							greska.setVisible(true);
+							break;
+						}
 						}
 					}
 				}
