@@ -138,8 +138,9 @@ public class Lokacija {
 		termini.setParameter("var", p.getZgrada());
 		termini.setParameter("tar",p.getSala());
 		termini.executeUpdate();
-		Query upit = em.createQuery("delete from Lokacija p where p.id=:var", Lokacija.class);
-		upit.setParameter("var", id);
+		Query upit = em.createQuery("delete from Lokacija p where p.zgrada=?1 and p.sala = ?2");
+		upit.setParameter(1, p.getZgrada());
+		upit.setParameter(2, p.getSala());
 		upit.executeUpdate();
 		em.getTransaction().commit();
 		return true;
