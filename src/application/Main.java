@@ -1723,7 +1723,7 @@ public class Main extends Application {
 		 */
 
 		// Termin.showTermini();
-		Podaci.napuniBazu();
+		//Podaci.napuniBazu();
 		// Termin.showTermini();
 		if (Korisnik.nadjiKorisnika("amer", "amer") == tipKorisnika.Nastavnik) {
 			System.out.println("radi");
