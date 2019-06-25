@@ -211,9 +211,6 @@ public class Termin {
 			upit.setParameter("drugo", datumDrugi);
 		}
 		Collection<Termin> rezultat = upit.getResultList();
-		for (Termin o : rezultat) {
-			System.out.println(o);
-		}
 		em.close();
 
 		System.out.println("Mirza" + rezultat.size());
@@ -356,9 +353,9 @@ public class Termin {
 		terminUpit.setParameter("moj", zgrada);
 		terminUpit.setParameter("tvoj", sala);
 		Collection<Termin> brojTer=terminUpit.getResultList();
-		if(brojTer.size()!=0) {
-			System.out.println("Zauzet termin");
-			return -3;
+		for(Termin t : brojTer) {
+			if(t.getId()!=id)
+				return -3;
 		}
 		Termin temp=em.getReference(Termin.class,id);
 		temp.setPredmet(broj.get(0));
