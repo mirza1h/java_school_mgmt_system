@@ -325,7 +325,7 @@ public class Termin {
 		
 		return 1;
 	}
-	public static boolean updateTermin(List<String> unos) {
+	public static int updateTermin(List<String> unos) {
 		Long id=Long.valueOf(unos.get(0));
 		String nazivPred=unos.get(1);
 		DateTimeFormatter form= DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -339,7 +339,7 @@ public class Termin {
 		predmUpit.setParameter("var", nazivPred);
 		List<Predmet> broj=predmUpit.getResultList();
 		if(broj.size()==0) {
-			return false;
+			return -1;
 		}
 		Query lokacijaUpit=em.createQuery("select p from Lokacija p where p.zgrada=:sar and p.sala=:lar",Lokacija.class);
 		lokacijaUpit.setParameter("sar",zgrada);
@@ -347,7 +347,7 @@ public class Termin {
 		List<Lokacija> brojLok=lokacijaUpit.getResultList();
 		if(brojLok.size()==0) {
 			System.out.println("Nema lokacije");
-			return false;
+			return -2;
 		}
 		Query terminUpit=em.createQuery("select p from Termin p where p.startTime>=:kar and p.endTime<=:dar and p.lokacija.zgrada=:moj and "
 				+ "p.lokacija.sala=:tvoj",Termin.class);
@@ -358,7 +358,7 @@ public class Termin {
 		Collection<Termin> brojTer=terminUpit.getResultList();
 		if(brojTer.size()!=0) {
 			System.out.println("Zauzet termin");
-			return false;
+			return -3;
 		}
 		Termin temp=em.getReference(Termin.class,id);
 		temp.setPredmet(broj.get(0));
@@ -369,7 +369,7 @@ public class Termin {
 		em.getTransaction().commit();
 		em.close();
 		
-		return true;
+		return 1;
 	}
 
 }

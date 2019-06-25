@@ -89,10 +89,6 @@ public class Izvjestaj {
 		
 		for (Termin t : termini) {
 			
-			if ((t.getStartTime().compareTo(limitDatum)) < 0) {
-				continue;
-			}
-			
 			IzvjestajInfo red = new IzvjestajInfo();
 			red.setPredmet(t.getPredmet().getNaziv());
 			red.setDatum(t.getStartTime().format(formatter));

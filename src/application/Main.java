@@ -440,9 +440,6 @@ public class Main extends Application {
 			ArrayList<Termin> trenutna = (ArrayList<Termin>) pair.getValue();
 
 			for (int i = 0; i < trenutna.size(); ++i) {
-				if ((trenutna.get(i).getStartTime().compareTo(limitDatum)) < 0) {
-					continue;
-				}
 				AnchorPane noviDodavanje = newBlock(defaultBlock, trenutna.get(i), trenutna.size(), i);
 				Termin temp = trenutna.get(i);
 				noviDodavanje.setOnMouseClicked(event -> {
@@ -1549,7 +1546,7 @@ public class Main extends Application {
 							break;
 						}
 						case -1: {
-							greska.setText("Postoji termin za predmet/usmjerenje!");
+							greska.setText("Taj predmet ne postoji!");
 							greska.setVisible(true);
 							break;
 						}
@@ -1635,15 +1632,48 @@ public class Main extends Application {
 					greska.setVisible(true);
 					greska.setText("Niste unijeli sve podatke");
 				} else {
+					terminInfo.add(String.valueOf(id));
 					terminInfo.add(predmet.getText());
 					terminInfo.add(pocetak.getText());
 					terminInfo.add(kraj.getText());
 					terminInfo.add(zgrada.getText());
 					terminInfo.add(sala.getText());
 					// Pozvati fju za UPDATE
-					System.out.println("UPDATE");
-					secondStage.close();
-					// Vratit se na raspored
+					DateTimeFormatter form = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+					for (Termin t : termini) {
+						if (t.getId() == id) {
+							t.getPredmet().setNaziv(predmet.getText());
+							t.setEndTime(LocalDateTime.parse(kraj.getText(),form));
+							t.setStartTime(LocalDateTime.parse(pocetak.getText(),form));
+							t.getLokacija().setZgrada(zgrada.getText());
+							t.getLokacija().setSala(sala.getText());
+						}
+					}
+					
+					int code = Termin.updateTermin(terminInfo);
+					if (code == 1) {
+						try {
+							startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if (code == -1) {
+						greska.setText("Taj predmet ne postoji!");
+						greska.setVisible(true);
+					}
+					
+					if (code == -2) {
+						greska.setText("Ne postoji trazena sala!");
+						greska.setVisible(true);
+					}
+					
+					if (code == -3) {
+						greska.setText("Zauzeta sala u trazenom terminu!");
+						greska.setVisible(true);
+					}		
 				}
 			}
 		});
