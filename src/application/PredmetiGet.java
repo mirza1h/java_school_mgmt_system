@@ -36,7 +36,7 @@ List<PredmetiIspis> lista = new ArrayList<>();
 			Collection<Profesor> profesori = p.getProfesore();
 			String novi ="";
 			for (Profesor prof : profesori) {
-				novi = prof.getIme() + "; ";
+				novi += (prof.getIme() + "; ");
 			}
 			ispis.setProfesori(novi);
 			ret.add(ispis);

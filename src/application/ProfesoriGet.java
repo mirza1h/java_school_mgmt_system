@@ -32,7 +32,7 @@ public class ProfesoriGet {
 			Collection<Predmet> predmeti = p.getPredmete();
 			String novi ="";
 			for (Predmet pred : predmeti) {
-				novi = pred.getNaziv() + ", ";
+				novi += (pred.getNaziv() + "; ");
 			}
 			ispis.setPredmeti(novi);
 			ret.add(ispis);
