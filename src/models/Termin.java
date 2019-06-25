@@ -281,8 +281,9 @@ public class Termin {
 			int mjesec = datum1.getMonthValue();
 			int dan=datum1.getDayOfMonth();
 			for(;mjesec<=6;mjesec=datum1.getMonthValue()) {
-				datum1.plusDays(7);
-				datum2.plusDays(7);
+				System.out.println(datum1);
+				datum1=datum1.plusDays(7);
+				datum2=datum2.plusDays(7);
 				List<String> listic=new ArrayList<String>();
 				String mojDatum1=datum1.format(form);
 				String mojDatum2=datum2.format(form);
@@ -299,8 +300,8 @@ public class Termin {
 				Termin.dodajTermin(listic, false);
 			}
 			for(;mjesec>=9;mjesec=datum1.getMonthValue()) {
-				datum1.plusDays(7);
-				datum2.plusDays(7);
+				datum1=datum1.plusDays(7);
+				datum2=datum2.plusDays(7);
 				List<String> listic=new ArrayList<String>();
 				String mojDatum1=datum1.format(form);
 				String mojDatum2=datum2.format(form);
