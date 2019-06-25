@@ -117,8 +117,8 @@ public class Lokacija {
 		upit.setParameter("var", zgrada);
 		upit.setParameter("nest", sala);
 		Collection<Lokacija> rezultat = upit.getResultList();
-		if (rezultat.size() != 0) {
-			em.close();
+		for(Lokacija lok : rezultat) {
+			if(lok.getId()!=neka.getId())
 			return false;
 		}
 		neka.setKapacitet(kapacitet);
