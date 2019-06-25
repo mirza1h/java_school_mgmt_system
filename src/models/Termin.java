@@ -273,10 +273,6 @@ public class Termin {
 			System.out.println("Nema profesora na tom predmetu");
 			return -5;
 		}
-		if(broj.get(0).getBrojStudenata()>brojLok.get(0).getKapacitet()) {
-			System.out.println("Broj studenata na predmetu je veci od kapaciteta sale");
-			return -6;
-		}
 		
 		Termin novi=new Termin();
 		novi.setPredmet(broj.get(0));

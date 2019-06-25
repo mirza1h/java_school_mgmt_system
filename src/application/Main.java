@@ -1481,7 +1481,7 @@ public class Main extends Application {
 				} else {
 
 					if (!trenutniKorisnik.equals("Emir Mešković") && (tip.getText().equals("Predavanje")
-							|| tip.getText().equals("Vjezbe") || tip.getText().equals("Labaratorija"))) {
+							|| tip.getText().equals("Vjezbe") || tip.getText().equals("Laboratorija"))) {
 						greska.setText("Nastavnik ne može dodavati te termine!");
 					} else {
 						terminInfo.add(predmet.getText());
@@ -1500,8 +1500,7 @@ public class Main extends Application {
 						}
 
 						int code;
-						if (tip.getText().equals("Predavanje") || tip.getText().equals("Vjezbe")
-								|| tip.getText().equals("Labaratorija")) {
+						if (tip.getText().equals("Predavanje") || tip.getText().equals("Vjezbe") || tip.getText().equals("Laboratorija")) {
 
 							code = Termin.dodajTermin(terminInfo, true);
 						} else {
