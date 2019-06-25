@@ -115,7 +115,7 @@ public class Profesor {
 		Usmjerenje usm = Usmjerenje.valueOf(unos.get(2));
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		Query testniUpit = em.createQuery("select t from Korisnik t where t.username='" + ime + "'");
+		Query testniUpit = em.createQuery("select t from Profesor t where t.ime='" + ime + "'",Profesor.class);
 		Collection<Profesor> provjera = testniUpit.getResultList();
 		if (provjera.size() != 0) {
 			return false;

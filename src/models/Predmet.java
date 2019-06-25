@@ -197,8 +197,9 @@ public class Predmet {
 		test.setParameter("var", naziv);
 		test.setParameter("tar", usm);
 		Collection<Predmet> testRez = test.getResultList();
-		if (testRez.size() != 0) {
-			return false;
+		for(Predmet oo : testRez) {
+			if(oo.getId()!=taj.getId())
+				return false;
 		}
 		Collection<Profesor> ukloniti = taj.getProfesore();
 		for (Profesor kk : ukloniti) {
@@ -207,6 +208,7 @@ public class Predmet {
 		}
 		taj.setNaziv(naziv);
 		taj.setProfesore(rezultat);
+		taj.setBrojStudenata(brojst);
 		taj.setSemestar(Integer.valueOf(semestar));
 		taj.setUsmjerenje(usm);
 		for (Profesor nastavnik : rezultat) {
