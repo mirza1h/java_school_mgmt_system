@@ -724,7 +724,7 @@ public class Main extends Application {
 
 		tabela.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
 		tabela.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("naziv"));
-		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("brojStudenata"));
+		tabela.getColumns().get(2).setCellValueFactory(new PropertyValueFactory<>("brStud"));
 		tabela.getColumns().get(3).setCellValueFactory(new PropertyValueFactory<>("usmjerenje"));
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("semestar"));
 		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("profesori"));

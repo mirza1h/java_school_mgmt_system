@@ -1,7 +1,7 @@
 package application;
 
 public class PredmetiIspis {
-	private String id, naziv, brojStudenata, usmjerenje, semestar, profesori;
+	private String id, naziv, brStud, usmjerenje, semestar, profesori;
 
 	public String getId() {
 		return id;
@@ -20,11 +20,11 @@ public class PredmetiIspis {
 	}
 
 	public String getBrStud() {
-		return brojStudenata;
+		return brStud;
 	}
 
 	public void setBrStud(String brStud) {
-		this.brojStudenata = brStud;
+		this.brStud = brStud;
 	}
 
 	public String getUsmjerenje() {
