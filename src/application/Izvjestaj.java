@@ -1,6 +1,8 @@
 package application;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -83,15 +85,28 @@ public class Izvjestaj {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
 		DateTimeFormatter formatterVrijeme = DateTimeFormatter.ofPattern("HH:mm");
+		LocalDateTime limitDatum = LocalDateTime.of(LocalDate.of(2019, 6, 24), LocalTime.of(0, 0, 0));
 		
 		for (Termin t : termini) {
+			
+			if ((t.getStartTime().compareTo(limitDatum)) < 0) {
+				continue;
+			}
+			
 			IzvjestajInfo red = new IzvjestajInfo();
 			red.setPredmet(t.getPredmet().getNaziv());
 			red.setDatum(t.getStartTime().format(formatter));
 			red.setMjesto(t.getLokacija().getZgrada()+" "+t.getLokacija().getSala() + " "
 					+ t.getStartTime().format(formatterVrijeme) + " do "
 					+ t.getEndTime().format(formatterVrijeme));
-			red.setBrojStudenata(String.valueOf((int)(t.getPredmet().getBrojStudenata() * Math.random())));
+			
+			if ((t.getStartTime().compareTo(trenutniDatum)) > 0) {
+				red.setBrojStudenata("Još nije održano");
+			}
+			else {
+				red.setBrojStudenata(String.valueOf((int)(t.getPredmet().getBrojStudenata() * Math.random())));
+			}	
+			
 			if (t.getTip() == Termin.tipTermina.Predavanje) {
 				red.setBrojP(String.valueOf(3));
 				red.setBrojV(String.valueOf(0));
