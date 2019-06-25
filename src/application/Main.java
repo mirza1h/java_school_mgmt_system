@@ -1251,7 +1251,7 @@ public class Main extends Application {
 					try {
 						greska.setVisible(false);
 						secondStage.close();
-						startProfesori(primaryStage);
+						startPredmeti(primaryStage);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
