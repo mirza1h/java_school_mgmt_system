@@ -332,7 +332,7 @@ public class Main extends Application {
 					}
 					List<String> trenutnaSedmica = getDates();
 					vrijednosti.add(trenutnaSedmica.get(0));
-					vrijednosti.add(trenutnaSedmica.get(5));
+					vrijednosti.add(trenutnaSedmica.get(6));
 					System.out.println(vrijednosti);
 					if ((vrijednosti.get(1) == null) && (vrijednosti.get(2) == null) && (vrijednosti.get(4) == null)
 							&& (vrijednosti.get(5) == null)) {
@@ -386,13 +386,13 @@ public class Main extends Application {
 		List<String> sledeciDatumi = getDates();
 		this.offsetDatum -= 7;
 		sledeceVrijednosti.set(7, sledeciDatumi.get(0));
-		sledeceVrijednosti.set(8, sledeciDatumi.get(5));
+		sledeceVrijednosti.set(8, sledeciDatumi.get(6));
 
 		this.offsetDatum -= 7;
 		List<String> prethodniDatumi = getDates();
 		this.offsetDatum += 7;
 		prethodneVrijednosti.set(7, prethodniDatumi.get(0));
-		prethodneVrijednosti.set(8, prethodniDatumi.get(5));
+		prethodneVrijednosti.set(8, prethodniDatumi.get(6));
 
 		Collection<Termin> sledeciTermini = Termin.getTermini(sledeceVrijednosti);
 		Collection<Termin> prethodniTermini = Termin.getTermini(prethodneVrijednosti);
@@ -1532,7 +1532,17 @@ public class Main extends Application {
 							terminInfo.add(Main.this.trenutniKorisnik);
 						}
 
-						int code = Termin.dodajTermin(terminInfo);
+						int code;
+						if (tip.getText().equals("Predavanje")
+							|| tip.getText().equals("Vjezbe") 
+							|| tip.getText().equals("Labaratorija")) {
+							
+							code = Termin.dodajTermin(terminInfo, true);
+						}
+						else {
+							code = Termin.dodajTermin(terminInfo, false);
+						}
+						
 						switch(code) {
 						case 1: {
 							greska.setText("Dodano!");
