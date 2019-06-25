@@ -159,10 +159,10 @@ public class Predmet {
 				novi.setSemestar(Integer.valueOf(semestar));
 				novi.setUsmjerenje(usm);
 				novi.setProfesore(rezultat);
-				//for (Profesor nastavnik : rezultat) {
-				//	Profesor temp = em.getReference(Profesor.class, nastavnik.getId());
-				//	temp.getPredmete().add(novi);
-				//}
+				for (Profesor nastavnik : rezultat) {
+					Profesor temp = em.getReference(Profesor.class, nastavnik.getId());
+					temp.getPredmete().add(novi);
+				}
 				em.persist(novi);
 				em.getTransaction().commit();
 				return 1;
