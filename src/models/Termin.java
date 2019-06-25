@@ -265,6 +265,18 @@ public class Termin {
 			System.out.println("Nema profesora sa tim imenom");
 			return -4;
 		}
+		Query profnaPredUpit=em.createQuery("select p from Profesor p where p.ime=:yar and p.predmeti IN :qar",Profesor.class);
+		profnaPredUpit.setParameter("yar",kojemProf);
+		profnaPredUpit.setParameter("qar", broj);
+		List<Profesor> brojprofnaPred=profnaPredUpit.getResultList();
+		if(brojprofnaPred.size()==0) {
+			System.out.println("Nema profesora na tom predmetu");
+			return -5;
+		}
+		if(broj.get(0).getBrojStudenata()>brojLok.get(0).getKapacitet()) {
+			System.out.println("Broj studenata na predmetu je veci od kapaciteta sale");
+			return -6;
+		}
 		
 		Termin novi=new Termin();
 		novi.setPredmet(broj.get(0));
