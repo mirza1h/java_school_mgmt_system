@@ -1500,7 +1500,8 @@ public class Main extends Application {
 						}
 
 						int code;
-						if (tip.getText().equals("Predavanje") || tip.getText().equals("Vjezbe") || tip.getText().equals("Laboratorija")) {
+						if (tip.getText().equals("Predavanje") || tip.getText().equals("Vjezbe")
+								|| tip.getText().equals("Laboratorija")) {
 
 							code = Termin.dodajTermin(terminInfo, true);
 						} else {

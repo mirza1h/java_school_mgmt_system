@@ -1,5 +1,7 @@
 package application;
 
+import models.Korisnik;
+import models.Korisnik.tipKorisnika;
 import models.Lokacija;
 import models.Predmet;
 import models.Profesor;
@@ -94,6 +96,11 @@ public class Podaci {
 		for (int i = 0; i < profesori.size(); ++i) {
 			String[] lines = profesori.get(i).split("\\r?\\n");
 			for (int j = 0; j < lines.length; ++j) {
+				Korisnik korisnik = new Korisnik();
+				korisnik.setUsername(lines[j]);
+				korisnik.setTip(tipKorisnika.Nastavnik);
+				korisnik.setPassword("123");
+				em.persist(korisnik);
 //				for (int m = 0; m < 3; ++m) {
 //					Predmet predmet = new Predmet();
 //					Termin termin = new Termin();
@@ -150,16 +157,16 @@ public class Podaci {
 //					int brojProfesora = (int) (Math.random() * 4) + 1;
 //					String[] prof = profesori.get(i).split("\\r?\\n");
 //					for (int k = 0; k < brojProfesora; ++k) {
-				Profesor profObj = new Profesor();
+//				Profesor profObj = new Profesor();
 //						int randomProfesor = (int) (Math.random() * prof.length);
 //						if (prof[randomProfesor].equals("koristen")) {
 //							continue;
 //						}
-				profObj.setIme(lines[j]);
+//				profObj.setIme(lines[j]);
 //						prof[randomProfesor] = new String("koristen");
-				profObj.setUsmjerenje(usmjerenja[i]);
+//				profObj.setUsmjerenje(usmjerenja[i]);
 //						profObj.getPredmete().add(predmet);
-				em.persist(profObj);
+//				em.persist(profObj);
 //						predmet.getProfesore().add(profObj);
 //					}
 //					termin.setProfesor(predmet.getOneProfesor());
