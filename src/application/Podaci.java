@@ -93,14 +93,14 @@ public class Podaci {
 		Usmjerenje[] usmjerenja = { Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK };
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		for (int i = 0; i < profesori.size(); ++i) {
-			String[] lines = profesori.get(i).split("\\r?\\n");
-			for (int j = 0; j < lines.length; ++j) {
-				Korisnik korisnik = new Korisnik();
-				korisnik.setUsername(lines[j]);
-				korisnik.setTip(tipKorisnika.Nastavnik);
-				korisnik.setPassword("123");
-				em.persist(korisnik);
+//		for (int i = 0; i < profesori.size(); ++i) {
+//			String[] lines = profesori.get(i).split("\\r?\\n");
+//			for (int j = 0; j < lines.length; ++j) {
+		Korisnik korisnik = new Korisnik();
+		korisnik.setUsername("Emir Mešković");
+		korisnik.setTip(tipKorisnika.Prodekan);
+		korisnik.setPassword("123");
+		em.persist(korisnik);
 //				for (int m = 0; m < 3; ++m) {
 //					Predmet predmet = new Predmet();
 //					Termin termin = new Termin();
@@ -175,10 +175,11 @@ public class Podaci {
 //					em.persist(termin);
 //					em.persist(predmet);
 //				}
-			}
-			// pocetakSemestra = LocalDateTime.of(LocalDate.of(2019, 6, 10), LocalTime.of(0,
-			// 0, 0));
-		}
+//	}
+
+		// pocetakSemestra = LocalDateTime.of(LocalDate.of(2019, 6, 10), LocalTime.of(0,
+		// 0, 0));
+//	}
 
 		em.getTransaction().commit();
 		em.close();
