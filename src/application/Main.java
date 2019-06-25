@@ -79,10 +79,8 @@ public class Main extends Application {
 	}
 
 	private static void setDBSystemDir() {
-		// Decide on the db system directory: <userhome>/.addressbook/
 		String userHomeDir = System.getProperty("user.home", ".");
 		String systemDir = userHomeDir + "/.addressbook";
-		// Set the db system directory.
 		System.setProperty("derby.system.home", systemDir);
 	}
 
@@ -94,7 +92,7 @@ public class Main extends Application {
 		c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-		c.add(Calendar.DATE, this.offsetDatum);
+		c.add(Calendar.DATE, offsetDatum);
 
 		weekDates.add(df.format(c.getTime()));
 		for (int i = 0; i < 6; i++) {
@@ -157,8 +155,8 @@ public class Main extends Application {
 		String dan = danDatum.format(formatter);
 		List<String> sviDani = getDates();
 
-		System.out.println("DAAAN " + dan);
-		System.out.println("DANIII NEW BLOCK" + sviDani);
+		// System.out.println("DAAAN " + dan);
+		// System.out.println("DANIII NEW BLOCK" + sviDani);
 		int pomjerajX = 0;
 		int pocetak = ((termin.getStartTime().getHour() - 8) * 60) + termin.getStartTime().getMinute();
 		long pomjerajY = pocetak;
@@ -169,8 +167,8 @@ public class Main extends Application {
 			}
 		}
 
-		System.out.println(pomjerajY);
-		System.out.println(pomjerajX);
+		// System.out.println(pomjerajY);
+		// System.out.println(pomjerajX);
 		novi.setLayoutY(pomjerajY);
 
 		novi.setLayoutX(pomjerajX + (poRedu * (width + ((velicina - 1) * 2))) + (poRedu * 2));
@@ -190,27 +188,6 @@ public class Main extends Application {
 			novi.getChildren().add(info.get(i));
 		}
 		return novi;
-	}
-
-	private void dodajKorisnike() {
-		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		EntityManager em = factory.createEntityManager();
-		setDBSystemDir();
-		Korisnik prodekan = new Korisnik();
-		prodekan.setUsername("mesko");
-		prodekan.setPassword("mesko");
-		prodekan.setTip(tipKorisnika.Prodekan);
-
-		Korisnik nastavnik = new Korisnik();
-		nastavnik.setUsername("amer");
-		nastavnik.setPassword("amer");
-		nastavnik.setTip(tipKorisnika.Nastavnik);
-
-		em.getTransaction().begin();
-		em.persist(prodekan);
-		em.persist(nastavnik);
-		em.getTransaction().commit();
-		em.close();
 	}
 
 	public void startLoginPage(Stage primaryStage) throws IOException {
@@ -242,7 +219,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				try {
-					String uneseniUser = Main.this.trenutniKorisnik = username.getText();
+					String uneseniUser = trenutniKorisnik = username.getText();
 					String uneseniPass = password.getText();
 
 					if ((uneseniUser == null) || (uneseniPass == null)) {
@@ -268,7 +245,6 @@ public class Main extends Application {
 					}
 
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -280,7 +256,6 @@ public class Main extends Application {
 				try {
 					startFilterPage(primaryStage, false);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -366,7 +341,6 @@ public class Main extends Application {
 					}
 
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -382,15 +356,15 @@ public class Main extends Application {
 		sledeceVrijednosti.addAll(vrijednosti);
 		prethodneVrijednosti.addAll(vrijednosti);
 
-		this.offsetDatum += 7;
+		offsetDatum += 7;
 		List<String> sledeciDatumi = getDates();
-		this.offsetDatum -= 7;
+		offsetDatum -= 7;
 		sledeceVrijednosti.set(7, sledeciDatumi.get(0));
 		sledeceVrijednosti.set(8, sledeciDatumi.get(6));
 
-		this.offsetDatum -= 7;
+		offsetDatum -= 7;
 		List<String> prethodniDatumi = getDates();
-		this.offsetDatum += 7;
+		offsetDatum += 7;
 		prethodneVrijednosti.set(7, prethodniDatumi.get(0));
 		prethodneVrijednosti.set(8, prethodniDatumi.get(6));
 
@@ -446,12 +420,11 @@ public class Main extends Application {
 					if (event.getClickCount() == 2) {
 						if (!registrovan) {
 							System.out.println("Ne mozete uredjivati!");
-						} else if (this.trenutniKorisnik.equals(temp.getProfesor().getIme())
-								|| this.trenutniKorisnik.equals("Emir Mešković")) {
+						} else if (trenutniKorisnik.equals(temp.getProfesor().getIme())
+								|| trenutniKorisnik.equals("Emir Mešković")) {
 							try {
 								startTerminObrisiPage(primaryStage, registrovan, termini, vrijednosti, temp);
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
@@ -504,11 +477,10 @@ public class Main extends Application {
 		sledeca.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				Main.this.offsetDatum += 7;
+				offsetDatum += 7;
 				try {
 					startRasporedPage(primaryStage, registrovan, sledeciTermini, sledeceVrijednosti);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -517,7 +489,7 @@ public class Main extends Application {
 		prethodna.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				Main.this.offsetDatum -= 7;
+				offsetDatum -= 7;
 				try {
 					startRasporedPage(primaryStage, registrovan, prethodniTermini, prethodneVrijednosti);
 				} catch (IOException e1) {
@@ -533,7 +505,6 @@ public class Main extends Application {
 				try {
 					startTerminPage(primaryStage, registrovan, termini, vrijednosti);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -545,7 +516,6 @@ public class Main extends Application {
 				try {
 					startIzvjestajPage(primaryStage, trenutniDatum.getMonth().name(), trenutniDan);
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
@@ -680,7 +650,7 @@ public class Main extends Application {
 				}
 			}
 		});
-		
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -863,7 +833,7 @@ public class Main extends Application {
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 
 		ime.requestFocus();
-		
+
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -933,7 +903,7 @@ public class Main extends Application {
 		CheckBox ri = (CheckBox) scene.lookup("#ri");
 		CheckBox tk = (CheckBox) scene.lookup("#tk");
 		TextField profesori = (TextField) scene.lookup("#profesori");
-		
+
 		naziv.requestFocus();
 
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
@@ -1033,7 +1003,7 @@ public class Main extends Application {
 		TextField sala = (TextField) scene.lookup("#sala");
 		TextField zgrada = (TextField) scene.lookup("#zgrada");
 		TextField kapacitet = (TextField) scene.lookup("#kapacitet");
-		
+
 		sala.requestFocus();
 
 		dodaj.setOnAction(new EventHandler<ActionEvent>() {
@@ -1118,7 +1088,7 @@ public class Main extends Application {
 
 		usmjerenje.getItems().addAll(Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK);
 		usmjerenje.setValue(prof.getUsmjerenje());
-		
+
 		ime.requestFocus();
 
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
@@ -1222,29 +1192,29 @@ public class Main extends Application {
 		eske.setDisable(true);
 		ri.setDisable(true);
 		tk.setDisable(true);
-		switch(pred.getUsmjerenje()) {
-			case AR:{
-				ar.setSelected(true);
-				break;
-			}
-			case EEMS:{
-				eems.setSelected(true);
-				break;
-			}
-			case ESKE:{
-				eske.setSelected(true);
-				break;
-			}
-			case RI:{
-				ri.setSelected(true);
-				break;
-			}
-			case TK:{
-				tk.setSelected(true);
-				break;
-			}
+		switch (pred.getUsmjerenje()) {
+		case AR: {
+			ar.setSelected(true);
+			break;
 		}
-		
+		case EEMS: {
+			eems.setSelected(true);
+			break;
+		}
+		case ESKE: {
+			eske.setSelected(true);
+			break;
+		}
+		case RI: {
+			ri.setSelected(true);
+			break;
+		}
+		case TK: {
+			tk.setSelected(true);
+			break;
+		}
+		}
+
 		naziv.requestFocus();
 
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
@@ -1263,7 +1233,7 @@ public class Main extends Application {
 				}
 
 				System.out.println("uredi");
-				
+
 				List<String> predmet = new ArrayList<String>();
 				predmet.add(id.getText());
 				predmet.add(naziv.getText());
@@ -1274,9 +1244,9 @@ public class Main extends Application {
 				for (int i = 0; i < profesoriNiz.length; ++i) {
 					predmet.add(5 + i, profesoriNiz[i]);
 				}
-				
+
 				System.out.println(predmet);
-				
+
 				if (Predmet.updatePredmet(predmet) == true) {
 					try {
 						greska.setVisible(false);
@@ -1348,7 +1318,7 @@ public class Main extends Application {
 		zgrada.setText(prostorija.getZgrada());
 		Integer k = (Integer) prostorija.getKapacitet();
 		kapacitet.setText(k.toString());
-		
+
 		sala.requestFocus();
 
 		uredi.setOnAction(new EventHandler<ActionEvent>() {
@@ -1433,8 +1403,8 @@ public class Main extends Application {
 		Label zaMjesec = (Label) scene.lookup("#zaMjesec");
 		Label datumLabel = (Label) scene.lookup("#datum");
 
-		izvrsilac1.setText("IZVRSILAC: " + this.trenutniKorisnik);
-		izvrsilac2.setText("Izvrsilac: " + this.trenutniKorisnik);
+		izvrsilac1.setText("IZVRSILAC: " + trenutniKorisnik);
+		izvrsilac2.setText("Izvrsilac: " + trenutniKorisnik);
 		zaMjesec.setText("za mjesec " + Izvjestaj.prevediMjesec(mjesec) + " zimski/ljetni semestar ak. 2018/19 godine");
 		datumLabel.setText("Datum podnosenja izvjestaja: " + datum);
 
@@ -1447,7 +1417,7 @@ public class Main extends Application {
 		tabela.getColumns().get(4).setCellValueFactory(new PropertyValueFactory<>("brojP"));
 		tabela.getColumns().get(5).setCellValueFactory(new PropertyValueFactory<>("brojV"));
 
-		List<IzvjestajInfo> termini = Izvjestaj.getIzvjestaj(this.trenutniKorisnik, mjesec);
+		List<IzvjestajInfo> termini = Izvjestaj.getIzvjestaj(trenutniKorisnik, mjesec);
 
 		int ukupnoP = 0, ukupnoV = 0;
 
@@ -1489,7 +1459,7 @@ public class Main extends Application {
 		Button dodaj = (Button) scene.lookup("#dodaj");
 		Button nazad = (Button) scene.lookup("#nazad");
 
-		if (this.trenutniKorisnik.equals("Emir Mešković")) {
+		if (trenutniKorisnik.equals("Emir Mešković")) {
 			profesorlabela.setVisible(true);
 			profesor.setVisible(true);
 		} else {
@@ -1510,7 +1480,7 @@ public class Main extends Application {
 					greska.setText("Niste unijeli sve podatke");
 				} else {
 
-					if (!Main.this.trenutniKorisnik.equals("Emir Mešković") && (tip.getText().equals("Predavanje")
+					if (!trenutniKorisnik.equals("Emir Mešković") && (tip.getText().equals("Predavanje")
 							|| tip.getText().equals("Vjezbe") || tip.getText().equals("Labaratorija"))) {
 						greska.setText("Nastavnik ne može dodavati te termine!");
 					} else {
@@ -1520,27 +1490,25 @@ public class Main extends Application {
 						terminInfo.add(zgrada.getText());
 						terminInfo.add(sala.getText());
 						terminInfo.add(usmjerenje.getText());
-						terminInfo.add(Main.this.trenutniKorisnik);
+						terminInfo.add(trenutniKorisnik);
 						terminInfo.add(tip.getText());
 						terminInfo.add(grupa.getText());
-						if (Main.this.trenutniKorisnik.equals("Emir Mešković")) {
+						if (trenutniKorisnik.equals("Emir Mešković")) {
 							terminInfo.add(profesor.getText());
 						} else {
-							terminInfo.add(Main.this.trenutniKorisnik);
+							terminInfo.add(trenutniKorisnik);
 						}
 
 						int code;
-						if (tip.getText().equals("Predavanje")
-							|| tip.getText().equals("Vjezbe") 
-							|| tip.getText().equals("Labaratorija")) {
-							
+						if (tip.getText().equals("Predavanje") || tip.getText().equals("Vjezbe")
+								|| tip.getText().equals("Labaratorija")) {
+
 							code = Termin.dodajTermin(terminInfo, true);
-						}
-						else {
+						} else {
 							code = Termin.dodajTermin(terminInfo, false);
 						}
-						
-						switch(code) {
+
+						switch (code) {
 						case 1: {
 							greska.setText("Dodano!");
 							break;
@@ -1580,7 +1548,6 @@ public class Main extends Application {
 					secondStage.close();
 					startRasporedPage(primaryStage, registrovan, Termin.getTermini(vrijednosti), vrijednosti);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -1644,19 +1611,18 @@ public class Main extends Application {
 					for (Termin t : termini) {
 						if (t.getId() == id) {
 							t.getPredmet().setNaziv(predmet.getText());
-							t.setEndTime(LocalDateTime.parse(kraj.getText(),form));
-							t.setStartTime(LocalDateTime.parse(pocetak.getText(),form));
+							t.setEndTime(LocalDateTime.parse(kraj.getText(), form));
+							t.setStartTime(LocalDateTime.parse(pocetak.getText(), form));
 							t.getLokacija().setZgrada(zgrada.getText());
 							t.getLokacija().setSala(sala.getText());
 						}
 					}
-					
+
 					int code = Termin.updateTermin(terminInfo);
 					if (code == 1) {
 						try {
 							startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -1664,16 +1630,16 @@ public class Main extends Application {
 						greska.setText("Taj predmet ne postoji!");
 						greska.setVisible(true);
 					}
-					
+
 					if (code == -2) {
 						greska.setText("Ne postoji trazena sala!");
 						greska.setVisible(true);
 					}
-					
+
 					if (code == -3) {
 						greska.setText("Zauzeta sala u trazenom terminu!");
 						greska.setVisible(true);
-					}		
+					}
 				}
 			}
 		});
@@ -1701,7 +1667,6 @@ public class Main extends Application {
 					secondStage.close();
 					startRasporedPage(primaryStage, registrovan, obrisan, vrijednosti);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -1715,7 +1680,6 @@ public class Main extends Application {
 					secondStage.close();
 					startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

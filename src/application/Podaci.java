@@ -85,91 +85,92 @@ public class Podaci {
 		int trajanje = 3;
 		boolean dodajSlovo = false;
 		parsirajProfesore();
-		parsirajPredmete();
+		// parsirajPredmete();
 		String salePredavanja[] = { "FE-008", "FE-101", "STELEKT-A", "G-A" };
 		String saleVjezbe[] = { "FE-005", "FE-102", "FE-RC14", "FE-RC15", "G-RC19", "G-RC21" };
 		Usmjerenje[] usmjerenja = { Usmjerenje.AR, Usmjerenje.EEMS, Usmjerenje.ESKE, Usmjerenje.RI, Usmjerenje.TK };
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
-		for (int i = 0; i < predmeti.size(); ++i) {
-			String[] lines = predmeti.get(i).split("\\r?\\n");
+		for (int i = 0; i < profesori.size(); ++i) {
+			String[] lines = profesori.get(i).split("\\r?\\n");
 			for (int j = 0; j < lines.length; ++j) {
-				for (int m = 0; m < 3; ++m) {
-					Predmet predmet = new Predmet();
-					Termin termin = new Termin();
-					String sale[] = null;
-					Lokacija lokacija = new Lokacija();
-					if (m == 0) {
-						termin.setTip(tipTermina.Predavanje);
-						trajanje = 3;
-						sale = salePredavanja;
-					} else if (m == 1) {
-						termin.setTip(tipTermina.Vjezbe);
-						trajanje = 1;
-						sale = saleVjezbe;
-					} else if (m == 2) {
-						termin.setTip(tipTermina.Laboratorija);
-						trajanje = 1;
-						sale = saleVjezbe;
-					}
-					LocalDateTime vrijeme1 = pocetakSemestra.plusHours(pocetak);
-					LocalDateTime vrijeme2 = vrijeme1.plusHours(trajanje);
-					termin.setStartTime(vrijeme1);
-					termin.setEndTime(vrijeme2);
-					pocetak += trajanje;
-					if ((vrijeme2.getHour() >= 17) && (m == 0)) {
-						pocetakSemestra = pocetakSemestra.plusDays(1);
-						pocetak = 8;
-					}
-					if ((vrijeme2.getHour() >= 19) && ((m == 1) || (m == 2))) {
-						pocetakSemestra = pocetakSemestra.plusDays(1);
-						pocetak = 8;
-					}
-					if (vrijeme1.getDayOfWeek().getValue() == 5) {
-						pocetakSemestra = pocetakSemestra.plusDays(3);
-					}
-					String randomSala = sale[(int) ((Math.random() * sale.length) - 1) + 0];
-					if (randomSala.equals("FE-008") || randomSala.equals("G-A")) {
-						lokacija.setKapacitet(100);
-					} else if (randomSala.equals("FE-101") || randomSala.equals("STELEKT-A")) {
-						lokacija.setKapacitet(50);
-					} else {
-						lokacija.setKapacitet(20);
-					}
-					String salaZgrada[] = randomSala.split("-");
-					lokacija.setZgrada(salaZgrada[0]);
-					lokacija.setSala(salaZgrada[1]);
-					termin.setLokacija(lokacija);
-					predmet.setNaziv(lines[j]);
-					predmet.setUsmjerenje(usmjerenja[i]);
-					predmet.setSemestar((int) (Math.random() * 8) + 1);
-					int godina = izracunajGodinu(predmet.getSemestar());
-					String grupa = godina + "-" + predmet.getUsmjerenje();
-					termin.setGrupa(grupa);
-					predmet.setBrojStudenata((int) (Math.random() * 90) + 15);
-					int brojProfesora = (int) (Math.random() * 4) + 1;
-					String[] prof = profesori.get(i).split("\\r?\\n");
-					for (int k = 0; k < brojProfesora; ++k) {
-						Profesor profObj = new Profesor();
-						int randomProfesor = (int) (Math.random() * prof.length);
-						if (prof[randomProfesor].equals("koristen")) {
-							continue;
-						}
-						profObj.setIme(prof[randomProfesor]);
-						prof[randomProfesor] = new String("koristen");
-						profObj.setUsmjerenje(usmjerenja[i]);
-						profObj.getPredmete().add(predmet);
-						em.persist(profObj);
-						predmet.getProfesore().add(profObj);
-					}
-					termin.setProfesor(predmet.getOneProfesor());
-					em.persist(lokacija);
-					termin.setPredmet(predmet);
-					em.persist(termin);
-					em.persist(predmet);
-				}
+//				for (int m = 0; m < 3; ++m) {
+//					Predmet predmet = new Predmet();
+//					Termin termin = new Termin();
+//					String sale[] = null;
+//					Lokacija lokacija = new Lokacija();
+//					if (m == 0) {
+//						termin.setTip(tipTermina.Predavanje);
+//						trajanje = 3;
+//						sale = salePredavanja;
+//					} else if (m == 1) {
+//						termin.setTip(tipTermina.Vjezbe);
+//						trajanje = 1;
+//						sale = saleVjezbe;
+//					} else if (m == 2) {
+//						termin.setTip(tipTermina.Laboratorija);
+//						trajanje = 1;
+//						sale = saleVjezbe;
+//					}
+//					LocalDateTime vrijeme1 = pocetakSemestra.plusHours(pocetak);
+//					LocalDateTime vrijeme2 = vrijeme1.plusHours(trajanje);
+//					termin.setStartTime(vrijeme1);
+//					termin.setEndTime(vrijeme2);
+//					pocetak += trajanje;
+//					if ((vrijeme2.getHour() >= 17) && (m == 0)) {
+//						pocetakSemestra = pocetakSemestra.plusDays(1);
+//						pocetak = 8;
+//					}
+//					if ((vrijeme2.getHour() >= 19) && ((m == 1) || (m == 2))) {
+//						pocetakSemestra = pocetakSemestra.plusDays(1);
+//						pocetak = 8;
+//					}
+//					if (vrijeme1.getDayOfWeek().getValue() == 5) {
+//						pocetakSemestra = pocetakSemestra.plusDays(3);
+//					}
+//					String randomSala = sale[(int) ((Math.random() * sale.length) - 1) + 0];
+//					if (randomSala.equals("FE-008") || randomSala.equals("G-A")) {
+//						lokacija.setKapacitet(100);
+//					} else if (randomSala.equals("FE-101") || randomSala.equals("STELEKT-A")) {
+//						lokacija.setKapacitet(50);
+//					} else {
+//						lokacija.setKapacitet(20);
+//					}
+//					String salaZgrada[] = randomSala.split("-");
+//					lokacija.setZgrada(salaZgrada[0]);
+//					lokacija.setSala(salaZgrada[1]);
+//					termin.setLokacija(lokacija);
+//					predmet.setNaziv(lines[j]);
+//					predmet.setUsmjerenje(usmjerenja[i]);
+//					predmet.setSemestar((int) (Math.random() * 8) + 1);
+//					int godina = izracunajGodinu(predmet.getSemestar());
+//					String grupa = godina + "-" + predmet.getUsmjerenje();
+//					termin.setGrupa(grupa);
+//					predmet.setBrojStudenata((int) (Math.random() * 90) + 15);
+//					int brojProfesora = (int) (Math.random() * 4) + 1;
+//					String[] prof = profesori.get(i).split("\\r?\\n");
+//					for (int k = 0; k < brojProfesora; ++k) {
+				Profesor profObj = new Profesor();
+//						int randomProfesor = (int) (Math.random() * prof.length);
+//						if (prof[randomProfesor].equals("koristen")) {
+//							continue;
+//						}
+				profObj.setIme(lines[j]);
+//						prof[randomProfesor] = new String("koristen");
+				profObj.setUsmjerenje(usmjerenja[i]);
+//						profObj.getPredmete().add(predmet);
+				em.persist(profObj);
+//						predmet.getProfesore().add(profObj);
+//					}
+//					termin.setProfesor(predmet.getOneProfesor());
+//					em.persist(lokacija);
+//					termin.setPredmet(predmet);
+//					em.persist(termin);
+//					em.persist(predmet);
+//				}
 			}
-			pocetakSemestra = LocalDateTime.of(LocalDate.of(2019, 6, 10), LocalTime.of(0, 0, 0));
+			// pocetakSemestra = LocalDateTime.of(LocalDate.of(2019, 6, 10), LocalTime.of(0,
+			// 0, 0));
 		}
 
 		em.getTransaction().commit();
