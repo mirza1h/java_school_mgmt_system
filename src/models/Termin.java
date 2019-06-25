@@ -340,6 +340,7 @@ public class Termin {
 		String sala=unos.get(5);
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
+		Termin temp=em.getReference(Termin.class,id);
 		Query predmUpit=em.createQuery("select p from Predmet p where p.naziv=:var",Predmet.class);
 		predmUpit.setParameter("var", nazivPred);
 		List<Predmet> broj=predmUpit.getResultList();
@@ -362,10 +363,9 @@ public class Termin {
 		terminUpit.setParameter("tvoj", sala);
 		Collection<Termin> brojTer=terminUpit.getResultList();
 		for(Termin t : brojTer) {
-			if(t.getId()!=id)
+			if(t.getId()!=temp.getId())
 				return -3;
 		}
-		Termin temp=em.getReference(Termin.class,id);
 		temp.setPredmet(broj.get(0));
 		temp.getLokacija().setZgrada(zgrada);
 		temp.getLokacija().setSala(sala);
