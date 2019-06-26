@@ -1533,6 +1533,11 @@ public class Main extends Application {
 							greska.setVisible(true);
 							break;
 						}
+						case -5: {
+							greska.setText("Taj profesor ne postoji na tom predmetu!");
+							greska.setVisible(true);
+							break;
+						}
 						}
 					}
 				}
@@ -1701,42 +1706,7 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		// DbFunctions.createPredmet();
-		// DbFunctions.createTermini();
-		List<String> vr = new ArrayList<String>();
-		vr.add(null);
-		vr.add(null);
-		vr.add(null);
-		vr.add("2");
-		vr.add(null);
-		vr.add(null);
-		vr.add("RI");
-		vr.add("16/09/2019");
-		vr.add("23/09/2019");
-		// DbFunctions.addProdekan();
-		// DbFunctions.addProfesor();
-		// Korisnik.showKorisnici();
-
-		// Termin.getTermini(vr);
-		/*
-		 * Termin.getTermini(vr); Predmet.showPredmeti();
-		 */
-
-		// Termin.showTermini();
-		//Podaci.napuniBazu();
-		// Termin.showTermini();
-		if (Korisnik.nadjiKorisnika("amer", "amer") == tipKorisnika.Nastavnik) {
-			System.out.println("radi");
-		}
-		if (Korisnik.nadjiKorisnika("mesko", "mesko") == tipKorisnika.Prodekan) {
-			System.out.println("radi opet");
-		}
-		// Pogresan PASS primjer
-		if (Korisnik.nadjiKorisnika("amer", "aer") == null) {
-			System.out.println("radi i null");
-		}
 		launch(args);
-
 		factory.close();
 	}
 }
