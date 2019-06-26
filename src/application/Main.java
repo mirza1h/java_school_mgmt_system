@@ -202,6 +202,8 @@ public class Main extends Application {
 
 		primaryStage.setScene(loginScene);
 		primaryStage.show();
+		
+		Stage otvoriFilter = new Stage();
 
 		AnchorPane mainPane = (AnchorPane) login.getChildren().get(0);
 		AnchorPane duals = (AnchorPane) mainPane.getChildren().get(1);
@@ -232,14 +234,11 @@ public class Main extends Application {
 						greska.setVisible(false);
 
 						if (Korisnik.nadjiKorisnika(uneseniUser, uneseniPass) == tipKorisnika.Nastavnik) {
-							startFilterPage(primaryStage, true);
-							System.out.println("radi");
+							startFilterPage(otvoriFilter, true);
 						} else if (Korisnik.nadjiKorisnika(uneseniUser, uneseniPass) == tipKorisnika.Prodekan) {
-//							startFilterPage(primaryStage, true);
 							startProdekanPage(primaryStage);
-							System.out.println("radi opet");
 						} else {
-							startFilterPage(primaryStage, false);
+							startFilterPage(otvoriFilter, false);
 						}
 
 					}
@@ -308,7 +307,6 @@ public class Main extends Application {
 					List<String> trenutnaSedmica = getDates();
 					vrijednosti.add(trenutnaSedmica.get(0));
 					vrijednosti.add(trenutnaSedmica.get(6));
-					System.out.println(vrijednosti);
 					if ((vrijednosti.get(1) == null) && (vrijednosti.get(2) == null) && (vrijednosti.get(4) == null)
 							&& (vrijednosti.get(5) == null)) {
 
@@ -327,7 +325,7 @@ public class Main extends Application {
 							upozorenje1.setVisible(false);
 							upozorenje2.setVisible(false);
 							Collection<Termin> termini = Termin.getTermini(vrijednosti);
-							System.out.println(termini.size());
+							
 							secondStage.close();
 							startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 						}
@@ -336,7 +334,7 @@ public class Main extends Application {
 						upozorenje1.setVisible(false);
 						upozorenje2.setVisible(false);
 						Collection<Termin> termini = Termin.getTermini(vrijednosti);
-						System.out.println(termini.size());
+						secondStage.close();
 						startRasporedPage(primaryStage, registrovan, termini, vrijednosti);
 					}
 
@@ -531,6 +529,8 @@ public class Main extends Application {
 	public void startProdekanPage(Stage primaryStage) throws IOException {
 		AnchorPane home = FXMLLoader.load(getClass().getResource("ProdekanHomePage.fxml"));
 		Scene scene = new Scene(home);
+		
+		Stage otvoriFilter = new Stage();
 
 		Button profesori = (Button) scene.lookup("#b01");
 		Button predmeti = (Button) scene.lookup("#b02");
@@ -579,7 +579,7 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					startFilterPage(primaryStage, true);
+					startFilterPage(otvoriFilter, true);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

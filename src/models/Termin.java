@@ -213,7 +213,6 @@ public class Termin {
 		Collection<Termin> rezultat = upit.getResultList();
 		em.close();
 
-		System.out.println("Mirza" + rezultat.size());
 		return rezultat;
 	}
 
