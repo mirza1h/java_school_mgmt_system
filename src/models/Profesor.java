@@ -115,12 +115,13 @@ public class Profesor {
 		Usmjerenje usm = Usmjerenje.valueOf(unos.get(2));
 		EntityManager em = Main.getFactory().createEntityManager();
 		em.getTransaction().begin();
+		Profesor prof = em.getReference(Profesor.class, id);
 		Query testniUpit = em.createQuery("select t from Profesor t where t.ime='" + ime + "'",Profesor.class);
 		Collection<Profesor> provjera = testniUpit.getResultList();
-		if (provjera.size() != 0) {
-			return false;
+		for(Profesor pp : provjera){
+			if(pp.getId()!=prof.getId())
+				return false;
 		}
-		Profesor prof = em.getReference(Profesor.class, id);
 		Query upit = em.createQuery("select t from Korisnik t where t.username='" + prof.getIme() + "'",
 				Profesor.class);
 		Collection<Korisnik> rezultat = upit.getResultList();
@@ -142,8 +143,9 @@ public class Profesor {
 		Query termini = em.createQuery("delete from Termin t where t.profesor.ime=:var", Termin.class);
 		termini.setParameter("var", prof.getIme());
 		termini.executeUpdate();
-		Query drugiUpit = em.createQuery("delete from Korisnik k where k.username=:tar");
+		Query drugiUpit = em.createQuery("delete from Korisnik k where k.username=:tar and k.tip=:var");
 		drugiUpit.setParameter("tar", prof.getIme());
+		drugiUpit.setParameter("var", tipKorisnika.Nastavnik);
 		drugiUpit.executeUpdate();
 		Query upit = em.createQuery("delete from Profesor p where p.ime=?1");
 		upit.setParameter(1, prof.getIme());
